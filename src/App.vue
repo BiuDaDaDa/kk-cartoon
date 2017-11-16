@@ -2,6 +2,7 @@
   <div id="app">
     <img src="./assets/logo.png">
     <router-view/>
+    <button @click="fecthHomeData">ddd</button>
   </div>
 </template>
 
@@ -13,17 +14,19 @@ export default {
     fecthHomeData () {
       this.$request({
         type: 'get',
-        url: 'api/getHomeData',
+        url: 'v1/daily/comic_lists/0',
         headers: {},
         params: {},
-        success: function () {},
+        success: function (res) {
+          console.log(res)
+        },
         failed: function () {}
       })
     }
   }
 }
 </script>
-
+<link rel="stylesheet/less" href="./common/less/reset.less">
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
