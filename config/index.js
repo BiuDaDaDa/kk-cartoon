@@ -21,13 +21,13 @@ module.exports = {
           Host: 'api.kuaikanmanhua.com'
         }
       },
-      '/api': {
-        target: 'http://api.kuaikanmanhua.com',
+      '/cartonUser': {
+        target: 'https://api.kkmh.com',
         pathRewrite: {
-          '^/api': '/v1'
+          '^/cartonUser': '/v1'
         },
         headers: {
-          Host: 'api.kuaikanmanhua.com'
+          Host: 'api.kkmh.com'
         }
       }
     },
