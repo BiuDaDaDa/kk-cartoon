@@ -21,6 +21,7 @@ module.exports = {
           Host: 'api.kuaikanmanhua.com'
         }
       },
+<<<<<<< HEAD
       // '/v2': {
       //   target: 'http://api.kuaikanmanhua.com',
       //   pathRewrite: {
@@ -30,6 +31,17 @@ module.exports = {
       //     Host: 'api.kuaikanmanhua.com'
       //   }
       // }
+=======
+      '/api': {
+        target: 'http://api.kuaikanmanhua.com',
+        pathRewrite: {
+          '^/api': '/v1'
+        },
+        headers: {
+          Host: 'api.kuaikanmanhua.com'
+        }
+      }
+>>>>>>> cfd530976135dfa8d83aeea2705f8457dd383561
     },
     cssSourceMap: false
   },
