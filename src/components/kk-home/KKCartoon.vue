@@ -210,14 +210,14 @@
   .likesCount {
     left: 65%;
     font-size: 14px;
-    background: url("../assets/zan.png") no-repeat left;
+    background: url("../../assets/zan.png") no-repeat left;
     padding-left: 20px;
     color: #949899;
   }
   .commentsCount {
     left: 85%;
     font-size: 14px;
-    background: url("../assets/comment.png") no-repeat left;
+    background: url("../../assets/comment.png") no-repeat left;
     padding-left: 20px;
   }
   .commentsCount>a {
@@ -228,3 +228,4 @@
     position: absolute;
   }
 </style>
+
