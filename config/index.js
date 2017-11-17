@@ -22,6 +22,7 @@ module.exports = {
         }
       },
 <<<<<<< HEAD
+<<<<<<< HEAD
       // '/v2': {
       //   target: 'http://api.kuaikanmanhua.com',
       //   pathRewrite: {
@@ -34,11 +35,15 @@ module.exports = {
 =======
       '/api': {
         target: 'http://api.kuaikanmanhua.com',
+=======
+      '/cartonUser': {
+        target: 'https://api.kkmh.com',
+>>>>>>> 090e33211101f3c742beb0a3b3790daf8dd41c57
         pathRewrite: {
-          '^/api': '/v1'
+          '^/cartonUser': '/v1'
         },
         headers: {
-          Host: 'api.kuaikanmanhua.com'
+          Host: 'api.kkmh.com'
         }
       }
 >>>>>>> cfd530976135dfa8d83aeea2705f8457dd383561

@@ -1,8 +1,8 @@
-import HelloWorld from '../../components/HelloWorld.vue'
+import CartonUser from '../../components/kk-user/CartonUser'
 export default [
   {
-    path: '/a',
-    name: 'HelloWorld',
-    component: HelloWorld
+    path: '/user',
+    name: 'CartonUser',
+    component: CartonUser
   }
 ]

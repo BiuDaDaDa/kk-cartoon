@@ -1,14 +1,22 @@
 <template>
   <div id="app">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <router-view/>
     <!--<button @click="fecthHomeData">ddd</button>-->
 =======
+=======
+
+>>>>>>> 090e33211101f3c742beb0a3b3790daf8dd41c57
     <!--<img src="./assets/logo.png">-->
+
     <router-view/>
+<<<<<<< HEAD
     <button @click="fecthHomeData">ddd</button>
     <button @click="test">666</button>
 >>>>>>> cfd530976135dfa8d83aeea2705f8457dd383561
+=======
+>>>>>>> 090e33211101f3c742beb0a3b3790daf8dd41c57
   </div>
 </template>
 
@@ -26,7 +34,7 @@ export default {
 =======
         url: 'v1/topic_new/discovery_list',
         headers: {
-          'X-Device': 'A:eef09de00f4e0b31',
+          'X-Device': 'A:eef09de00f4e0b31'
 //          'User-Agent': 'Kuaikan/4.6.6/46600(Android;5.1.1;MI 4S;kuaikan220;WIFI;1920*1080)'
         },
         params: {
@@ -83,7 +91,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /*margin-top: 60px;*/
 }
 >>>>>>> cfd530976135dfa8d83aeea2705f8457dd383561
 </style>
