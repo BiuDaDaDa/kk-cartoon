@@ -1,7 +1,8 @@
-// export default [
-//   {
-//     path: '',
-//     component: name,
-//     name: ''
-//   }
-// ]
+import HelloWorld from '../../components/HelloWorld.vue'
+export default [
+  {
+    path: '/a',
+    name: 'HelloWorld',
+    component: HelloWorld
+  }
+]

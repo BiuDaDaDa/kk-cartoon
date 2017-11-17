@@ -20,6 +20,15 @@ module.exports = {
         headers: {
           Host: 'api.kuaikanmanhua.com'
         }
+      },
+      '/api': {
+        target: 'http://api.kuaikanmanhua.com',
+        pathRewrite: {
+          '^/api': '/v1'
+        },
+        headers: {
+          Host: 'api.kuaikanmanhua.com'
+        }
       }
     },
     cssSourceMap: false
