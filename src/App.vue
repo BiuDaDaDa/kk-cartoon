@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+
+    <!--<img src="./assets/logo.png">-->
+
     <router-view/>
   </div>
 </template>
@@ -13,7 +16,7 @@ export default {
         type: 'get',
         url: 'v1/topic_new/discovery_list',
         headers: {
-          'X-Device': 'A:eef09de00f4e0b31',
+          'X-Device': 'A:eef09de00f4e0b31'
 //          'User-Agent': 'Kuaikan/4.6.6/46600(Android;5.1.1;MI 4S;kuaikan220;WIFI;1920*1080)'
         },
         params: {
