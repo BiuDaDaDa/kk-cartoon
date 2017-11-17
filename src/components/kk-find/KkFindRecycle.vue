@@ -21,7 +21,7 @@
       }
     },
     beforeUpdate () {
-      // 记录更新前下标
+      // 记录更新前的下标
       this.activeIndex = this.$refs.swipe.index
     },
     mounted () {
