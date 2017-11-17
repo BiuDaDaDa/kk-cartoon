@@ -20,7 +20,16 @@ module.exports = {
         headers: {
           Host: 'api.kuaikanmanhua.com'
         }
-      }
+      },
+      // '/v2': {
+      //   target: 'http://api.kuaikanmanhua.com',
+      //   pathRewrite: {
+      //     '^/v2': '/v2'
+      //   },
+      //   headers: {
+      //     Host: 'api.kuaikanmanhua.com'
+      //   }
+      // }
     },
     cssSourceMap: false
   },
