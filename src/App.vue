@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-    <!--<img src="./assets/logo.png">-->
     <router-view/>
-    <button @click="boyCard">boy</button>
-    <button @click="girCard">girl</button>
+    <!--<button @click="boyCard">boy</button>-->
+    <!--<button @click="girCard">girl</button>-->
   </div>
 </template>
 
@@ -43,38 +42,17 @@ export default {
           console.log(err)
         }
       })
-    },
-    test () {
-      this.$request({
-        type: 'get',
-        url: 'api/topic_new/discovery_list',
-        headers: {
-          'X-Device': 'I:69F388A7-E1B2-4F9A-8EFD-F971E5B73404'
-//          'User-Agent': 'Kuaikan/4.6.6/46600(Android;5.1.1;MI 4S;kuaikan220;WIFI;1920*1080)'
-        },
-        params: {
-          'gender': '0',
-          'operator_count': '7'
-        },
-        success: function (res) {
-          console.log(res.data.data)
-        },
-        failed: function (err) {
-          console.log(err)
-        }
-      })
     }
   }
 }
 </script>
 <link rel="stylesheet/less" href="./common/less/reset.less">
 <style>
-#app {
+/* #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
-}
+} */
 </style>
