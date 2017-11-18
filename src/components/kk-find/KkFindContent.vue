@@ -10,9 +10,11 @@
       <div class="boxTop">
         <img :src="ite['pic']" alt="">
       </div>
-      <div class="boxBottom">
+      <div v-if="item['topics']" class="boxBottom">
         <p class="title">{{ite['title']}}</p>
-        <p class="recommended_text">{{ite['recommended_text']}}</p>
+        <p class="recommended_text">{{ite['recommended_text']}}
+          <span v-if="!ite['recommended_text']" v-for="val in ite['category']">{{val}}</span>
+        </p>
       </div>
     </router-link>
   </div>
@@ -26,6 +28,11 @@
     props: {
       newContent: {
         type: Array
+      }
+    },
+    data () {
+      return {
+        rec: false
       }
     },
     mounted () {
@@ -64,21 +71,32 @@
     width: 49%;
     margin-bottom: 10px;
   }
+  .box14 .boxTop{
+    height:127px;
+  }
   .box4{
     width: 33%;
     margin-bottom: 10px;
+  }
+  .box4 .boxTop{
+    height:182px;
   }
   .box19{
     width: 33%;
     margin-bottom: 10px;
   }
+  .box19 .boxTop{
+    height:182px;
+  }
   .box7{
     width: 100%;
     margin-bottom: 10px;
   }
+  .box7 .boxTop{
+    height:136px;
+  }
   .boxF .boxTop{
     width: 100%;
-    height:auto;
   }
   .boxF img{
     width: 100%;
@@ -89,11 +107,17 @@
   }
   .boxBottom .title{
     font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     color:black;
   }
   .boxBottom .recommended_text{
     font-size: 13px;
     color: #888;
     font-weight: bolder;
+  }
+  .boxBottom span{
+    margin-right: 2%;
   }
 </style>

@@ -94,7 +94,7 @@
           since: 0
         },
         success: function (res) {
-          console.log(res.data.data.comics)
+//          console.log(res.data.data.comics)
           _that.array = res.data.data.comics
         },
         failed: function (err) {

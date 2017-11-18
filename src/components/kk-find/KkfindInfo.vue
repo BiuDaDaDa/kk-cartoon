@@ -3,6 +3,20 @@
   <Recycle :newRecycle="newRecycle"></Recycle>
   <List :newList="newList"></List>
   <myContent :newContent="newContent"></myContent>
+  <div class="btnF">
+    <button class="contribute">
+      <span class="banner">
+        <img src="../../assets/kk-find/kk-find-contribute.png" alt="">
+        <span>我要投稿</span>
+      </span>
+    </button>
+    <button class="allComposition">
+      <span class="banner">
+        <img src="../../assets/kk-find/kk-find-all.png" alt="">
+        <span>全部作品</span>
+      </span>
+    </button>
+  </div>
 </div>
 </template>
 
@@ -54,5 +68,35 @@
 </script>
 
 <style scoped lang=less>
+.btnF{
+  padding:5%;
+  display: flex;
+  justify-content: space-around;
 
+}
+  .btnF button{
+    width: 45%;
+    padding: 3% 0;
+    font-size: 17px;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+  .btnF button .banner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+ .btnF .contribute{
+    color: blue;
+    border: 1px solid blue;
+  }
+  .btnF .allComposition{
+    color: red;
+    border: 1px solid red;
+  }
+  .allComposition img{
+    padding: 4px;
+    width: 20px;
+    height: 20px;
+  }
 </style>
