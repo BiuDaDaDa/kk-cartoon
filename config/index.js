@@ -21,24 +21,17 @@ module.exports = {
           Host: 'api.kuaikanmanhua.com'
         }
       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-      // '/v2': {
-      //   target: 'http://api.kuaikanmanhua.com',
-      //   pathRewrite: {
-      //     '^/v2': '/v2'
-      //   },
-      //   headers: {
-      //     Host: 'api.kuaikanmanhua.com'
-      //   }
-      // }
-=======
-      '/api': {
+      '/v2': {
         target: 'http://api.kuaikanmanhua.com',
-=======
+        pathRewrite: {
+          '^/v2': '/v2'
+        },
+        headers: {
+          Host: 'api.kuaikanmanhua.com'
+        }
+      },
       '/cartonUser': {
         target: 'https://api.kkmh.com',
->>>>>>> 090e33211101f3c742beb0a3b3790daf8dd41c57
         pathRewrite: {
           '^/cartonUser': '/v1'
         },
@@ -46,24 +39,19 @@ module.exports = {
           Host: 'api.kkmh.com'
         }
       }
->>>>>>> cfd530976135dfa8d83aeea2705f8457dd383561
     },
     cssSourceMap: false
   },
-
   build: {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
-
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-
     /**
      * Source Maps
      */
-
     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
@@ -80,5 +68,5 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
+    }
   }
-}

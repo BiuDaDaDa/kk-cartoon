@@ -1,5 +1,5 @@
 <template>
-  <div id="my-clud">
+  <div id="my-zui-xin">
   <div class="wrap" v-if="isloading">
     <div class="box" v-for="(common, index) in array.data.feeds">
       <div class="box_up">
@@ -40,7 +40,7 @@
 
 <script>
   export default {
-    name: '',
+    name: 'ZuiXin',
     data () {
       return {
         isloading: false,
@@ -61,7 +61,7 @@
             uid: '92673412',
             since: '0',
             page_num: '1',
-            catalog_type: '2'
+            catalog_type: '1'
           },
           success: function (res) {
 //            console.log(res.data)
@@ -165,7 +165,7 @@
     margin-right: 30%;
   }
   /*.box_bottom_left{*/
-  /*margin-left: 20px;*/
+    /*margin-left: 20px;*/
   /*}*/
   .box_bottom_right{
     display: flex;
