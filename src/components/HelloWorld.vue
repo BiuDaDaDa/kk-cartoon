@@ -29,27 +29,27 @@
 </template>
 
 <script>
-  var day = new Date()
-  var nowDay = day.getDay()
-  var dayarray = []
-  var weekDay = ['v1/daily/comic_lists/1510416000', 'v1/daily/comic_' +
-  'lists/1510329600', 'v1/daily/comic_lists/1510502400', 'v1/daily/comic_lists' +
-  '/1510588800', 'v1/daily/comic_lists/1510675200', 'v1/daily/comic_lists' +
-  '/1510761600', 'v1/daily/comic_lists/0']
-  for (var i = 0; i < 7; i++) {
-    dayarray[i] = nowDay - i
-    switch (dayarray[i]) {
-      case 1: dayarray[i] = '周一'; break
-      case 2: dayarray[i] = '周二'; break
-      case 3: dayarray[i] = '周三'; break
-      case 4: dayarray[i] = '周四'; break
-      case 5: dayarray[i] = '周五'; break
-      case 0: dayarray[i] = '周日'; break
-      case -1: dayarray[i] = '周六'; break
-    }
-  }
-  dayarray[0] = '今天'
-  dayarray[1] = '昨天'
+//  var day = new Date()
+//  var nowDay = day.getDay()
+//  var dayarray = []
+//  var weekDay = ['v1/daily/comic_lists/1510416000', 'v1/daily/comic_' +
+//  'lists/1510329600', 'v1/daily/comic_lists/1510502400', 'v1/daily/comic_lists' +
+//  '/1510588800', 'v1/daily/comic_lists/1510675200', 'v1/daily/comic_lists' +
+//  '/1510761600', 'v1/daily/comic_lists/0']
+//  for (var i = 0; i < 7; i++) {
+//    dayarray[i] = nowDay - i
+//    switch (dayarray[i]) {
+//      case 1: dayarray[i] = '周一'; break
+//      case 2: dayarray[i] = '周二'; break
+//      case 3: dayarray[i] = '周三'; break
+//      case 4: dayarray[i] = '周四'; break
+//      case 5: dayarray[i] = '周五'; break
+//      case 0: dayarray[i] = '周日'; break
+//      case -1: dayarray[i] = '周六'; break
+//    }
+//  }
+//  dayarray[0] = '今天'
+//  dayarray[1] = '昨天'
   var listArr = document.getElementsByClassName('list')
   export default {
     name: 'HelloWorld',
@@ -131,6 +131,7 @@
   }
   .content {
     padding-top: 5px;
+    border: 1px solid fuchsia;
   }
   .fixed {
     position: fixed;
@@ -168,9 +169,6 @@
     width: 100%;
     height: 100%;
   }
-  /*.fixed {*/
-  /**/
-  /*}*/
   .author {
     position: absolute;
     top: 13px;
