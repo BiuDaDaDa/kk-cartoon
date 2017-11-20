@@ -7,7 +7,7 @@
     </ul>
     <div id="mainContent">
       <div v-for="(k,i) in array" class="content">
-        <router-link to="/" tag="div" class="nav">
+        <router-link to="/" tag="div" class="nav" @touchstart.native="link(k.topic.id)">
           <div class="title">{{k.label_text}}</div>
           <p class="heading">{{k.topic.title}}</p>
           <router-link to="/" class="all">全集&nbsp;></router-link>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+  import bus from '../../common/js/eventBus'
   var day = new Date()
   var nowDay = day.getDay()
   var dayarray = []
@@ -66,6 +67,10 @@
       }
     },
     methods: {
+      link: function (val) {
+        bus.$emit('info', val)
+        this.$router.push({path: 'kkcartitle'})
+      },
       touch: function () {
         if (window.scrollY > 10) {
           this.$refs.list.className = 'fixed'
@@ -197,7 +202,7 @@
   /*}*/
   .author {
     position: absolute;
-    top: 20px;
+    top: 25px;
     font-size: 12px;
     width: 340px;
     overflow: hidden;
