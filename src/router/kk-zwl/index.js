@@ -1,9 +1,9 @@
 
-import Recycle from '@/components/kk-find/KkFindRecycle'
+import myInfo from '@/components/kk-find/KkFindInfo'
 export default [
   {
-    path: '/',
+    path: '/kkFind',
     name: '',
-    component: Recycle
+    component: myInfo
   }
 ]

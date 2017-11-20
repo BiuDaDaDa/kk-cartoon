@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
+<<<<<<< HEAD
 
 import HansRouters from '../router/kk-hans'
 // import ZwlRouters from '../router/kk-zwl'
@@ -15,10 +16,19 @@ let routes = HansRouters
 // console.log(arr)
 
 // var kkRouters = YuanRouters.concat(HansRouters, HuoRouters, ZwlRouters)
+=======
+import HansRouters from '../router/kk-hans'
+import ZwlRouters from './kk-zwl'
+import HuoRouters from '../router/kk-huo'
+import YuanRouters from './kk-yuan'
+
+var kkRouters = YuanRouters.concat(HansRouters, HuoRouters, ZwlRouters)
+>>>>>>> 8e01534427f124c9611447cce782ef5d10c00656
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
+<<<<<<< HEAD
   routes: routes
   // routes: arr
   // routes: [{
@@ -27,18 +37,7 @@ export default new Router({
   //   component: HelloWorld
   // }]
   // kkRouters
+=======
+  routes: kkRouters
+>>>>>>> 8e01534427f124c9611447cce782ef5d10c00656
 })
-
-// import Vue from 'vue'
-// import Router from 'vue-router'
-//
-// import Clubindex from './kk-hans'
-
-// Vue.use(Router)
-//
-// let routes = Clubindex
-//
-// export default new Router({
-//   mode: 'history',
-//   routes: routes
-// })
