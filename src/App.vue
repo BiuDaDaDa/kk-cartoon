@@ -1,13 +1,28 @@
 <template>
   <div id="app">
     <router-view/>
+    <!--<button @click="boyCard">boy</button>-->
+    <!--<button @click="girCard">girl</button>-->
   </div>
 </template>
 
 <script>
 export default {
   name: 'app',
+  data () {
+    return {
+      gender: '0'
+    }
+  },
   methods: {
+    boyCard () {
+      this.gender = '0'
+      this.fecthHomeData()
+    },
+    girCard () {
+      this.gender = '1'
+      this.fecthHomeData()
+    },
     fecthHomeData () {
       this.$request({
         type: 'get',
@@ -56,13 +71,5 @@ export default {
 *{
   margin: 0;
   padding: 0;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  /*margin-top: 60px;*/
 }
 </style>
