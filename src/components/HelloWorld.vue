@@ -56,8 +56,8 @@
     data () {
       return {
         array: [],
-        dayarray: dayarray.reverse(),
-        weekArr: weekDay,
+//        dayarray: dayarray.reverse(),
+//        weekArr: weekDay,
         url: ''
       }
     },
@@ -72,7 +72,7 @@
         }
       },
       tab: function (i) {
-        this.url = weekDay[i]
+//        this.url = weekDay[i]
         for (var y = 0; y < listArr.length; y++) {
           if (y === i) {
             listArr[y].style.borderBottom = '2px solid #E4C93D'

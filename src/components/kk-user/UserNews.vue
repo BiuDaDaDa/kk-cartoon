@@ -18,7 +18,7 @@
       </mt-tab-item>
     </mt-navbar>
 
-    <!-- tab-container -->
+     <!--tab-container -->
     <mt-tab-container v-model="selected" :swipeable=true>
       <mt-tab-container-item id="s1">
         <div class="user-pl-all">
