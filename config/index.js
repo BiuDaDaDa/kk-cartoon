@@ -21,7 +21,6 @@ module.exports = {
           Host: 'api.kuaikanmanhua.com'
         }
       },
-<<<<<<< HEAD
       '/v2': {
         target: 'http://api.kuaikanmanhua.com',
         pathRewrite: {
@@ -31,8 +30,6 @@ module.exports = {
           Host: 'api.kuaikanmanhua.com'
         }
       },
-=======
->>>>>>> 8e01534427f124c9611447cce782ef5d10c00656
       '/cartonUser': {
         target: 'https://api.kkmh.com',
         pathRewrite: {
@@ -45,7 +42,6 @@ module.exports = {
     },
       cssSourceMap: false
   },
-<<<<<<< HEAD
   build: {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
@@ -59,8 +55,6 @@ module.exports = {
     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
-=======
-
     build: {
       // Template for index.html
       index: path.resolve(__dirname, '../dist/index.html'),
@@ -77,7 +71,6 @@ module.exports = {
       productionSourceMap: true,
       // https://webpack.js.org/configuration/devtool/#production
       devtool: '#source-map',
->>>>>>> 8e01534427f124c9611447cce782ef5d10c00656
 
       // Gzip off by default as many popular static hosts such as
       // Surge or Netlify already gzip all static assets for you.
@@ -86,21 +79,17 @@ module.exports = {
       productionGzip: false,
       productionGzipExtensions: ['js', 'css'],
 
-<<<<<<< HEAD
     // Run the build command with an extra argument to
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
     }
-  }
-=======
+  },
       // Run the build command with an extra argument to
       // View the bundle analyzer report after build finishes:
       // `npm run build --report`
       // Set to `true` or `false` to always turn it on or off
       bundleAnalyzerReport: process.env.npm_config_report
-    }
   }
 
->>>>>>> 8e01534427f124c9611447cce782ef5d10c00656

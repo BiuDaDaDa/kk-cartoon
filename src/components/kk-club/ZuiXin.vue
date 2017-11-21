@@ -96,7 +96,7 @@
 <style scoped lang="less">
   .wrap{
     background-color: rgb(247,247,247);
-    padding-top: 60px;
+    padding-top: 45px;
   }
   .box{
     background-color: white;
@@ -137,7 +137,7 @@
     margin-top: 5px;
   }
   .usertx{
-    width: 20%;
+    width: 50px;
     border-radius: 50%;
     border: 1px solid #ccc;
     margin-right: 10px;

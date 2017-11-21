@@ -1,15 +1,10 @@
 <template>
   <div id="app" class="wrap">
     <div class="box">
-      <!--<div class="remen" v-for="(tab, index) in tabs">-->
-        <!--<div class="title">{{tab.text}}</div>-->
-      <!--</div>-->
       <router-link class="title" to="/kk-club">热门</router-link>
       <router-link class="title" to="/kk-zuixin">评论</router-link>
     </div>
     <router-view></router-view>
-    <!--<my-club class="club"/>-->
-    <!--<my-zui-xin class="zuixin"/>-->
   </div>
 </template>
 
@@ -39,7 +34,7 @@
   .box{
     position: fixed;
     left: 0;
-    top: 16px;
+    top: 0px;
     width: 100%;
     border-bottom: 1px solid #ccc;
     display: flex;
@@ -47,6 +42,7 @@
     background-color: white;
   }
   .title{
+    color: black;
     border-bottom: 2px solid rgb(240,214,62);
     box-sizing: border-box;
     padding: 10px 25px;

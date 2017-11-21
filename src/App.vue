@@ -1,29 +1,27 @@
 <template>
   <div id="app">
     <router-view/>
-<<<<<<< HEAD
     <!--<button @click="fecthHomeData">ddd</button>-->
     <!--<img src="./assets/logo.png">-->
 
     <!--<button @click="fecthHomeData">ddd</button>-->
     <!--<button @click="test">666</button>-->
-=======
+
     <!--<button @click="boyCard">boy</button>-->
     <!--<button @click="girCard">girl</button>-->
->>>>>>> 8e01534427f124c9611447cce782ef5d10c00656
+
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      gender: '0'
-    }
-  },
-  methods: {
-<<<<<<< HEAD
+  export default {
+    name: 'app',
+    data () {
+      return {
+        gender: '0'
+      }
+    },
+    methods: {
 //    fecthHomeData () {
 //      this.$request({
 //        type: 'get',
@@ -47,76 +45,76 @@ export default {
 //        }
 //      })
 //    },
-    test () {
-      this.$request({
-        type: 'get',
-        url: 'api/topic_new/discovery_list',
-        headers: {
-          'X-Device': 'I:69F388A7-E1B2-4F9A-8EFD-F971E5B73404'
+      test () {
+        this.$request({
+          type: 'get',
+          url: 'api/topic_new/discovery_list',
+          headers: {
+            'X-Device': 'I:69F388A7-E1B2-4F9A-8EFD-F971E5B73404'
 //          'User-Agent': 'Kuaikan/4.6.6/46600(Android;5.1.1;MI 4S;kuaikan220;WIFI;1920*1080)'
-        },
-        params: {
-          'gender': '0',
-          'operator_count': '7'
-=======
-    boyCard () {
-      this.gender = '0'
-      this.fecthHomeData()
-    },
-    girCard () {
-      this.gender = '1'
-      this.fecthHomeData()
-    },
-    fecthHomeData () {
-      this.$request({
-        type: 'get',
-        url: 'v1/topic_new/discovery_list',
-        headers: {
-          'X-Device': 'A:eef09de00f4e0b31'
+          },
+          params: {
+            'gender': '0',
+            'operator_count': '7'
+          },
+          boyCard () {
+            this.gender = '0'
+            this.fecthHomeData()
+          },
+          girCard () {
+            this.gender = '1'
+            this.fecthHomeData()
+          },
+          fecthHomeData () {
+            this.$request({
+              type: 'get',
+              url: 'v1/topic_new/discovery_list',
+              headers: {
+                'X-Device': 'A:eef09de00f4e0b31'
 //          'User-Agent': 'Kuaikan/4.6.6/46600(Android;5.1.1;MI 4S;kuaikan220;WIFI;1920*1080)'
-        },
-        params: {
-          'gender': this.gender,
-          'operator_count': '6'
->>>>>>> 8e01534427f124c9611447cce782ef5d10c00656
-        },
-        success: function (res) {
-          console.log(res)
-        },
-        failed: function (err) {
-          console.log(err)
-        }
-      })
+              },
+              params: {
+                'gender': this.gender,
+                'operator_count': '6'
+              },
+              success: function (res) {
+                console.log(res)
+              },
+              failed: function (err) {
+                console.log(err)
+              }
+            })
+          }
+        })
+      }
     }
   }
-}
 </script>
 <link rel="stylesheet/less" href="./common/less/reset.less">
 <style>
-<<<<<<< HEAD
   /**{*/
-    /*margin: 0;*/
-    /*padding: 0;*/
-  /*}*/
-/**{*/
   /*margin: 0;*/
   /*padding: 0;*/
-/*}*/
-/*#app {*/
+  /*}*/
+  /**{*/
+  /*margin: 0;*/
+  /*padding: 0;*/
+  /*}*/
+  /*#app {*/
   /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
   /*-webkit-font-smoothing: antialiased;*/
   /*-moz-osx-font-smoothing: grayscale;*/
   /*text-align: center;*/
   /*color: #2c3e50;*/
   /*!*margin-top: 60px;*!*/
-/*}*/
-=======
-/* #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-} */
->>>>>>> 8e01534427f124c9611447cce782ef5d10c00656
+  /*}*/
+
+  /* #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  } */
+
 </style>
