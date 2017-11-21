@@ -1,16 +1,28 @@
 <template>
   <div id="app">
-
-    <!--<img src="./assets/logo.png">-->
-
     <router-view/>
+    <!--<button @click="boyCard">boy</button>-->
+    <!--<button @click="girCard">girl</button>-->
   </div>
 </template>
 
 <script>
 export default {
   name: 'app',
+  data () {
+    return {
+      gender: '0'
+    }
+  },
   methods: {
+    boyCard () {
+      this.gender = '0'
+      this.fecthHomeData()
+    },
+    girCard () {
+      this.gender = '1'
+      this.fecthHomeData()
+    },
     fecthHomeData () {
       this.$request({
         type: 'get',
@@ -20,7 +32,7 @@ export default {
 //          'User-Agent': 'Kuaikan/4.6.6/46600(Android;5.1.1;MI 4S;kuaikan220;WIFI;1920*1080)'
         },
         params: {
-          'gender': '1',
+          'gender': this.gender,
           'operator_count': '6'
         },
         success: function (res) {
@@ -59,13 +71,5 @@ export default {
 *{
   margin: 0;
   padding: 0;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  /*margin-top: 60px;*/
 }
 </style>

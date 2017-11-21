@@ -14,37 +14,19 @@
 <script>
   export default {
     name: '',
+    props: {
+      newRecycle: {
+        type: Array
+      }
+    },
     data () {
       return {
-        newRecycle: [],
         activeIndex: ''
       }
     },
     beforeUpdate () {
       // 记录更新前的下标
       this.activeIndex = this.$refs.swipe.index
-    },
-    mounted () {
-      this.$request({
-        type: 'get',
-        url: 'v1/topic_new/discovery_list',
-        headers: {
-          'X-Device': 'A:eef09de00f4e0b31'
-//          'User-Agent': 'Kuaikan/4.6.6/46600(Android;5.1.1;MI 4S;kuaikan220;WIFI;780*480)'
-        },
-        params: {
-          'gender': '1',
-          'operator_count': '6'
-        },
-        success: function (res) {
-          console.log(res.data.data.infos[0]['banners'])
-          this.newRecycle = res['data']['data']['infos'][0]['banners']
-          console.log(this.newRecycle)
-        },
-        failed: function (err) {
-          console.log(err)
-        }
-      })
     },
     watch: {
       activeIndex: function (val, oldVal) {
@@ -56,7 +38,6 @@
 
 <style scoped lang=less>
   .recycle{
-    min-height: 100px;
     height: 260px;
     position: relative;
     overflow: hidden;
