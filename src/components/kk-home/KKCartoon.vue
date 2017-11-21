@@ -7,7 +7,7 @@
     </ul>
     <div id="mainContent">
       <div v-for="(k,i) in array" class="content">
-        <router-link to="/" tag="div" class="nav" @touchstart.native="link(k.topic.id)">
+        <router-link to="/" tag="div" class="nav" @touchend.native="link(k.topic.id)" @touchstart.native='tiao'>
           <div class="title">{{k.label_text}}</div>
           <p class="heading">{{k.topic.title}}</p>
           <router-link to="/" class="all">全集&nbsp;></router-link>
@@ -33,45 +33,52 @@
   var day = new Date()
   var nowDay = day.getDay()
   var dayarray = []
+  var arrayday = []
+  var num = 0
   var weekDay = ['v1/daily/comic_lists/1510416000', 'v1/daily/comic_' +
   'lists/1510329600', 'v1/daily/comic_lists/1510502400', 'v1/daily/comic_lists' +
   '/1510588800', 'v1/daily/comic_lists/1510675200', 'v1/daily/comic_lists' +
   '/1510761600', 'v1/daily/comic_lists/0']
-  for (var i = 0; i < 7; i++) {
+  for (var i = 6; i > 0; i--) {
     dayarray[i] = nowDay - i
     switch (dayarray[i]) {
-      case 1: dayarray[i] = '周一'; break
-      case 2: dayarray[i] = '周二'; break
-      case 3: dayarray[i] = '周三'; break
-      case 4: dayarray[i] = '周四'; break
-      case 5: dayarray[i] = '周五'; break
       case 0: dayarray[i] = '周日'; break
       case -1: dayarray[i] = '周六'; break
       case -2: dayarray[i] = '周五'; break
       case -3: dayarray[i] = '周四'; break
       case -4: dayarray[i] = '周三'; break
       case -5: dayarray[i] = '周二'; break
+      case -6: dayarray[i] = '周一'; break
     }
   }
   dayarray[0] = '今天'
   dayarray[1] = '昨天'
+  arrayday = dayarray.reverse()
   var listArr = document.getElementsByClassName('list')
   export default {
     name: 'HelloWorld',
     data () {
       return {
         array: [],
-        dayarray: dayarray.reverse(),
+        dayarray: arrayday,
         weekArr: weekDay,
         url: ''
       }
     },
     methods: {
+      tiao: function () {
+        num = 0
+      },
       link: function (val) {
-        bus.$emit('info', val)
-        this.$router.push({path: 'kkcartitle'})
+        if (num === 0) {
+          bus.$emit('info', val)
+          this.$router.push({path: 'kkcartitle'})
+        } else {
+          return false
+        }
       },
       touch: function () {
+        num = 1
         if (window.scrollY > 10) {
           this.$refs.list.className = 'fixed'
         } else {
@@ -81,6 +88,7 @@
         }
       },
       tab: function (i) {
+        num = 0
         this.url = weekDay[i]
         for (var y = 0; y < listArr.length; y++) {
           if (y === i) {
@@ -121,7 +129,6 @@
           since: 0
         },
         success: function (res) {
-//          console.log(res.data.data.comics)
           _that.array = res.data.data.comics
         },
         failed: function (err) {
@@ -249,7 +256,8 @@
   .commentsCount {
     left: 85%;
     font-size: 14px;
-    background: url("../../assets/comment.png") no-repeat left;
+    height: 20px;
+    background: url("../../assets/comment.png") no-repeat left 2px;
     padding-left: 20px;
   }
   .commentsCount>a {
