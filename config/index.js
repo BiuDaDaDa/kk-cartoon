@@ -21,8 +21,22 @@ module.exports = {
           Host: 'api.kuaikanmanhua.com'
         }
       },
+<<<<<<< HEAD
+      '/v2': {
+        target: 'http://api.kuaikanmanhua.com',
+        pathRewrite: {
+          '^/v2': '/v2'
+        },
+        headers: {
+          Host: 'api.kuaikanmanhua.com'
+        }
+      },
+      '/cartonUser': {
+        target: 'https://api.kkmh.com',
+=======
       '/api': {
         target: 'http://api.kuaikanmanhua.com',
+>>>>>>> f653208b72f459cc5b75943213e9537568b1522b
         pathRewrite: {
           '^/api': '/v1'
         },
@@ -43,10 +57,29 @@ module.exports = {
       }
     }
   },
+<<<<<<< HEAD
+  build: {
+    // Template for index.html
+    index: path.resolve(__dirname, '../dist/index.html'),
+    // Paths
+    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/',
+    /**
+     * Source Maps
+     */
+    productionSourceMap: true,
+    // https://webpack.js.org/configuration/devtool/#production
+    devtool: '#source-map',
+    build: {
+      // Template for index.html
+      index: path.resolve(__dirname, '../dist/index.html'),
+=======
 
   build: {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
+>>>>>>> f653208b72f459cc5b75943213e9537568b1522b
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
@@ -73,6 +106,16 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
+<<<<<<< HEAD
+    }
+  },
+      // Run the build command with an extra argument to
+      // View the bundle analyzer report after build finishes:
+      // `npm run build --report`
+      // Set to `true` or `false` to always turn it on or off
+      bundleAnalyzerReport: process.env.npm_config_report
+=======
+>>>>>>> f653208b72f459cc5b75943213e9537568b1522b
   }
 
 }
