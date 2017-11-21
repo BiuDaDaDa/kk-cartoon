@@ -8,12 +8,17 @@
         <div class="user-bottom-body">
           <span class="user-name">登录</span>
           <ul class="user-name-firstul">
-            <li v-for="newsValue, newsIndex in userNews">
-              <div>
-                <img :src="newsValue.src">
-                <span>{{newsValue.name}}</span>
-              </div>
-            </li>
+            <div class="user-name-bb" v-for="newsValue, newsIndex in userNews" @click="turnClicked(newsIndex)" ref="turnStyle">
+              <li>
+                <div>
+                  <img :src="newsValue.src">
+                  <span>
+                    <router-link :to="newsValue.userInfo">{{newsValue.name}}</router-link>
+                  </span>
+                  <button v-if="newsValue.show">一键缓存</button>
+                </div>
+              </li>
+            </div>
           </ul>
         </div>
       </div>
@@ -29,41 +34,65 @@
           userNews: [
             {
               name: '我的消息',
-              src: require('../../assets/kk-user/kk-user-news.png')
+              src: require('../../assets/kk-user/kk-user-news.png'),
+              show: false,
+              userInfo: 'userNews/comment'
             },
             {
               name: '我的钱包',
-              src: require('../../assets/kk-user/kk-user-wallet.png')
+              src: require('../../assets/kk-user/kk-user-wallet.png'),
+              show: false,
+              userInfo: 'userWallet'
             },
             {
               name: '我的关注',
-              src: require('../../assets/kk-user/kk-user-attention.png')
+              src: require('../../assets/kk-user/kk-user-attention.png'),
+              show: false,
+              userInfo: 'userAttention'
             },
             {
               name: '我的收藏',
-              src: require('../../assets/kk-user/kk-user-collect.png')
+              src: require('../../assets/kk-user/kk-user-collect.png'),
+              show: false,
+              userInfo: 'userCollect'
             },
             {
               name: '浏览历史',
-              src: require('../../assets/kk-user/kk-user-history.png')
+              src: require('../../assets/kk-user/kk-user-history.png'),
+              show: false,
+              userInfo: 'userHistory'
             },
             {
               name: '游戏中心',
-              src: require('../../assets/kk-user/kk-user-game.png')
+              src: require('../../assets/kk-user/kk-user-game.png'),
+              show: false,
+              userInfo: 'userAttention'
             },
             {
               name: '快看商城',
-              src: require('../../assets/kk-user/kk-user-store.png')
+              src: require('../../assets/kk-user/kk-user-store.png'),
+              show: false,
+              userInfo: 'userAttention'
             },
             {
               name: '今日更新',
-              src: require('../../assets/kk-user/kk-user-update.png')
+              src: require('../../assets/kk-user/kk-user-update.png'),
+              show: true,
+              userInfo: 'userSetting'
             },
             {
               name: '设置',
-              src: require('../../assets/kk-user/kk-user-setting.png')
+              src: require('../../assets/kk-user/kk-user-setting.png'),
+              show: false,
+              userInfo: 'userSetting'
             }
-          ]
+          ],
+          turnStyle: ''
+        }
+      },
+      methods: {
+        turnClicked (index) {
+          this.$refs.turnStyle[index].style.backgroundColor = 'red'
         }
       }
     }
@@ -73,6 +102,10 @@
 <style scoped lang='less'>
 .user-all{
   position: relative;
+  a{
+    text-decoration: none;
+    color: #424242;
+  }
 }
 .user-top{
   width: 100%;
@@ -120,42 +153,70 @@
       height: 85vh;
       /*background-color: gold;*/
       list-style: none;
-      li:nth-child(2){
-        border-bottom: 6px solid #f8f8f8;
+      .user-name-bb:nth-child(2){
+        li{
+          border-bottom: none;
+        }
+        border-bottom: 3px solid #fafafa;
       }
-      li:nth-child(5){
-        border-bottom: 6px solid #f8f8f8;
+      .user-name-bb:nth-child(5){
+        li{
+          border-bottom: none;
+        }
+        border-bottom: 3px solid #fafafa;
       }
-      li:nth-child(7){
-        border-bottom: 6px solid #f8f8f8;
+      .user-name-bb:nth-child(7){
+        li{
+          border-bottom: none;
+        }
+        border-bottom: 3px solid #fafafa;
       }
-      li:nth-child(8){
-        border-bottom: 6px solid #f8f8f8;
+      .user-name-bb:nth-child(8){
+        li{
+          border-bottom: none;
+          background-image: none;
+        }
+        border-bottom: 3px solid #fafafa;
       }
-      li:nth-child(9){
-        border-bottom: none;
-      }
-      li{
-        width: 85%;
-        margin: 0 auto;
+      .user-name-bb{
+        width: 100%;
         height: 11%;
-        background-image: url("../../assets/kk-user/kk-user-right.png");
-        background-size:20px 20px;
-        background-position: center right;
-        background-repeat: no-repeat;
-        border-bottom:1px solid #efefef;
-        div{
-          width: 100%;
+        display: flex;
+        align-items: flex-end;
+        li{
+          width: 90%;
           height: 100%;
-          display: flex;
-          align-items: center;
+          margin: 0 auto;
+          background-image: url("../../assets/kk-user/kk-user-right.png");
+          background-size:20px 20px;
+          background-position: center right;
+          background-repeat: no-repeat;
+          border-bottom:1px solid #fdfdfd;
+          div{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
 
-          img{
-            width: 20px;
-            height: 20px;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
+            img{
+              width: 20px;
+              height: 20px;
+              display: inline-block;
+              vertical-align: middle;
+              margin-right: 10px;
+            }
+            button{
+              height: 50%;
+              width: 20vw;
+              border-radius: 30px;
+              border: none;
+              background-color: gold;
+              position: absolute;
+              top: 25%;
+              right: 0px;
+
+            }
           }
         }
       }
