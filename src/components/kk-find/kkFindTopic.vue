@@ -54,6 +54,11 @@
 <script>
   export default {
     name: '',
+    props: {
+      goShow: {
+        type: Boolean
+      }
+    },
     data () {
       return {
         tags: [],
@@ -120,7 +125,7 @@
         })
       },
       loadMore () {
-        if (!this.loading) {
+        if (!this.goShow && !this.loading) {
           this.loading = true
           setTimeout(() => {
             this.HuoQuListSort()

@@ -28,7 +28,8 @@
   </div>
   </div>
   <div v-show="!isShow" class="follow">
-    <myTopic/>
+    <myTopic :goShow="isShow"/>
+    <!-- 控制无限加载 -->
   </div>
 </div>
 </template>
@@ -51,7 +52,8 @@
         newRecycle: [],
         newList: [],
         newContent: [],
-        isShow: false
+        gender: 1,
+        isShow: true
       }
     },
     methods: {

@@ -67,18 +67,18 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
-  .box14{
+  .box14,.box2, .box18{
     width: 49%;
     margin-bottom: 10px;
   }
-  .box14 .boxTop{
+  .box14 .boxTop, .box2 .boxTop{
     height:127px;
   }
-  .box4{
+  .box4,.box5{
     width: 33%;
     margin-bottom: 10px;
   }
-  .box4 .boxTop{
+  .box4 .boxTop, .box5 .boxTop{
     height:182px;
   }
   .box19{
