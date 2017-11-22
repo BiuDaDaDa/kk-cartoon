@@ -1,12 +1,10 @@
 <template>
-  <div>
-    333
-  </div>
+  <div>浏览历史</div>
 </template>
 
 <script>
     export default {
-      name: 'Comment'
+      name: 'UserHistory'
     }
 </script>
 

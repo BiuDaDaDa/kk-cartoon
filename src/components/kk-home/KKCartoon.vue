@@ -29,7 +29,6 @@
 </template>
 
 <script>
-  import bus from '../../common/js/eventBus'
   var day = new Date()
   var nowDay = day.getDay()
   var dayarray = []
@@ -71,8 +70,8 @@
       },
       link: function (val) {
         if (num === 0) {
-          bus.$emit('info', val)
-          this.$router.push({path: 'kkcartitle'})
+          console.log('val:' + val)
+          this.$router.push({path: 'kkcartitle', query: {id: val}})
         } else {
           return false
         }
