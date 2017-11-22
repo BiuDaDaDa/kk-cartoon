@@ -6,6 +6,7 @@ import HuoRouters from '../router/kk-huo'
 import YuanRouters from './kk-yuan'
 let kkRouters = YuanRouters.concat(HansRouters, HuoRouters, ZwlRouters)
 Vue.use(Router)
+
 export default new Router({
   mode: 'history',
   routes: kkRouters

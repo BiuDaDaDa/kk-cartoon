@@ -5,12 +5,13 @@
       <router-link class="title" to="/kk-zuixin">评论</router-link>
     </div>
     <router-view></router-view>
+    <!--<my-club/>-->
   </div>
 </template>
 
 <script>
   import MyClub from '../../components/kk-club/Club'
-//  import MyZuiXin from '../../components/kk-club/ZuiXin'
+  import MyZuiXin from '../../components/kk-club/ZuiXin'
   export default {
     name: 'Tabs',
 //    data () {
@@ -24,8 +25,8 @@
     methods: {
     },
     components: {
-      MyClub
-//      MyZuiXin
+      MyClub,
+      MyZuiXin
     }
   }
 </script>

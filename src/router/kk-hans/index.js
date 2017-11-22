@@ -2,7 +2,8 @@
 import Tabs from '@/components/kk-club/Tabs'
 import Club from '@/components/kk-club/Club'
 import ZuiXin from '@/components/kk-club/ZuiXin'
-// import PingLun from '@/components/kk-club/PingLun'
+import PingLun from '@/components/kk-club/PingLun'
+import DaPing from '@/components/kk-club/DaPing'
 
 export default [
   {
@@ -19,20 +20,25 @@ export default [
         component: ZuiXin
       }
     ]
+  },
+  {
+    path: '/kk-club',
+    name: 'Club',
+    component: Club
+  },
+  {
+    path: '/kk-club',
+    name: 'ZuiXin',
+    component: ZuiXin
+  },
+  {
+    path: '/kk-pinglun',
+    name: 'PingLun',
+    component: PingLun
+  },
+  {
+    path: '/kk-daping',
+    name: 'DaPing',
+    component: DaPing
   }
-  // {
-  //   path: '/kk-club',
-  //   name: 'Club',
-  //   component: Club
-  // },
-  // {
-  //   path: '/kk-club',
-  //   name: 'ZuiXin',
-  //   component: ZuiXin
-  // }
-  // {
-  //   path: '/kk-club',
-  //   name: 'PingLun',
-  //   component: PingLun
-  // }
 ]
