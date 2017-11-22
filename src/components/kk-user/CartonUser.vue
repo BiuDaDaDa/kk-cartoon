@@ -10,10 +10,11 @@
           <ul class="user-name-firstul">
             <div class="user-name-bb" v-for="newsValue, newsIndex in userNews" @click="turnClicked(newsIndex)" ref="turnStyle">
               <li>
+                <router-link :to="newsValue.userInfo"></router-link>
                 <div>
                   <img :src="newsValue.src">
                   <span>
-                    <router-link :to="newsValue.userInfo">{{newsValue.name}}</router-link>
+                    {{newsValue.name}}
                   </span>
                   <button v-if="newsValue.show">一键缓存</button>
                 </div>
@@ -36,7 +37,7 @@
               name: '我的消息',
               src: require('../../assets/kk-user/kk-user-news.png'),
               show: false,
-              userInfo: 'userNews/comment'
+              userInfo: 'userNews'
             },
             {
               name: '我的钱包',
@@ -66,19 +67,19 @@
               name: '游戏中心',
               src: require('../../assets/kk-user/kk-user-game.png'),
               show: false,
-              userInfo: 'userAttention'
+              userInfo: 'gameCenter'
             },
             {
               name: '快看商城',
               src: require('../../assets/kk-user/kk-user-store.png'),
               show: false,
-              userInfo: 'userAttention'
+              userInfo: 'kkStore'
             },
             {
               name: '今日更新',
               src: require('../../assets/kk-user/kk-user-update.png'),
               show: true,
-              userInfo: 'userSetting'
+              userInfo: 'userUpdate'
             },
             {
               name: '设置',
@@ -136,6 +137,10 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
+    background-image: url(../../assets/kk-user/kk-user-head.jpg);
+    -webkit-background-size: 100% 100%;
+    background-size: 100% 100%;
+    background-repeat:no-repeat;
   }
   .user-bottom-body{
     width: 100%;
@@ -192,6 +197,15 @@
           background-position: center right;
           background-repeat: no-repeat;
           border-bottom:1px solid #fdfdfd;
+          position: relative;
+          a{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+          }
           div{
             width: 100%;
             height: 100%;

@@ -30,19 +30,45 @@
                 <img src="../../assets/kk-user/kk-user-up.png" alt="">
               </div>
               <div class="none-down">
-                <span class="none-span-one" @click="returnClicked">回复我的</span>
-                <span @click="mineClicked">我发出的</span>
+                <span class="none-span-one" @click="returnClicked">
+                   <router-link :to="userChoose">回复我的</router-link>
+                </span>
+                <span @click="mineClicked">
+                  <router-link :to="userChoose">我发出的</router-link>
+                </span>
               </div>
             </div>
           </div>
 
-          <div class="user-pl-content-all"></div>
-
+          <div class="user-pl-content-all">
+            <router-view></router-view>
+          </div>
         </div>
       </mt-tab-container-item>
 
       <mt-tab-container-item id="s2">
-        <mt-cell v-for="n in s2" :title="'测试 ' + n" />
+
+        <div class="inform-all">
+
+          <div class="inform-top">
+            <span>2017-11-15</span>
+          </div>
+
+          <div class="inform-body">
+            <div class="inform-body-header">
+              <img src="../../assets/kk-user/kk-user-xzs.jpg" alt="">
+              <span>快看小助手</span>
+            </div>
+
+            <div class="inform-body-content"></div>
+
+            <div class="inform-body-footer">
+              <span>立即体验</span>
+            </div>
+          </div>
+
+        </div>
+
       </mt-tab-container-item>
     </mt-tab-container>
 
@@ -58,7 +84,8 @@
         s1: [1, 2, 3, 4, 5, 6, 7, 8],
         s2: [1, 2, 3, 4, 5, 6, 7],
         noneShow: false,
-        changeTags: '回复我的'
+        changeTags: '回复我的',
+        userChoose: ''
       }
     },
     methods: {
@@ -68,10 +95,12 @@
       returnClicked () {
         this.changeTags = '回复我的'
         this.noneShow = !this.noneShow
+        this.userChoose = '/userNews/reply'
       },
       mineClicked () {
         this.changeTags = '我发出的'
         this.noneShow = !this.noneShow
+        this.userChoose = '/userNews/sendout'
       }
     }
   }
@@ -167,6 +196,7 @@
         position: absolute;
         bottom: -12vh;
         right: 5vw;
+        z-index: 3;
         background-color: #4d4d4f;
         margin: 0 auto;
         border-radius: 10px;
@@ -185,14 +215,79 @@
           padding: 10px 10px;
           span{
             display: block;
-            color: #fff;
-            margin: 0 5px;
+            a{
+              color: #fff;
+              margin: 0 5px;
+            }
           }
           .none-span-one{
             padding-bottom: 10px;
             margin-bottom: 10px;
             border-bottom: 2px solid #fff;
           }
+        }
+      }
+    }
+  }
+  .inform-all{
+    width: 100%;
+    min-height: 88.9vh;
+    background-color: #f9f8fd;
+    .inform-top{
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      span{
+        color: #a4a5a7;
+        font-size: 14px;
+        line-height: 40px;
+      }
+    }
+    .inform-body{
+      margin: 0 auto;
+      width: 90%;
+      height: 60vh;
+      background-color: white;
+      font-size: 15px;
+      .inform-body-header{
+        width: 90%;
+        height: 10%;
+        /*background-color: red;*/
+        border-bottom: 1px solid #f1f1f1;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        img{
+          vertical-align: middle;
+          width: 5%;
+          height: 40%;
+        }
+        span{
+          vertical-align: middle;
+          margin-left: 5%;
+        }
+      }
+      .inform-body-content{
+        display: flex;
+        width: 90%;
+        height: 78%;
+        margin: 0 auto;
+        /*background-color: #654;*/
+      }
+      .inform-body-footer{
+        width: 90%;
+        height: 10%;
+        /*background-color: red;*/
+        background-image: url(../../assets/kk-user/kk-user-right.png);
+        background-size: 5% 40%;
+        background-repeat:no-repeat;
+        background-position:right;
+        border-top: 1px solid #f1f1f1;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        span{
+          color: #eab953;
         }
       }
     }
