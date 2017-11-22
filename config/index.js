@@ -12,33 +12,58 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/v1': {
+      '/kuaikanv1': {
         target: 'http://api.kuaikanmanhua.com',
         pathRewrite: {
-          '^/v1': '/v1'
+          '^/kuaikanv1': '/v1'
         },
         headers: {
           Host: 'api.kuaikanmanhua.com'
         }
       },
-      '/api': {
+      '/kuaikanv2': {
         target: 'http://api.kuaikanmanhua.com',
         pathRewrite: {
-          '^/api': '/v1'
+          '^/kuaikanv2': '/v2'
         },
         headers: {
           Host: 'api.kuaikanmanhua.com'
         }
       },
-      '/v2': {
-        '/cartonUser': {
-          target: 'https://api.kkmh.com',
-          pathRewrite: {
-            '^/v2': '/v2'
-          },
-          headers: {
-            Host: 'api.kkmh.com'
-          }
+      '/kuaikanv3': {
+        target: 'http://api.kuaikanmanhua.com',
+        pathRewrite: {
+          '^/kuaikanv3': '/v3'
+        },
+        headers: {
+          Host: 'api.kuaikanmanhua.com'
+        }
+      },
+      '/kkv1': {
+        target: 'https://api.kkmh.com',
+        pathRewrite: {
+          '^/kkv1': '/v1'
+        },
+        headers: {
+          Host: 'api.kkmh.com'
+        }
+      },
+      '/kkv2': {
+        target: 'https://api.kkmh.com',
+        pathRewrite: {
+          '^/kkv2': '/v2'
+        },
+        headers: {
+          Host: 'api.kkmh.com'
+        }
+      },
+      '/kkv3': {
+        target: 'https://api.kkmh.com',
+        pathRewrite: {
+          '^/kkv3': '/v3'
+        },
+        headers: {
+          Host: 'api.kkmh.com'
         }
       }
     }
