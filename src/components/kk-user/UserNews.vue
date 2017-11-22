@@ -19,32 +19,32 @@
     </mt-navbar>
 
      <!--tab-container -->
-    <mt-tab-container v-model="selected" :swipeable=true>
-      <mt-tab-container-item id="s1">
-        <div class="user-pl-all">
-          <div class="downlist">
-            <span class="downlist-tags" @click="listTagsClicked">{{changeTags}}</span>
-            <img src="../../assets/kk-user/kk-user-down.png" alt="">
-            <div class="user-downlist-none" v-show="noneShow">
-              <div class="none-img">
-                <img src="../../assets/kk-user/kk-user-up.png" alt="">
-              </div>
-              <div class="none-down">
-                <span class="none-span-one" @click="returnClicked">回复我的</span>
-                <span @click="mineClicked">我发出的</span>
-              </div>
-            </div>
-          </div>
+    <!--<mt-tab-container v-model="selected" :swipeable=true>-->
+      <!--<mt-tab-container-item id="s1">-->
+        <!--<div class="user-pl-all">-->
+          <!--<div class="downlist">-->
+            <!--<span class="downlist-tags" @click="listTagsClicked">{{changeTags}}</span>-->
+            <!--<img src="../../assets/kk-user/kk-user-down.png" alt="">-->
+            <!--<div class="user-downlist-none" v-show="noneShow">-->
+              <!--<div class="none-img">-->
+                <!--<img src="../../assets/kk-user/kk-user-up.png" alt="">-->
+              <!--</div>-->
+              <!--<div class="none-down">-->
+                <!--<span class="none-span-one" @click="returnClicked">回复我的</span>-->
+                <!--<span @click="mineClicked">我发出的</span>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
 
-          <div class="user-pl-content-all"></div>
+          <!--<div class="user-pl-content-all"></div>-->
 
-        </div>
-      </mt-tab-container-item>
+        <!--</div>-->
+      <!--</mt-tab-container-item>-->
 
-      <mt-tab-container-item id="s2">
-        <mt-cell v-for="n in s2" :title="'测试 ' + n" />
-      </mt-tab-container-item>
-    </mt-tab-container>
+      <!--<mt-tab-container-item id="s2">-->
+        <!--<mt-cell v-for="n in s2" :title="'测试 ' + n" />-->
+      <!--</mt-tab-container-item>-->
+    <!--</mt-tab-container>-->
 
   </div>
 </template>

@@ -1,45 +1,48 @@
 <template>
   <div class="wrap">
     <div class="top">
+      <router-link to="/kk-club">
       <img src="../../assets/hans/houtui.png" alt="">
+      </router-link>
       <span class="dongtai">动态正文</span>
       <img src="../../assets/hans/gengduo.png" alt="">
     </div>
-    <!-- 连接 -->
-    <div class="box1">
-      <div class="box_up">
-        <div class="box_up_left">
-          <img class="usertx1" :src="arrayPing.data.feeds[0].user.avatar_url" alt="">
-          <span class="username">{{arrayPing.data.feeds[0].user.nickname}}</span>
-        </div>
-        <div class="box_up_right">
-          <img src="../../assets/hans/jia.png" alt="">
-          <span>关注</span>
-        </div>
-      </div>
-      <div class="box_content">
-        <p v-html="huanhang(arrayPing.data.feeds[0].content.text)"></p>
-      </div>
-      <div class="box_img">
-        <img :class="'fbtu'+ arrayPing.data.feeds[0].content.images.length" v-for="(value, index) in arrayPing.data.feeds[0].content.images" :src="arrayPing.data.feeds[0].content.image_base + value" alt="">
-      </div>
-      <div class="box_bottom">
-        <div class="box_bottom_left">
-          <span v-html="getLocalTime(arrayPing.data.feeds[0].updated_at)"></span>
-        </div>
-        <div class="box_bottom_right">
-          <div class="dianzang">
-            <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
-            <span>{{arrayPing.data.feeds[0].likes_count}}</span>
-          </div>
-          <div class="pinglun">
-            <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
-            <span>{{arrayPing.data.feeds[0].comments_count}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 评论 -->
+     <!--连接 -->
+    <!--<div class="box1">-->
+      <!--<div class="box_up">-->
+        <!--<div class="box_up_left">-->
+          <!--<img class="usertx1" :src="arrayPing[0].user.avatar_url" alt="">-->
+          <!--<span class="username">{{arrayPing[0].user.nickname}}</span>-->
+          <!--<p>{{arrayPing[0].updated_at}}</p>-->
+        <!--</div>-->
+        <!--<div class="box_up_right">-->
+          <!--<img src="../../assets/hans/jia.png" alt="">-->
+          <!--<span>关注</span>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="box_content">-->
+        <!--<p v-html="huanhang(arrayPing.data.feeds[0].content.text)"></p>-->
+      <!--</div>-->
+      <!--<div class="box_img">-->
+        <!--<img :class="'fbtu'+ arrayPing.data.feeds[0].content.images.length" v-for="(value, index) in arrayPing.data.feeds[0].content.images" :src="arrayPing.data.feeds[0].content.image_base + value" alt="">-->
+      <!--</div>-->
+      <!--<div class="box_bottom">-->
+        <!--<div class="box_bottom_left">-->
+          <!--<span v-html="getLocalTime(arrayPing.data.feeds[0].updated_at)"></span>-->
+        <!--</div>-->
+        <!--<div class="box_bottom_right">-->
+          <!--<div class="dianzang">-->
+            <!--<img src="../../assets/hans/dianzang.png" alt="">&nbsp;-->
+            <!--<span>{{arrayPing.data.feeds[0].likes_count}}</span>-->
+          <!--</div>-->
+          <!--<div class="pinglun">-->
+            <!--<img src="../../assets/hans/pinglun.png" alt="">&nbsp;-->
+            <!--<span>{{arrayPing.data.feeds[0].comments_count}}</span>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+     <!--评论 -->
     <div class="zuixinpinglun">
       <div class="huandian"></div>
       <span>最新评论</span>
@@ -76,7 +79,7 @@
       <div class="fabu_right">
         <img src="../../assets/hans/pinglun1.png" alt="">
         <div class="num">
-          <span>{{arrayPing.data.feeds[0].comments_count}}</span>
+          <span>220</span>
         </div>
       </div>
     </div>
@@ -88,25 +91,24 @@
     name: '',
     data () {
       return {
-//        isloading: false,
-        Zuiarray: [],
-        arrayPing: []
+        Zuiarray: []
+//        arrayPing: []
       }
     },
     mounted () {
       this.fecthHomeData()
-      this.fecthPingLunData()
+//      this.fecthPingLunData()
     },
     methods: {
       fecthHomeData () {
         let that = this
         this.$request({
           type: 'get',
-          url: 'v2/comments/hot_floor_list',
+          url: 'v22/comments/hot_floor_list',
           headers: {},
           params: {
             target_type: 'feed',
-            target_id: '391034782126965248'
+            target_id: '391277931197890736'
           },
           success: function (res) {
 //            console.log(res.data.data.comment_floors)
@@ -115,25 +117,25 @@
           failed: function () {}
         })
       },
-      fecthPingLunData () {
-        let that = this
-        this.$request({
-          type: 'get',
-          url: 'v1/feeds/feed_lists',
-          headers: {},
-          params: {
-            uid: '92673412',
-            since: '0',
-            page_num: '1',
-            catalog_type: '2'
-          },
-          success: function (res) {
-            that.arrayPing = res.data
-            console.log(res.data.data.feeds)
-          },
-          failed: function () {}
-        })
-      },
+//      fecthPingLunData () {
+//        let that = this
+//        this.$request({
+//          type: 'get',
+//          url: 'v1/feeds/feed_lists',
+//          headers: {},
+//          params: {
+//            uid: '92673412',
+//            since: '0',
+//            page_num: '1',
+//            catalog_type: '2'
+//          },
+//          success: function (res) {
+//            that.arrayPing = res.data.data.feeds
+//            console.log(res.data.data.feeds)
+//          },
+//          failed: function () {}
+//        })
+//      },
       // 换行
       huanhang: function (val) {
         if (val.indexOf(/\n/g) === -1) {
