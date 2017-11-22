@@ -38,13 +38,13 @@
 
 <style scoped lang=less>
   .recycle{
-    height: 260px;
+    height: 280px;
     position: relative;
     overflow: hidden;
   }
   .recycle img{
     width: 100%;
-    height: 100%;
+    height:100%;
   }
   .bottomBorder{
     height: 40px;
