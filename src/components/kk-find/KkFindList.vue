@@ -13,7 +13,6 @@
       newList: {
         type: Array
       }
-
     }
   }
 </script>

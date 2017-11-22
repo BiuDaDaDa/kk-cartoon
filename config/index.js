@@ -31,7 +31,6 @@ module.exports = {
         }
       },
       '/v2': {
-        '/cartonUser': {
           target: 'https://api.kkmh.com',
           pathRewrite: {
             '^/v2': '/v2'
@@ -41,7 +40,6 @@ module.exports = {
           }
         }
       }
-    }
   },
 
   build: {

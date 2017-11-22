@@ -1,10 +1,16 @@
 <template>
-<div class="kkFind">
-  <div class="kkFindNav">
+<div @touchstart="changePos1" @touchend="changePos2" class="kkFind">
+  <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
     <div class="Nav" :class="{activeNav:!isShow}">
+      <div class="diBg" :class="{actDiBg:!isShow}">
+        <img src="" alt="男">
+      </div>
       <div class="btnN">
-        <button @click="isShow = true">推荐</button>
-        <button @click="isShow = false">分类</button>
+        <span @click="isShow = true" :class="{actBtn:isShow}">推荐</span>
+        <span @click="isShow = false" :class="{actBtn:!isShow}">分类</span>
+      </div>
+      <div class="diBg" :class="{actDiBg:!isShow}">
+        <img src="" alt="🔍">
       </div>
     </div>
   </div>
@@ -53,10 +59,43 @@
         newList: [],
         newContent: [],
         gender: 1,
-        isShow: true
+        isShow: true,
+        scrollTop1: '',
+        scrollTop2: ''
       }
     },
     methods: {
+      changePos1 () {
+        this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+      },
+      changePos2 () {
+        this.scrollTop2 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 !== this.scrollTop2) {
+          this.changePos()
+        }
+      },
+      changePos () {
+        let myTimer = null
+        let _this = this
+        // 向下滑动
+        if (this.scrollTop1 < this.scrollTop2 && this.$refs.kkFindNav.offsetTop === 0) {
+          clearInterval(myTimer)
+          myTimer = setInterval(function () {
+            _this.$refs.kkFindNav.style.top = _this.$refs.kkFindNav.offsetTop - 1 + 'px'
+            if (_this.$refs.kkFindNav.offsetTop === -60) {
+              clearInterval(myTimer)
+            }
+          }, 10)
+        } else if (this.scrollTop1 > this.scrollTop2 && this.$refs.kkFindNav.offsetTop === -60) {
+          clearInterval(myTimer)
+          myTimer = setInterval(function () {
+            _this.$refs.kkFindNav.style.top = _this.$refs.kkFindNav.offsetTop + 1 + 'px'
+            if (_this.$refs.kkFindNav.offsetTop === 0) {
+              clearInterval(myTimer)
+            }
+          }, 10)
+        }
+      }
     },
     mounted () {
       this.$request({
@@ -86,22 +125,60 @@
 </script>
 
 <style scoped lang=less>
+
   .kkFindNav{
+    padding-top: 20px;
     width: 100%;
     position: fixed;
-    top: 0;
     z-index: 20;
+
   }
   .Nav{
     display: flex;
+    height: 40px;
+    padding:0 5%;
     justify-content: space-between;
     align-items: center;
+  }
+  .diBg{
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,.6);
+  }
+  .actDiBg{
+    background-color: #fff;
+  }
+  .btnN{
+    height: 24px;
+    width: 28%;
+    background-color: rgba(0,0,0,.6);
+    border-radius: 12px;
+    border:1px solid rgba(0,0,0,.6);
+  }
+  .btnN span{
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 200;
+    text-align: center;
+    line-height: 24px;
+    color: #fff;
+    padding: 0 10%;
+    outline: none;
+  }
+  .btnN .actBtn{
+    background-color: #fff;
+    color: orange;
+    border-radius: 12px;
   }
   .activeNav{
     background-color: #fff;
   }
   .follow{
-    margin-top: 25%;
+    padding-top: 38%;
   }
 .btnF{
   padding:5%;
