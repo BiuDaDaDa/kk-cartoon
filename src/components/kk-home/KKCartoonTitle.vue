@@ -31,7 +31,7 @@
     </div>
     <ul id="contentList" v-if="tf">
       <router-link to="/kkcartitle" v-for="(key,i) in jsText.comics"
-                   :key="key.id" tag="li" class="writings" @touchend.native="kk(i)"
+                   :key="key.id" tag="li" class="writings" @touchend.native="kk(i,key.id)"
                    @touchstart.native="start" @touchmove.native="move">
         <img :src="key.cover_image_url" alt="" class="images">
         <div class="rightContent">
@@ -67,8 +67,6 @@
         clock: true,
         tf: true
       }
-    },
-    computed: {
     },
     methods: {
 //      gettime: function (time) {
@@ -122,8 +120,9 @@
 //        }
 //        return this.num
 //      },
-      kk: function (i) {
+      kk: function (i, val) {
         if (count === 0) {
+          this.$router.push({ name: 'kksection', params: {id: val} })
           for (var j = 0; j < histories.length; j++) {
             if (j === i) {
               histories[j].style.display = 'block'
@@ -149,7 +148,7 @@
         if (i === 0) {
           this.tf = false
           let url = {
-            url: 'v2/review/topic/1576',
+            url: '/kkv2/review/topic/1062',
             type: 'get',
             params: {
               limit: 20,
@@ -182,9 +181,9 @@
     },
     mounted () {
       var _that = this
-      let ace = _that.$route.query.id
+      let ace = this.$route.params.id
       let url = {
-        url: 'v1/topics/' + ace,
+        url: 'kkv1/topics/' + ace,
         type: 'get',
         headers: {},
         params: {
@@ -194,7 +193,6 @@
           sortAction: 0
         },
         success: function (res) {
-          console.log(res.data.data)
           _that.timeArr = res.data.data.comics
           _that.jsText = res.data.data
         },
