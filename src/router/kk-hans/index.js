@@ -32,12 +32,12 @@ export default [
     component: ZuiXin
   },
   {
-    path: '/kk-pinglun',
+    path: '/kk-pinglun/:id?',
     name: 'PingLun',
     component: PingLun
   },
   {
-    path: '/kk-daping',
+    path: '/kk-daping/:id?',
     name: 'DaPing',
     component: DaPing
   }
