@@ -1,13 +1,80 @@
 <template>
   <div>
-    <div id="nav" ref="head">
-      <router-link id="back" tag="div" to="/" @touchend.native="back"><</router-link>
-      <p id="title">{{title}}</p>
-      <router-link id="complete" tag="div" to="/">全集</router-link>
+    <div ref="head">
+      <div id="nav">
+        <router-link id="back" tag="div" to="/"><</router-link>
+        <p id="title">{{title}}</p>
+        <router-link id="complete" tag="div" to="/">全集</router-link>
+      </div>
     </div>
+    <!--中间内容-->
     <div id="content" @touchmove="move">
       <img  :src="k" alt="" class="iamges" v-for="(k,i) in images">
     </div>
+    <div id="rump">
+      <div class="zan">
+        <img src="../../assets/kkcartoontitle/nozan.png" alt="">
+        <p class="text">赞{{zan_count}}</p>
+      </div>
+      <div class="attention">
+        <img src="../../assets/kkcartoontitle/attention.png" alt="">
+        <p class="text">关注</p>
+      </div>
+      <div class="share">
+        <img src="../../assets/kkcartoontitle/share.png" alt="">
+        <p class="text">分享</p>
+      </div>
+    </div>
+    <div id="cross">
+      <div class="previous_posts"><&nbsp;上一篇</div>
+      <div class="line"></div>
+      <div class="next_chapter">下一篇&nbsp;></div>
+    </div>
+    <!--作者-->
+    <div class="author">
+      <p class="sign"></p>
+      <div>作者</div>
+    </div>
+    <!--作者详情-->
+    <div id="information">
+      <div v-for="(val,index) in authorArr" class="authorList">
+        <div class="authorHead">
+          <img :src="val.avatar_url" alt="">
+        </div>
+        <div class="authorName">{{val.nickname}}</div>
+      </div>
+    </div>
+    <!--评论-->
+    <div class="author">
+      <p class="sign"></p>
+      <div>评论</div>
+    </div>
+    <ul>
+      <li v-for="(val,index) in commentsArr" class="comments">
+        <img :src="val.root.user.avatar_url" alt="">
+        <div class="rightContent">
+          <div class="username">{{val.root.user.nickname}}</div>
+          <div class="commentext">
+            {{val.root.content}}
+          </div>
+          <!--<p class="children_comments">{{val.children_comments.id}}1111111</p>-->
+          <div class="children_comments" v-if="val.children_comments.length>0">
+            <div v-for="(v,i) in val.children_comments">
+              <span>{{v.user.nickname}}</span>
+              :{{v.content}}
+            </div>
+          </div>
+          <!--时间-->
+          <div class="time">
+            <div class="created">{{val.root.created_at_info}}</div>
+            <div class="call" @touchend="call(val.root.id)">{{val.root.likes_count}}</div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <!--查看更多评论-->
+    <router-link to='/' tag="p" @touchend.native="linkto" id="chakan">查看更多评论&nbsp;></router-link>
+    <!--底部发送-->
     <div id="comment" ref="foot">
       <input type="text" placeholder="吐槽神马的尽管来">
       <div id="send">发送</div>
@@ -28,6 +95,7 @@
 </template>
 
 <script>
+  var num = 0
   export default {
     name: '',
     data () {
@@ -35,7 +103,10 @@
         title: '',
         images: [],
         comments: '',
-        targed: ''
+        targed: '',
+        zan_count: '',
+        authorArr: [],
+        commentsArr: []
       }
     },
     methods: {
@@ -43,22 +114,65 @@
         console.log(this.targed)
         this.$router.push({ name: 'kkcomment', params: {id: this.targed} })
       },
+      call: function (i) {
+        console.log(i)
+        let url = {
+          url: '/kkv2/like/add',
+          type: 'post',
+          params: {
+            app_id: 1000000027,
+            kk_c_t: 1511430018881,
+            kk_s_t: 1511430016139,
+            target_id: i,
+            target_type: 'comment'
+          },
+          success: function (res) {
+            console.log(res.data)
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        }
+        this.$request(url)
+      },
       share: function () {
         console.log('点击分享')
       },
       tool: function () {
         console.log('这是工具')
       },
-      back: function () {
-        this.$router.go(1)
-      },
       move: function () {
-        if (window.scrollY > 1) {
+        var that = this
+        console.log(window.scrollY)
+        if (window.scrollY > 1 && window.scrollY <= 6800) {
           this.$refs.head.style.display = 'none'
           this.$refs.foot.style.display = 'none'
-        } else {
+          this.$refs.head.className = ''
+        } else if (window.scrollY >= 7000) {
+          this.$refs.head.className = 'head'
           this.$refs.head.style.display = 'block'
           this.$refs.foot.style.display = 'block'
+          this.$refs.foot.className = 'foot'
+        } else if (window.scrollY > 5600) {
+          if (num === 0) {
+            num = 1
+            let url = {
+              url: '/kkv2/comments/hot_floor_list',
+              type: 'get',
+              params: {
+                target_id: this.$route.params.id,
+                target_type: 'comic'
+              },
+              success: function (res) {
+                that.commentsArr = res.data.data.comment_floors
+                console.log(res.data.data.comment_floors)
+              },
+              failed: function (err) {
+                console.log(err)
+              }
+            }
+            this.$request(url)
+          }
         }
       }
     },
@@ -73,6 +187,9 @@
           that.images = res.data.data.images
           that.comments = res.data.data.comments_count
           that.targed = res.data.data.id
+          that.zan_count = res.data.data.likes_count
+          that.authorArr = res.data.data.topic.related_authors
+          console.log(res.data.data)
         },
         failed: function (err) {
           console.log(err)
@@ -89,6 +206,17 @@
     height: 40px;
     border-bottom: 1px solid darkgray;
   }
+  .head {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background-color: white;
+  }
+  .foot {
+    position: fixed;
+    bottom: 0;
+    background-color: rgb(245,245,245);
+  }
   #back {
     position: absolute;
     left: 15px;
@@ -96,12 +224,13 @@
     line-height: 40px;
   }
   #title {
+    font-size: 14px;
+    text-align: center;
     position: absolute;
-    width: 80px;
+    width: 110px;
     left: 50%;
     line-height: 40px;
-    margin-left: -40px;
-
+    margin-left: -50px;
   }
   #complete {
     position: absolute;
@@ -203,5 +332,183 @@
     left: 85%;
     width: 30px;
     background: url("../../assets/kkcartoontitle/tool.png") no-repeat;
+  }
+  #rump {
+    position: relative;
+    height: 60px;
+    border-bottom: 1px solid darkgray;
+  }
+  #rump>div {
+    display: inline-block;
+  }
+  .zan {
+    position: absolute;
+    width: 65px;
+    left: 10%;
+  }
+  .zan>img {
+    margin-left: 15px;
+  }
+  .attention {
+    position: absolute;
+    left: 50%;
+    width: 36px;
+    margin-left: -15px;
+  }
+  .attention>img {
+    margin-left: 2px;
+  }
+  .text {
+    color: #626262;
+  }
+  .share {
+    position: absolute;
+    left: 80%;
+  }
+  .share>img {
+    margin-left: 2px;
+  }
+  #cross {
+    position: relative;
+    border-bottom: 2px solid darkgray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 50px;
+  }
+  #cross>div {
+    position: absolute;
+    display: inline-block;
+  }
+  .previous_posts {
+    height: 40px;
+    width: 80px;
+    left: 15%;
+    line-height: 50px;
+  }
+  .next_chapter {
+    left: 70%;
+    line-height: 50px;
+  }
+  .line {
+    width: 1px;
+    height: 50px;
+    background-color: darkgray;
+    left: 50%;
+  }
+  .author {
+    padding: 5px 10px;
+    border-bottom: 1px solid darkgray;
+  }
+  .sign{
+    display: inline-block;
+    width: 6px;
+    height: 12px;
+    background-color: #FCB43C;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+  .author>div {
+    display: inline-block;
+    font-size: 14px;
+  }
+  #information {
+    position: relative;
+    padding: 13px 10px;
+  }
+  #information>div {
+    display: inline-block;
+  }
+  .authorList {
+    position: relative;
+    width: 160px;
+    height: 40px;
+  }
+  .authorList>div {
+    display: inline-block;
+  }
+  .authorHead {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .authorHead>img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  .authorName {
+    font-size: 13px;
+    position: absolute;
+    left: 50px;
+    top: 12px;
+  }
+  .comments {
+    width: 100%;
+    padding-left: 15px;
+    padding-top: 15px;
+    border-bottom: 1px solid darkgray;
+  }
+  .comments>img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    left: 10px;
+    top: 10px;
+    vertical-align: top;
+  }
+  .rightContent {
+    display: inline-block;
+  }
+  .username {
+    font-size: 13px;
+    color: #6D6D6D;
+  }
+  .commentext {
+    width: 320px;
+    word-wrap: break-word;
+    height: 30px;
+    margin-top: 10px;
+  }
+  .children_comments {
+    background-color: #F6F9FA;
+    padding: 7px 10px;
+    width: 320px;
+    margin-top: 15px;
+  }
+  .children_comments>div {
+    font-size: 13px;
+  }
+  .children_comments>div>span {
+    color: #757575;
+    font-size: 13px;
+  }
+  .time {
+    width: 340px;
+    overflow: hidden;
+    margin-top: 10px;
+    color: #A7A7A7;
+    font-size: 13px;
+  }
+  .created {
+    float: left;
+  }
+  .call {
+    float: right;
+    padding-left: 15px;
+    background: url("../../assets/zan.png") no-repeat left;
+  }
+  #chakan {
+    width: 140px;
+    text-align: center;
+    margin: auto;
+    font-size: 12px;
+    color: #289CE0;
+    margin-bottom: 100px;
+    padding-top: 15px;
   }
 </style>

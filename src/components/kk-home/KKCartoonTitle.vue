@@ -112,6 +112,7 @@
             time = day1
           }
         } else {
+          console.log('年份')
           var years = a.substr(0, 10).replace(/\//g, '-')
           time = years
         }
@@ -119,57 +120,6 @@
       }
     },
     methods: {
-//      gettime: function (time) {
-//        var oldTime = new Date(time * 1000)
-//        var nowTime = new Date()
-//        var a = oldTime.toLocaleString()
-//        console.log(a)
-//        var nowYear = nowTime.getFullYear()
-//        console.log(nowYear)
-//        if (a.substr(0, 4) === nowYear) {
-//          console.log('进来了')
-//          var oldMoon = oldTime.getMonth()
-//          var nowMoon = nowTime.getMonth()
-//          if (oldMoon === nowMoon) {
-//            var nowDate = nowTime.getDate()
-//            var oldDate = oldTime.getDate()
-//            if (nowDate - oldDate === 0) {
-//              var b = a.substr(11, 6)
-//              if (b.indexOf('上午') !== -1) {
-//                var c = b.replace('上午', '')
-//                var d = c.split(':')
-//                if (d[0] < 10) {
-//                  d[0] = '0' + d[0]
-//                } else if (d[0] === 12) {
-//                  d[0] = '00'
-//                }
-//              } else {
-//                c = b.replace('下午', '')
-//                d = c.split(':')
-//                if (d[0] < 12) {
-//                  d[0] = parseInt(d[0]) + parseInt(12)
-//                }
-//              }
-//              var hour = d.join(':')
-//              this.num = hour
-//            } else if (nowDate - oldDate === 1) {
-//              this.num = '昨天'
-//            } else {
-//              var day = a.substr(5, 5)
-//              day = day.replace('/', '-')
-//              this.num = day
-//            }
-//          } else {
-//            var day1 = a.substr(5, 5)
-//            day1 = day1.replace('/', '-')
-//            this.num = day1
-//          }
-//        } else {
-//          var years = a.substr(0, 10).replace(/\//g, '-')
-//          this.num = years
-//        }
-//        return this.num
-//      },
       kk: function (i, val) {
         if (count === 0) {
           this.$router.push({ name: 'kksection', params: {id: val} })
