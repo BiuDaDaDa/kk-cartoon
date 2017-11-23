@@ -3,7 +3,7 @@
 <div v-for="item in newContent" class="boxBar">
   <div v-if="item['topics']" class="BTitle">
     <span class="title">{{item['title']}}</span>
-    <span class="more">更多&nbsp;></span>
+    <span class="more" @click="moreGo(item['action'],item['title'])">更多&nbsp;></span>
   </div>
   <div class="boxF">
     <router-link v-for="ite in item['topics']||item['banners']" to="#" :key="ite['target_id']" :class="'box'+item['item_type']">
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+  import bus from '@/common/js/eventBus'
   export default {
     name: '',
     props: {
@@ -33,6 +34,12 @@
     data () {
       return {
         rec: false
+      }
+    },
+    methods: {
+      moreGo (act, tle) {
+        this.$router.push({path: '/t'})
+        bus.$emit('chuan', act, tle)
       }
     },
     mounted () {
