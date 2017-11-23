@@ -6,8 +6,8 @@
         <img src="" alt="男">
       </div>
       <div class="btnN">
-        <span @click="isShow = true" :class="{actBtn:isShow}">推荐</span>
-        <span @click="isShow = false" :class="{actBtn:!isShow}">分类</span>
+        <span @click="changeTui" :class="{actBtn:isShow}">推荐</span>
+        <span @click="changeFen" :class="{actBtn:!isShow}">分类</span>
       </div>
       <div class="diBg" :class="{actDiBg:!isShow}">
         <img src="" alt="🔍">
@@ -19,19 +19,19 @@
     <List :newList="newList"/>
     <myContent :newContent="newContent"/>
     <div class="btnF">
-    <button class="contribute">
+      <button class="contribute">
       <span class="banner">
         <img src="../../assets/kk-find/kk-find-contribute.png" alt="">
         <span>我要投稿</span>
       </span>
-    </button>
-    <button class="allComposition">
+      </button>
+      <button class="allComposition">
       <span class="banner">
         <img src="../../assets/kk-find/kk-find-all.png" alt="">
         <span>全部作品</span>
       </span>
-    </button>
-  </div>
+      </button>
+    </div>
   </div>
   <div v-show="!isShow" class="follow">
     <myTopic :goShow="isShow"/>
@@ -65,6 +65,12 @@
       }
     },
     methods: {
+      changeTui () {
+        this.isShow = true
+      },
+      changeFen () {
+        this.isShow = false
+      },
       changePos1 () {
         this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
       },
@@ -100,7 +106,7 @@
     mounted () {
       this.$request({
         type: 'get',
-        url: 'v1/topic_new/discovery_list',
+        url: 'kuaikanv1/topic_new/discovery_list',
         headers: {
           'X-Device': 'A:eef09de00f4e0b31'
 //          'User-Agent': 'Kuaikan/4.6.6/46600(Android;5.1.1;MI 4S;kuaikan220;WIFI;780*480)'
@@ -115,6 +121,7 @@
           for (let i = 2; i < res['data']['data']['infos'].length; i++) {
             this.newContent.push(res['data']['data']['infos'][i])
           }
+//          console.log(res['data']['data']['infos'])
         },
         failed: function (err) {
           console.log(err)
@@ -177,15 +184,12 @@
   .activeNav{
     background-color: #fff;
   }
-  .follow{
-    padding-top: 38%;
-  }
-.btnF{
-  padding:5%;
-  display: flex;
-  justify-content: space-around;
+  .btnF{
+    padding:5%;
+    display: flex;
+    justify-content: space-around;
 
-}
+  }
   .btnF button{
     width: 45%;
     padding: 3% 0;
@@ -198,7 +202,7 @@
     align-items: center;
     justify-content: center;
   }
- .btnF .contribute{
+  .btnF .contribute{
     color: blue;
     border: 1px solid blue;
   }
@@ -210,5 +214,8 @@
     padding: 4px;
     width: 20px;
     height: 20px;
+  }
+  .follow{
+    padding-top: 38%;
   }
 </style>
