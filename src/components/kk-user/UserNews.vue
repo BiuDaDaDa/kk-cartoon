@@ -117,8 +117,6 @@
     data () {
       return {
         selected: 1,
-        s1: [1, 2, 3, 4, 5, 6, 7, 8],
-        s2: [1, 2, 3, 4, 5, 6, 7],
         noneShow: false,
         changeTags: '回复我的',
         userChoose: ''
@@ -162,7 +160,7 @@
         color: #424242;
         img{
           position: absolute;
-          top: -2vh;
+          top: -1.8vh;
           left: 5vw;
           width: 25px;
           height: 25px;
@@ -197,6 +195,7 @@
     .is-selected{
       border-bottom: none;
       span{
+        color: #ffbb1a;
         border-bottom: 3px solid #ffbb1a;
       }
     }

@@ -1,8 +1,7 @@
 <template>
   <div id="my-clud">
   <div class="wrap" v-if="isloading">
-    <div class="box" v-for="(common, index) in array.data.feeds">
-      <router-link to="/kk-pinglun">
+    <div class="box" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url)">
       <div class="box_up">
         <div class="box_up_left">
           <img class="usertx" :src="common.user.avatar_url" alt="">
@@ -28,15 +27,12 @@
             <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
             <span>{{common.likes_count}}</span>
           </div>
-          <div class="pinglun">
-            <router-link class="rou" to="/kk-daping">
-              <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
-              <span>{{common.comments_count}}</span>
-            </router-link>
-          </div>
+          <div class="pinglun" @click="tab(common.share_url)" onClick="event.cancelBubble = true">
+            <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
+            <span>{{common.comments_count}}</span>
         </div>
       </div>
-      </router-link>
+      </div>
     </div>
   </div>
   </div>
@@ -49,6 +45,7 @@
       return {
         isloading: false,
         array: []
+//        feed: []
       }
     },
     mounted () {
@@ -59,7 +56,7 @@
         let that = this
         this.$request({
           type: 'get',
-          url: 'v1/feeds/feed_lists',
+          url: 'kuaikanv1/feeds/feed_lists',
           headers: {},
           params: {
             uid: '92673412',
@@ -68,7 +65,6 @@
             catalog_type: '2'
           },
           success: function (res) {
-//            console.log(res.data)
             that.isloading = true
             that.array = res.data
           },
@@ -92,6 +88,16 @@
         if (val.indexOf(/\n/g) === -1) {
           return val.replace(/\n/g, '<br/>')
         }
+      },
+      tab: function (ev) {
+        // 拆分字符串,取右
+        this.myidd = ev.split('feeds/')[1]
+        this.$router.push({path: `/kk-daping/${this.myidd}`})
+      },
+      jump: function (ev) {
+        // 拆分字符串,取右
+        this.myid = ev.split('feeds/')[1]
+        this.$router.push({path: `/kk-pinglun/${this.myid}`})
       }
     }
   }

@@ -10,8 +10,6 @@
 </template>
 
 <script>
-  import MyClub from '../../components/kk-club/Club'
-  import MyZuiXin from '../../components/kk-club/ZuiXin'
   export default {
     name: 'Tabs',
 //    data () {
@@ -23,10 +21,6 @@
 //      }
 //    },
     methods: {
-    },
-    components: {
-      MyClub,
-      MyZuiXin
     }
   }
 </script>
@@ -48,10 +42,4 @@
     box-sizing: border-box;
     padding: 10px 25px;
   }
-  /*.club{*/
-    /*padding-top: 60px;*/
-  /*}*/
-  /*.zuixin{*/
-    /*padding-top: 60px;*/
-  /*}*/
 </style>

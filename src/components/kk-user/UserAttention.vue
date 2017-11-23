@@ -97,7 +97,7 @@
         color: #424242;
         img{
           position: absolute;
-          top: -2vh;
+          top: -1.8vh;
           left: 5vw;
           width: 25px;
           height: 25px;
@@ -135,6 +135,7 @@
     .is-selected{
       border-bottom: none;
       span{
+        color: #ffbb1a;
         border-bottom: 3px solid #ffbb1a;
       }
     }
@@ -183,6 +184,42 @@
        }
      }
    }
+  .author-all{
+    width: 100%;
+    min-height: 88.9vh;
+    .author-for{
+      width: 100%;
+      height: 8vh;
+      /*background-color: red;*/
+      display: flex;
+      align-items: flex-start;
+      padding: 2% 3%;
+      border-bottom: 1px solid #efefef;
+      .author-img{
+        width: 15%;
+        height: 100%;
+        background-color: gold;
+        margin-right: 3%;
+        img{
+          width: 100%;
+        }
+      }
+      .author-name{
+        h5{
+          font-size: 18px;
+          color: #ff751a;
+          font-weight: normal;
+          line-height: 30px;
+        }
+        h6{
+          font-size: 14px;
+          font-weight: normal;
+          color: #939393;
+          line-height: 30px;
+        }
+      }
+    }
+  }
 
 
 

@@ -46,30 +46,30 @@
     name: 'DaPing',
     data () {
       return {
-        parray: []
+        parray: [],
+        feed1: this.$route.params.id
+//        feed2: 392097979445543040
       }
     },
     mounted () {
-      this.fecthHomeData()
+//      this.fecthHomeData()
+      let that = this
+//      console.log(this.$route.params.id)
+      this.$request({
+        type: 'get',
+        url: '/kuaikanv2/comments/floor_list',
+        headers: {},
+        params: {
+          'target_type': 'feed',
+          'target_id': this.feed1
+        },
+        success: function (res) {
+          that.parray = res.data.data.comment_floors
+        },
+        failed: function () {}
+      })
     },
     methods: {
-      fecthHomeData () {
-        let that = this
-        this.$request({
-          type: 'get',
-          url: 'v22/comments/floor_list',
-          headers: {},
-          params: {
-            target_type: 'feed',
-            target_id: '391320288358301808'
-          },
-          success: function (res) {
-            that.parray = res.data.data.comment_floors
-//            console.log(res.data)
-          },
-          failed: function () {}
-        })
-      },
       // 换行
       huanhang: function (val) {
         if (val.indexOf(/\n/g) === -1) {
