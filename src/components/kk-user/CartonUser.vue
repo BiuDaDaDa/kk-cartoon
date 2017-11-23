@@ -4,7 +4,10 @@
       <div class="user-top"></div>
 
       <div class="user-bottom">
-        <div class="user-head"></div>
+        <router-link class="userIn" to="/userInfo">
+          <div class="user-head">
+          </div>
+        </router-link>
         <div class="user-bottom-body">
           <span class="user-name">登录</span>
           <ul class="user-name-firstul">
@@ -24,12 +27,17 @@
         </div>
       </div>
     </div>
+    <footer-nav></footer-nav>
   </div>
 </template>
 
 <script>
+    import FooterNav from '../../components/kk-nav/FooterNav'
     export default {
       name: 'CartonUser',
+      components: {
+        FooterNav
+      },
       data () {
         return {
           userNews: [
@@ -93,7 +101,7 @@
       },
       methods: {
         turnClicked (index) {
-          this.$refs.turnStyle[index].style.backgroundColor = 'red'
+          this.$refs.turnStyle[index].style.backgroundColor = '#939393'
         }
       }
     }
@@ -127,20 +135,25 @@
   z-index: 2;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  .user-head{
+  .userIn{
+    width: 60px;
+    height: 60px;
     position: absolute;
     top: 0;
     left: 50%;
     margin-left: -30px;
     margin-top: -30px;
     z-index: 3;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-image: url(../../assets/kk-user/kk-user-head.jpg);
-    -webkit-background-size: 100% 100%;
-    background-size: 100% 100%;
-    background-repeat:no-repeat;
+    display: block;
+    .user-head{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-image: url(../../assets/kk-user/kk-user-head.jpg);
+      -webkit-background-size: 100% 100%;
+      background-size: 100% 100%;
+      background-repeat:no-repeat;
+    }
   }
   .user-bottom-body{
     width: 100%;

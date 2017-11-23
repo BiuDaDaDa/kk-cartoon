@@ -14,7 +14,7 @@
     mounted () {
 //      var _that = this
       let a = {
-        url: 'v2/topic/fav/timeline_v3',
+        url: 'kkv2/topic/fav/timeline_v3',
         type: 'get',
         data: '',
         headers: {},

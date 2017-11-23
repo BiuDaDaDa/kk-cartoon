@@ -3,6 +3,7 @@
     <router-view/>
   </div>
 </template>
+
 <script>
   export default {
     name: 'app'
@@ -12,8 +13,8 @@
 
 <link rel="stylesheet/less" href="./common/less/reset.less">
 <style>
-  *{
-    margin: 0;
-    padding: 0;
-  }
+*{
+  margin: 0;
+  padding: 0;
+}
 </style>

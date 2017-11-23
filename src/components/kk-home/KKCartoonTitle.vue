@@ -31,7 +31,7 @@
     </div>
     <ul id="contentList" v-if="tf">
       <router-link to="/kkcartitle" v-for="(key,i) in jsText.comics"
-                   :key="key.id" tag="li" class="writings" @touchend.native="kk(i)"
+                   :key="key.id" tag="li" class="writings" @touchend.native="kk(i,key.id)"
                    @touchstart.native="start" @touchmove.native="move">
         <img :src="key.cover_image_url" alt="" class="images">
         <div class="rightContent">
@@ -41,7 +41,7 @@
           </div>
           <div class="time">
             <div class="timer">
-              {{new Date(key.created_at * 1000).toLocaleString()}}
+              {{key.created_at | capitalize}}
             </div>
             <div class="zan" v-html="likeCount(key.likes_count)">
             </div>
@@ -68,7 +68,55 @@
         tf: true
       }
     },
-    computed: {
+    filters: {
+      capitalize: function (time) {
+        var oldTime = new Date(time * 1000)
+        var nowTime = new Date()
+        var a = oldTime.toLocaleString()
+        var nowYear = nowTime.getFullYear()
+        if (a.substr(0, 4) === nowYear) {
+          var oldMoon = oldTime.getMonth()
+          var nowMoon = nowTime.getMonth()
+          if (oldMoon === nowMoon) {
+            var nowDate = nowTime.getDate()
+            var oldDate = oldTime.getDate()
+            if (nowDate - oldDate === 0) {
+              var b = a.substr(11, 6)
+              if (b.indexOf('上午') !== -1) {
+                var c = b.replace('上午', '')
+                var d = c.split(':')
+                if (d[0] < 10) {
+                  d[0] = '0' + d[0]
+                } else if (d[0] === 12) {
+                  d[0] = '00'
+                }
+              } else {
+                c = b.replace('下午', '')
+                d = c.split(':')
+                if (d[0] < 12) {
+                  d[0] = parseInt(d[0]) + parseInt(12)
+                }
+              }
+              var hour = d.join(':')
+              time = hour
+            } else if (nowDate - oldDate === 1) {
+              this.num = '昨天'
+            } else {
+              var day = a.substr(5, 5)
+              day = day.replace('/', '-')
+              time = day
+            }
+          } else {
+            var day1 = a.substr(5, 5)
+            day1 = day1.replace('/', '-')
+            time = day1
+          }
+        } else {
+          var years = a.substr(0, 10).replace(/\//g, '-')
+          time = years
+        }
+        return time
+      }
     },
     methods: {
 //      gettime: function (time) {
@@ -122,8 +170,9 @@
 //        }
 //        return this.num
 //      },
-      kk: function (i) {
+      kk: function (i, val) {
         if (count === 0) {
+          this.$router.push({ name: 'kksection', params: {id: val} })
           for (var j = 0; j < histories.length; j++) {
             if (j === i) {
               histories[j].style.display = 'block'
@@ -149,7 +198,7 @@
         if (i === 0) {
           this.tf = false
           let url = {
-            url: 'v2/review/topic/1576',
+            url: '/kkv2/review/topic/1062',
             type: 'get',
             params: {
               limit: 20,
@@ -182,9 +231,9 @@
     },
     mounted () {
       var _that = this
-      let ace = _that.$route.query.id
+      let ace = this.$route.params.id
       let url = {
-        url: 'v1/topics/' + ace,
+        url: 'kkv1/topics/' + ace,
         type: 'get',
         headers: {},
         params: {
@@ -194,7 +243,6 @@
           sortAction: 0
         },
         success: function (res) {
-          console.log(res.data.data)
           _that.timeArr = res.data.data.comics
           _that.jsText = res.data.data
         },

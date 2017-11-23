@@ -5,7 +5,7 @@
 
         <div class="reply-top">
           <div class="reply-userimg">
-            <img src="../../assets/kk-user/test1.jpg" alt="">
+            <img src="../../../assets/kk-user/test1.jpg" alt="">
           </div>
 
           <div class="reply-userinfo">
@@ -71,7 +71,7 @@
           border-radius: 50%;
           overflow: hidden;
           margin-left: 2%;
-          background-image: url(../../assets/kk-user/kk-user-head.jpg);
+          background-image: url(../../../assets/kk-user/kk-user-head.jpg);
           -webkit-background-size: 100% 100%;
           background-size: 100% 100%;
           background-repeat:no-repeat;

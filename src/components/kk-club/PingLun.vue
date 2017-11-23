@@ -91,37 +91,35 @@
     name: '',
     data () {
       return {
-        Zuiarray: []
+        Zuiarray: [],
 //        arrayPing: []
+        feed1: this.$route.params.id
       }
     },
     mounted () {
-      this.fecthHomeData()
 //      this.fecthPingLunData()
+      let that = this
+      this.$request({
+        type: 'get',
+        url: '/kuaikanv2/comments/hot_floor_list',
+        headers: {},
+        params: {
+          'target_type': 'feed',
+          'target_id': this.feed1
+        },
+        success: function (res) {
+//            console.log(res.data.data.comment_floors)
+          that.Zuiarray = res.data.data.comment_floors
+        },
+        failed: function () {}
+      })
     },
     methods: {
-      fecthHomeData () {
-        let that = this
-        this.$request({
-          type: 'get',
-          url: 'v22/comments/hot_floor_list',
-          headers: {},
-          params: {
-            target_type: 'feed',
-            target_id: '391277931197890736'
-          },
-          success: function (res) {
-//            console.log(res.data.data.comment_floors)
-            that.Zuiarray = res.data.data.comment_floors
-          },
-          failed: function () {}
-        })
-      },
 //      fecthPingLunData () {
 //        let that = this
 //        this.$request({
 //          type: 'get',
-//          url: 'v1/feeds/feed_lists',
+//          url: 'kuaikanv1/feeds/feed_lists',
 //          headers: {},
 //          params: {
 //            uid: '92673412',

@@ -12,34 +12,34 @@
     <!-- -----头部----- -->
 
 
-    <mt-navbar v-model="selected" class="mt-tags">
-      <mt-tab-item id="s1" class="mt-tags-title">
-        <span>作品</span>
-      </mt-tab-item>
-      <mt-tab-item id="s2" class="mt-tags-title">
-        <span>作者</span>
-      </mt-tab-item>
-    </mt-navbar>
+    <!--<mt-navbar v-model="selected" class="mt-tags">-->
+      <!--<mt-tab-item id="s1" class="mt-tags-title">-->
+        <!--<span>作品</span>-->
+      <!--</mt-tab-item>-->
+      <!--<mt-tab-item id="s2" class="mt-tags-title">-->
+        <!--<span>作者</span>-->
+      <!--</mt-tab-item>-->
+    <!--</mt-navbar>-->
 
     <!--tab-container -->
-    <mt-tab-container v-model="selected" :swipeable=true>
-      <!--标签1-->
-      <mt-tab-container-item id="s1">
-        <div class="pro-all">
-          <div class="pro-for">
-            <div class="pro-img">
-              <img src="" alt="">
-            </div>
+    <!--<mt-tab-container v-model="selected" :swipeable=true>-->
+      <!--&lt;!&ndash;标签1&ndash;&gt;-->
+      <!--<mt-tab-container-item id="s1">-->
+        <!--<div class="pro-all">-->
+          <!--<div class="pro-for">-->
+            <!--<div class="pro-img">-->
+              <!--<img src="" alt="">-->
+            <!--</div>-->
 
-            <div class="pro-title">
-                <h2>无形门之汴京摸鱼</h2>
-                <h3>渣克+海分形</h3>
-                <h4>更新至：第一话 父子特工</h4>
+            <!--<div class="pro-title">-->
+                <!--<h2>无形门之汴京摸鱼</h2>-->
+                <!--<h3>渣克+海分形</h3>-->
+                <!--<h4>更新至：第一话 父子特工</h4>-->
 
-            </div>
-          </div>
-        </div>
-      </mt-tab-container-item>
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</mt-tab-container-item>-->
       <!--标签1-->
 
       <!--标签2-->
@@ -59,7 +59,7 @@
       </mt-tab-container-item>
       <!--标签2-->
 
-    </mt-tab-container>
+    <!--</mt-tab-container>-->
     <!--tab-container -->
 
   </div>
@@ -97,7 +97,7 @@
         color: #424242;
         img{
           position: absolute;
-          top: -2vh;
+          top: -1.8vh;
           left: 5vw;
           width: 25px;
           height: 25px;
@@ -135,6 +135,7 @@
     .is-selected{
       border-bottom: none;
       span{
+        color: #ffbb1a;
         border-bottom: 3px solid #ffbb1a;
       }
     }
@@ -183,6 +184,42 @@
        }
      }
    }
+  .author-all{
+    width: 100%;
+    min-height: 88.9vh;
+    .author-for{
+      width: 100%;
+      height: 8vh;
+      /*background-color: red;*/
+      display: flex;
+      align-items: flex-start;
+      padding: 2% 3%;
+      border-bottom: 1px solid #efefef;
+      .author-img{
+        width: 15%;
+        height: 100%;
+        background-color: gold;
+        margin-right: 3%;
+        img{
+          width: 100%;
+        }
+      }
+      .author-name{
+        h5{
+          font-size: 18px;
+          color: #ff751a;
+          font-weight: normal;
+          line-height: 30px;
+        }
+        h6{
+          font-size: 14px;
+          font-weight: normal;
+          color: #939393;
+          line-height: 30px;
+        }
+      }
+    }
+  }
 
 
 
