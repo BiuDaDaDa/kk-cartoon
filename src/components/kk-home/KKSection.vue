@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="nav" ref="head">
-      <router-link id="back" tag="div" to="/"><</router-link>
+      <router-link id="back" tag="div" to="/" @touchend.native="back"><</router-link>
       <p id="title">{{title}}</p>
       <router-link id="complete" tag="div" to="/">全集</router-link>
     </div>
@@ -48,6 +48,9 @@
       },
       tool: function () {
         console.log('这是工具')
+      },
+      back: function () {
+        this.$router.go(1)
       },
       move: function () {
         if (window.scrollY > 1) {

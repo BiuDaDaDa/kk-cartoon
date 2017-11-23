@@ -41,6 +41,7 @@
   for (var i = 6; i > 0; i--) {
     dayarray[i] = nowDay - i
     switch (dayarray[i]) {
+      case 2: dayarray[i] = '周二'; break
       case 1: dayarray[i] = '周一'; break
       case 0: dayarray[i] = '周日'; break
       case -1: dayarray[i] = '周六'; break
