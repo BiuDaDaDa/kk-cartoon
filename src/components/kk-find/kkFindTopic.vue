@@ -1,9 +1,11 @@
 <template>
-<div class="myTopics">
-  <ul class="listSort">
-    <li v-for="tag in tags" class="tagSort"
-        :class="{activeTagSort:tagId==tag['tag_id']}" @click="changeTagId(tag['tag_id'])">{{tag['title']}}</li>
-  </ul>
+<div @touchstart="changePos1" @touchend="changePos2" class="myTopics">
+  <div  ref="listSort" class="listSort" style="top: 0px">
+    <span v-for="tag in tags" class="tagSort"
+        :class="{activeTagSort:tagId==tag['tag_id']}" @click="changeTagId(tag['tag_id'])">
+      <mt-tab-item :id="tagId==tag['tag_id']">{{tag['title']}}</mt-tab-item>
+    </span>
+  </div>
   <div class="myTopicNav">
     <span class="muLu" :class="{activeMuLu:isShow === 1}" @click="changeType(1)">推荐</span>
     <span class="fenGe">|</span>
@@ -69,7 +71,10 @@
         sort: 1,
         diMsg: '',
         loading: false, // 加载状态
-        isShow: 1
+        isShow: 1,
+        scrollTop1: '',
+        scrollTop2: '',
+        selected: ''
       }
     },
     methods: {
@@ -131,6 +136,37 @@
             this.HuoQuListSort()
           }, 2000)
         }
+      },
+      changePos1 () {
+        this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+      },
+      changePos2 () {
+        this.scrollTop2 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 !== this.scrollTop2) {
+          this.changePos()
+        }
+      },
+      changePos () {
+        let myTimer = null
+        let _this = this
+        // 向下滑动
+        if (this.scrollTop1 < this.scrollTop2 && this.$refs.listSort.style.top === 0 + 'px') {
+          clearInterval(myTimer)
+          myTimer = setInterval(function () {
+            _this.$refs.listSort.style.top = _this.$refs.listSort.offsetTop - 1 + 'px'
+            if (_this.$refs.listSort.offsetTop === -40) {
+              clearInterval(myTimer)
+            }
+          }, 10)
+        } else if (this.scrollTop1 > this.scrollTop2 && this.$refs.listSort.style.top === -40 + 'px') {
+          clearInterval(myTimer)
+          myTimer = setInterval(function () {
+            _this.$refs.listSort.style.top = _this.$refs.listSort.offsetTop + 1 + 'px'
+            if (_this.$refs.listSort.offsetTop === 0) {
+              clearInterval(myTimer)
+            }
+          }, 10)
+        }
       }
     },
     mounted () {
@@ -143,7 +179,8 @@
 <style scoped lang=less>
   .listSort{
     position: fixed;
-    top: 2%;
+    width: 100%;
+    padding-top: 60px;
     z-index: 11;
     list-style: none;
     display: flex;
@@ -153,11 +190,13 @@
     border-bottom: 1px solid #ccc;
     background-color: #fff;
   }
-  .listSort li{
+  .listSort .tagSort{
+    display: block;
     font-size: 15px;
-    padding: 3% 0;
-    margin: 0 3%;
+    padding: 2.5% 0;
+    margin: 0 4%;
     border-bottom: 3px solid #fff;
+    text-decoration: none;
   }
   .listSort .activeTagSort{
     border-bottom:3px solid orange;

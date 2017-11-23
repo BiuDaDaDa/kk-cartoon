@@ -2,6 +2,7 @@
   <div id="my-clud">
   <div class="wrap" v-if="isloading">
     <div class="box" v-for="(common, index) in array.data.feeds">
+      <router-link to="/kk-pinglun">
       <div class="box_up">
         <div class="box_up_left">
           <img class="usertx" :src="common.user.avatar_url" alt="">
@@ -28,11 +29,14 @@
             <span>{{common.likes_count}}</span>
           </div>
           <div class="pinglun">
-            <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
-            <span>{{common.comments_count}}</span>
+            <router-link class="rou" to="/kk-daping">
+              <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
+              <span>{{common.comments_count}}</span>
+            </router-link>
           </div>
         </div>
       </div>
+      </router-link>
     </div>
   </div>
   </div>
@@ -106,6 +110,7 @@
     margin-bottom: 5px;
   }
   .box_up{
+    width: 385px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -174,6 +179,10 @@
     margin-right: 15px;
   }
   .pinglun{
+    display: flex;
+    align-items: center;
+  }
+  .rou{
     display: flex;
     align-items: center;
   }

@@ -1,12 +1,10 @@
 <template>
-  <div>
-    hhh
-  </div>
+  <div>快看商城</div>
 </template>
 
 <script>
     export default {
-      name: 'Inform'
+      name: 'KKStore'
     }
 </script>
 
