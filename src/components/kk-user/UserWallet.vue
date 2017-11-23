@@ -44,42 +44,28 @@
             {
               name: '阅读券',
               src: require('../../assets/kk-user/kk-wallet-read.png'),
-              urlInfo: '/userRead'
+              urlInfo: '/readTicket'
             },
             {
               name: '已购漫画',
               src: require('../../assets/kk-user/kk-wallet-buylist.png'),
-              urlInfo: '/userRead'
+              urlInfo: '/buyCarton'
             },
             {
               name: '自动购买管理',
               src: require('../../assets/kk-user/kk-user-setting.png'),
-              urlInfo: '/userRead'
+              urlInfo: '/buyingManagement'
             },
             {
               name: '交易明细',
               src: require('../../assets/kk-user/kk-wallet-trade.png'),
-              urlInfo: '/userRead'
+              urlInfo: '/tradeDetail'
             }
           ]
         }
       },
       methods: {
         testone () {
-          this.$request({
-            type: 'get',
-            url: '/kuaikanv2/comments/hot_floor_list',
-            params: {
-              target_type: 'comic',
-              target_id: 55456
-            },
-            success: function (res) {
-              console.log(res)
-            },
-            failed: function (err) {
-              console.log(err)
-            }
-          })
         }
       }
     }
@@ -167,6 +153,7 @@
         color: white;
         margin-left: 5%;
         margin-top: 3%;
+        outline: none;
       }
     }
     .wallet-bottom{
@@ -181,9 +168,6 @@
         list-style: none;
         li:nth-child(3){
           border-bottom: 5px solid #fafafa;
-        }
-        li:nth-child(4){
-          border-bottom: 25px solid #fafafa;
         }
         li{
           width: 100%;

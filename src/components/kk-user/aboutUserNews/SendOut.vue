@@ -23,7 +23,7 @@
           </div>
 
           <div class="sfb-zan">
-            <img src="../../assets/kk-user/kk-user-zan.png" alt="">
+            <img src="../../../assets/kk-user/kk-user-zan.png" alt="">
             <span>1</span>
             <button>删除</button>
           </div>

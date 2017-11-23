@@ -8,8 +8,13 @@ import GameCenter from '../../components/kk-user/GameCenter'
 import KKStore from '../../components/kk-user/KKStore'
 import UserUpdate from '../../components/kk-user/UserUpdate'
 import UserSetting from '../../components/kk-user/UserSetting'
-import Reply from '../../components/kk-user/Reply'
-import SendOut from '../../components/kk-user/SendOut'
+import UserInfo from '../../components/kk-user/UserInfo'
+import Reply from '../../components/kk-user/aboutUserNews/Reply'
+import SendOut from '../../components/kk-user/aboutUserNews/SendOut'
+import ReadTicket from '../../components/kk-user/aboutUserWallet/ReadTicket'
+import BuyCarton from '../../components/kk-user/aboutUserWallet/BuyCarton'
+import BuyingManagement from '../../components/kk-user/aboutUserWallet/BuyingManagement'
+import TradeDetail from '../../components/kk-user/aboutUserWallet/TradeDetail'
 export default [
   {
     path: '/user',
@@ -72,5 +77,30 @@ export default [
     path: '/userSetting',
     name: 'UserSetting',
     component: UserSetting
+  },
+  {
+    path: '/readTicket',
+    name: 'ReadTicket',
+    component: ReadTicket
+  },
+  {
+    path: '/buyCarton',
+    name: 'BuyCarton',
+    component: BuyCarton
+  },
+  {
+    path: '/buyingManagement',
+    name: 'BuyingManagement',
+    component: BuyingManagement
+  },
+  {
+    path: '/tradeDetail',
+    name: 'TradeDetail',
+    component: TradeDetail
+  },
+  {
+    path: '/userInfo',
+    name: 'UserInfo',
+    component: UserInfo
   }
 ]

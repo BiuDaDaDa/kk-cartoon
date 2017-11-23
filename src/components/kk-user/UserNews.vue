@@ -19,7 +19,6 @@
     </mt-navbar>
 
      <!--tab-container -->
-<<<<<<< HEAD
     <!--<mt-tab-container v-model="selected" :swipeable=true>-->
       <!--<mt-tab-container-item id="s1">-->
         <!--<div class="user-pl-all">-->
@@ -36,7 +35,6 @@
               <!--</div>-->
             <!--</div>-->
           <!--</div>-->
-
           <!--<div class="user-pl-content-all"></div>-->
 
         <!--</div>-->
@@ -46,7 +44,15 @@
         <!--<mt-cell v-for="n in s2" :title="'测试 ' + n" />-->
       <!--</mt-tab-container-item>-->
     <!--</mt-tab-container>-->
-=======
+          <!--<div class="user-pl-content-all"></div>-->
+
+        <!--</div>-->
+      <!--</mt-tab-container-item>-->
+
+      <!--<mt-tab-container-item id="s2">-->
+        <!--<mt-cell v-for="n in s2" :title="'测试 ' + n" />-->
+      <!--</mt-tab-container-item>-->
+    <!--</mt-tab-container>-->
     <mt-tab-container v-model="selected" :swipeable=true>
       <mt-tab-container-item id="s1">
         <div class="user-pl-all">
@@ -100,6 +106,7 @@
       </mt-tab-container-item>
     </mt-tab-container>
 >>>>>>> f590627032231e8466c1de8e34358c8942f4cdc4
+>>>>>>> 0efd7ba24f56676e78d560dce2720dc3b7924020
 
   </div>
 </template>
@@ -110,8 +117,6 @@
     data () {
       return {
         selected: 1,
-        s1: [1, 2, 3, 4, 5, 6, 7, 8],
-        s2: [1, 2, 3, 4, 5, 6, 7],
         noneShow: false,
         changeTags: '回复我的',
         userChoose: ''
@@ -155,7 +160,7 @@
         color: #424242;
         img{
           position: absolute;
-          top: -2vh;
+          top: -1.8vh;
           left: 5vw;
           width: 25px;
           height: 25px;
@@ -190,6 +195,7 @@
     .is-selected{
       border-bottom: none;
       span{
+        color: #ffbb1a;
         border-bottom: 3px solid #ffbb1a;
       }
     }
