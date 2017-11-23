@@ -23,7 +23,6 @@
 </template>
 
 <script>
-  import bus from '@/common/js/eventBus'
   export default {
     name: '',
     props: {
@@ -38,11 +37,10 @@
     },
     methods: {
       moreGo (act, tle) {
-        this.$router.push({path: '/t'})
-        bus.$emit('chuan', act, tle)
+        this.$router.push({path: '/kkFindMore'})
+        let tt = {0: act, 1: tle, 2: 'kkfind'}
+        this.$store.commit('increment', tt)
       }
-    },
-    mounted () {
     }
   }
 </script>

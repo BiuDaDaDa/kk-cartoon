@@ -26,7 +26,7 @@
       </span>
       </button>
       <button class="allComposition">
-      <span class="banner">
+      <span @click="changeFen" class="banner">
         <img src="../../assets/kk-find/kk-find-all.png" alt="">
         <span>全部作品</span>
       </span>

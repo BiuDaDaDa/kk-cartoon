@@ -46,7 +46,7 @@
 </script>
 
 <style scoped lang=less>
-  // nav换行问题
+  // nav换行问题 解决
   // 切换加载数据
   // 切换后偏移量问题 //用子路由数据获取有问题
 .mint-navbar{
