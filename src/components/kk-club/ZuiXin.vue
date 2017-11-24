@@ -55,7 +55,7 @@
         let that = this
         this.$request({
           type: 'get',
-          url: 'v1/feeds/feed_lists',
+          url: 'kuaikanv1/feeds/feed_lists',
           headers: {},
           params: {
             uid: '92673412',
