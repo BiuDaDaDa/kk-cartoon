@@ -3,8 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
-// 全引入 mint-ui
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
 
