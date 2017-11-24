@@ -2,12 +2,12 @@
   <div class="wrap">
     <div class="top">
       <router-link to="/kk-club">
-      <img src="../../assets/hans/houtui.png" alt="">
+        <img src="../../assets/hans/houtui.png" alt="">
       </router-link>
       <span class="dongtai">动态正文</span>
       <img src="../../assets/hans/gengduo.png" alt="">
     </div>
-     <!--连接 -->
+    <!--连接 -->
     <div class="box1" v-if="isloading">
       <div class="box_up">
         <div class="box_up_left">
@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-     <!--评论 -->
+    <!--评论 -->
     <div class="zuixinpinglun">
       <div class="huandian"></div>
       <span>最新评论</span>
