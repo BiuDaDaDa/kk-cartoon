@@ -32,7 +32,7 @@ export default [
     component: ZuiXin
   },
   {
-    path: '/kk-pinglun/:id?',
+    path: '/kk-pinglun/:myid?/:dataid?',
     name: 'PingLun',
     component: PingLun
   },
