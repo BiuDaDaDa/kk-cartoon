@@ -77,7 +77,7 @@
           <div>投稿</div>
         </div>
         <ul id="reply">
-          <router-link to='/' tag="li" class="replys" v-for="(value,index) in commentArr"
+          <router-link to='/' tag="li" class="replys" :key="index" v-for="(value,index) in commentArr"
                        @touchend.native="info(value.topic_id)" @touchmove="slide">
             <img :src="value.user.avatar_url" alt="" class="headimage">
             <div class="content">

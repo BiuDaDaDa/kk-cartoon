@@ -10,7 +10,7 @@
     <div class="content">
       <div class="title">
         <div class="headimg">
-          <img :src="" alt="">
+          <img src="" alt="">
         </div>
         <div class="username"></div>
       </div>
