@@ -98,8 +98,10 @@
       HuoQuListSort () {
         this.$request({
           type: 'get',
-          url: 'v1/topic_new/lists/get_by_tag',
-          header: {},
+          url: 'kuaikanv1/topic_new/lists/get_by_tag',
+          header: {
+            'X-Device': 'A:eef09de00f4e0b31'
+          },
           params: {
             'tag': this.tagId,
             'since': this.since,
@@ -113,8 +115,8 @@
               this.tags = res['data']['data']['tags']
             }
             this.since = res['data']['data']['since']
-            console.log(this.since)
-            console.log(res['data']['data'])
+//            console.log(this.since)
+//            console.log(res['data']['data'])
             // 加载数据
             this.topics = this.topics.concat(res['data']['data']['topics'])
             // 判断是否全部加载
