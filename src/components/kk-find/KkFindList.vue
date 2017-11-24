@@ -1,8 +1,8 @@
 <template>
 <div class="list">
-  <router-link v-for="item in newList" :key="item['id']" to="#">
+  <div v-for="(item,index) in newList" @click="myChangeTab(index)" :key="item['id']" class="imgF">
     <img :src="item['pic']" alt="">
-  </router-link>
+  </div>
 </div>
 </template>
 
@@ -12,6 +12,16 @@
     props: {
       newList: {
         type: Array
+      }
+    },
+    methods: {
+      myChangeTab (index) {
+        if (index === 0) {
+          this.$router.push({path: '/kkList'})
+        }
+        if (index === 3) {
+          this.$router.push({path: '/kkFindFen'})
+        }
       }
     }
   }
@@ -24,11 +34,11 @@
     align-items: center;
     justify-content: space-around;
   }
-.list a{
+.list .imgF{
   width: 15%;
   height: auto;
 }
-.list a img{
+.list .imgF img{
   width: 100%;
   height: 100%;
 }
