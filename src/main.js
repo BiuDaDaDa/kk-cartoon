@@ -4,10 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-// 全引入 mint-ui
+import store from './store'
+
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
-
 import request from './common/js/requestServerSetting'
 
 request(Vue)
@@ -19,6 +19,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

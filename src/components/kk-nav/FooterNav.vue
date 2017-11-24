@@ -53,6 +53,7 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    border-top: 1px solid #f1f1f1;
     div{
       margin-top: 0.5vh;
       height: 8vh;

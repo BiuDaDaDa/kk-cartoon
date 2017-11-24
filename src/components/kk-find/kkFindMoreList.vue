@@ -1,8 +1,8 @@
 <template>
 <div class="kkFindMoreList">
   <div class="topNav">
-    <img class="back" src="" alt="<">
-    {{title}}
+    <img @click="goBack" class="back" src="../../assets/kk-find/kk-find-back.png" alt="<">
+    {{countMoreList['1']}}
   </div>
   <div class="wrap"  v-infinite-scroll="loadMore"
         infinite-scroll-disabled="loading"
@@ -35,20 +35,11 @@
 </template>
 
 <script>
-  import bus from '@/common/js/eventBus'
   export default {
     name: '',
-    props: {
-      goShow: {
-        type: Boolean
-      }
-    },
     data () {
       return {
-        action: '',
-        title: '',
         topics: [],
-        module_list_id: '262',
         offset: '0',
         diMsg: '',
         loading: false // 加载状态
@@ -59,7 +50,7 @@
         this.$request({
           type: 'get',
           // api.kuaikanmanhua.com/v1/topic_new/discovery_module_list/262?offset=20&limit=20&style=3
-          url: 'kuaikanv1/topic_new/discovery_module_list/262',
+          url: 'kuaikanv1/' + this.countMoreList['0'],
           header: {},
           params: {
             offset: this.offset,
@@ -67,7 +58,7 @@
             style: 3
           },
           success: function (res) {
-            console.log(res['data']['data'])
+//            console.log(res['data']['data'])
             // 加载数据
             this.topics = this.topics.concat(res['data']['data']['topics'])
             // 判断是否全部加载
@@ -83,7 +74,7 @@
         })
       },
       loadMore () {
-        if (!this.goShow && !this.loading) {
+        if (!this.loading) {
           this.loading = true
           if (this.diMsg === '') {
             this.offset += 20
@@ -92,18 +83,19 @@
             }, 2000)
           }
         }
+      },
+      goBack () {
+        this.$router.push({path: '/' + this.countMoreList['2']})
       }
     },
     mounted () {
       this.loading = true
       this.HuoQuListSort()
-      console.log(this.action, this.title)
-      bus.$on('chuan', function (act, tle) {
-        this.action = act
-        console.log(1, act, tle)
-        console.log(this.action, this.title)
-        this.title = tle
-      })
+    },
+    computed: {
+      countMoreList () {
+        return this.$store.state.countMoreList
+      }
     }
   }
 </script>
@@ -117,12 +109,16 @@
     height: 40px;
     position: fixed;
     top: 0;
-    z-index: 10;
-    background-color: red;
+    z-index: 20;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
   }
   .topNav .back{
     position: absolute;
+    top: 30%;
     left: 5%;
+    width: 16px;
+    height: 16px;
   }
   .wrap{
     margin-top: 10%;

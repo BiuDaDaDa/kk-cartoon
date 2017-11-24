@@ -1,50 +1,51 @@
 <template>
-  <div id="my-zui-xin">
-  <div class="wrap" v-if="isloading">
-    <div class="box" v-for="(common, index) in array.data.feeds">
-      <div class="box_up">
-        <div class="box_up_left">
-          <img class="usertx" :src="common.user.avatar_url" alt="">
-          <span class="username">{{common.user.nickname}}</span>
-        </div>
-        <div class="box_up_right">
-          <img src="../../assets/hans/jia.png" alt="">
-          <span>关注</span>
-        </div>
-      </div>
-      <div class="box_content">
-        <p v-html="huanhang(common.content.text)"></p>
-      </div>
-      <div class="box_img">
-        <img :class="'fbtu'+ common.content.images.length" v-for="(value, index) in common.content.images" :src="common.content.image_base + value" alt="">
-      </div>
-      <div class="box_bottom">
-        <div class="box_bottom_left">
-          <span v-html="getLocalTime(common.updated_at)"></span>
-        </div>
-        <div class="box_bottom_right">
-          <div class="dianzang">
-            <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
-            <span>{{common.likes_count}}</span>
+  <div id="my-clud">
+    <div class="wrap" v-if="isloading">
+      <div class="box" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
+        <div class="box_up">
+          <div class="box_up_left">
+            <img class="usertx" :src="common.user.avatar_url" alt="">
+            <span class="username">{{common.user.nickname}}</span>
           </div>
-          <div class="pinglun">
-            <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
-            <span>{{common.comments_count}}</span>
+          <div class="box_up_right">
+            <img src="../../assets/hans/jia.png" alt="">
+            <span>关注</span>
+          </div>
+        </div>
+        <div class="box_content">
+          <p v-html="huanhang(common.content.text)"></p>
+        </div>
+        <div class="box_img">
+          <img :class="'fbtu'+ common.content.images.length" v-for="(value, index) in common.content.images" :src="common.content.image_base + value" alt="">
+        </div>
+        <div class="box_bottom">
+          <div class="box_bottom_left">
+            <span v-html="getLocalTime(common.updated_at)"></span>
+          </div>
+          <div class="box_bottom_right">
+            <div class="dianzang">
+              <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
+              <span>{{common.likes_count}}</span>
+            </div>
+            <div class="pinglun" @click="tab(common.share_url)" onClick="event.cancelBubble = true">
+              <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
+              <span>{{common.comments_count}}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
 </template>
 
 <script>
   export default {
-    name: 'ZuiXin',
+    name: '',
     data () {
       return {
         isloading: false,
         array: []
+//        feed: []
       }
     },
     mounted () {
@@ -64,7 +65,6 @@
             catalog_type: '1'
           },
           success: function (res) {
-//            console.log(res.data)
             that.isloading = true
             that.array = res.data
           },
@@ -88,6 +88,18 @@
         if (val.indexOf(/\n/g) === -1) {
           return val.replace(/\n/g, '<br/>')
         }
+      },
+      tab: function (ev) {
+        // 拆分字符串,取右
+        this.myid = ev.split('feeds/')[1]
+        this.$router.push({path: `/kk-daping/${this.myid}`})
+      },
+      jump: function (ev, ee) {
+        // 拆分字符串,取右
+        this.myid = ev.split('feeds/')[1]
+//        this.$router.push({name: 'PingLun', params: {id: this.myid}})
+        this.dataid = ee
+        this.$router.push({name: 'PingLun', params: {id: this.myid, dataid: this.dataid}})
       }
     }
   }
@@ -106,6 +118,7 @@
     margin-bottom: 5px;
   }
   .box_up{
+    width: 385px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -164,9 +177,6 @@
   .fbtu4:nth-of-type(2n){
     margin-right: 30%;
   }
-  /*.box_bottom_left{*/
-    /*margin-left: 20px;*/
-  /*}*/
   .box_bottom_right{
     display: flex;
     align-items: center;
@@ -177,6 +187,10 @@
     margin-right: 15px;
   }
   .pinglun{
+    display: flex;
+    align-items: center;
+  }
+  .rou{
     display: flex;
     align-items: center;
   }

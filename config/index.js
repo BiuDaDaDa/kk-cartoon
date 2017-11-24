@@ -65,6 +65,33 @@ module.exports = {
         headers: {
           Host: 'api.kkmh.com'
         }
+      },
+      '/pcv1': {
+        target: 'http://www.kuaikanmanhua.com',
+        pathRewrite: {
+          '^/pcv1': '/v1'
+        },
+        headers: {
+          Host: 'www.kuaikanmanhua.com'
+        }
+      },
+      '/pcv2': {
+        target: 'http://www.kuaikanmanhua.com',
+        pathRewrite: {
+          '^/pcv2': '/v2'
+        },
+        headers: {
+          Host: 'www.kuaikanmanhua.com'
+        }
+      },
+      '/pcv3': {
+        target: 'http://www.kuaikanmanhua.com',
+        pathRewrite: {
+          '^/pcv3': '/v3'
+        },
+        headers: {
+          Host: 'www.kuaikanmanhua.com'
+        }
       }
     }
   },

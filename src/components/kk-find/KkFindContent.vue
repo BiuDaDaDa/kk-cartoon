@@ -3,7 +3,9 @@
 <div v-for="item in newContent" class="boxBar">
   <div v-if="item['topics']" class="BTitle">
     <span class="title">{{item['title']}}</span>
-    <span class="more" @click="moreGo(item['action'],item['title'])">更多&nbsp;></span>
+    <span class="more" @click="moreGo(item['action'],item['title'])">更多&nbsp;
+      <img src="../../assets/kk-find/kk-find-more.png" alt=">">
+    </span>
   </div>
   <div class="boxF">
     <router-link v-for="ite in item['topics']||item['banners']" to="#" :key="ite['target_id']" :class="'box'+item['item_type']">
@@ -23,7 +25,6 @@
 </template>
 
 <script>
-  import bus from '@/common/js/eventBus'
   export default {
     name: '',
     props: {
@@ -38,11 +39,10 @@
     },
     methods: {
       moreGo (act, tle) {
-        this.$router.push({path: '/t'})
-        bus.$emit('chuan', act, tle)
+        this.$router.push({path: '/kkFindMore'})
+        let tt = {0: act, 1: tle, 2: 'kkfind'}
+        this.$store.commit('increment', tt)
       }
-    },
-    mounted () {
     }
   }
 </script>
@@ -68,19 +68,28 @@
   font-size: 14px;
   color: #7e8c8d;
 }
+  .BTitle .more img{
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 3px;
+  }
 .boxF{
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-  .box14,.box2, .box18{
+  .box14,.box2,.box18{
     width: 49%;
     margin-bottom: 10px;
   }
   .box14 .boxTop, .box2 .boxTop{
     height:127px;
   }
+  .box18 .boxTop{
+    height: auto;
+   }
   .box4,.box5{
     width: 33%;
     margin-bottom: 10px;

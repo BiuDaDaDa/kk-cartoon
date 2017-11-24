@@ -7,8 +7,7 @@
         </router-link>
       </div>
       <div class="btn">
-        <div>最新评论</div>
-        <div>最热评论</div>
+        <div v-for="(jump, i) in jumps" @click="clicked(i)">{{jump.text}}</div>
       </div>
     </div>
     <div class="div1"></div>
@@ -47,27 +46,16 @@
     data () {
       return {
         parray: [],
-        feed1: this.$route.params.id
-//        feed2: 392097979445543040
+        feed1: this.$route.params.id,
+        jumps: [
+          {text: '最新评论'},
+          {text: '最热评论'}
+        ],
+        tabs: ''
       }
     },
     mounted () {
-//      this.fecthHomeData()
-      let that = this
-//      console.log(this.$route.params.id)
-      this.$request({
-        type: 'get',
-        url: '/kuaikanv2/comments/floor_list',
-        headers: {},
-        params: {
-          'target_type': 'feed',
-          'target_id': this.feed1
-        },
-        success: function (res) {
-          that.parray = res.data.data.comment_floors
-        },
-        failed: function () {}
-      })
+      this.fecthHomeData()
     },
     methods: {
       // 换行
@@ -82,6 +70,33 @@
           return false
         } else {
           return true
+        }
+      },
+      fecthHomeData () {
+        let that = this
+        this.$request({
+          type: 'get',
+          url: '/kuaikanv2/comments/floor_list',
+          headers: {},
+          params: {
+            'target_type': 'feed',
+            'target_id': this.feed1,
+            'order': this.tabs
+          },
+          success: function (res) {
+            that.parray = res.data.data.comment_floors
+          },
+          failed: function () {}
+        })
+      },
+      clicked (i) {
+//        console.log(i)
+        if (i === 0) {
+          this.tabs = 'time'
+          this.fecthHomeData()
+        } else {
+          this.tabs = 'score'
+          this.fecthHomeData()
         }
       }
     }

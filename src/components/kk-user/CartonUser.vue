@@ -4,7 +4,7 @@
       <div class="user-top"></div>
 
       <div class="user-bottom">
-        <router-link class="userIn" to="/userInfo">
+        <router-link class="userIn" to="/userLogin">
           <div class="user-head">
           </div>
         </router-link>

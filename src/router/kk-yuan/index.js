@@ -15,6 +15,11 @@ import ReadTicket from '../../components/kk-user/aboutUserWallet/ReadTicket'
 import BuyCarton from '../../components/kk-user/aboutUserWallet/BuyCarton'
 import BuyingManagement from '../../components/kk-user/aboutUserWallet/BuyingManagement'
 import TradeDetail from '../../components/kk-user/aboutUserWallet/TradeDetail'
+import UserLogin from '../../components/kk-user/UserLogin'
+import UserReg from '../../components/kk-user/UserReg'
+import UserForget from '../../components/kk-user/UserForget'
+import UserVerify from '../../components/kk-user/UserVerify'
+
 export default [
   {
     path: '/user',
@@ -102,5 +107,25 @@ export default [
     path: '/userInfo',
     name: 'UserInfo',
     component: UserInfo
+  },
+  {
+    path: '/userLogin',
+    name: 'UserLogin',
+    component: UserLogin
+  },
+  {
+    path: '/userReg',
+    name: 'UserReg',
+    component: UserReg
+  },
+  {
+    path: '/userForget',
+    name: 'UserForget',
+    component: UserForget
+  },
+  {
+    path: '/userVerify',
+    name: 'UserVerify',
+    component: UserVerify
   }
 ]

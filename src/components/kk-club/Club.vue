@@ -1,7 +1,7 @@
 <template>
   <div id="my-clud">
   <div class="wrap" v-if="isloading">
-    <div class="box" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url)">
+    <div class="box" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
       <div class="box_up">
         <div class="box_up_left">
           <img class="usertx" :src="common.user.avatar_url" alt="">
@@ -91,13 +91,15 @@
       },
       tab: function (ev) {
         // 拆分字符串,取右
-        this.myidd = ev.split('feeds/')[1]
-        this.$router.push({path: `/kk-daping/${this.myidd}`})
+        this.myid = ev.split('feeds/')[1]
+        this.$router.push({path: `/kk-daping/${this.myid}`})
       },
-      jump: function (ev) {
+      jump: function (ev, ee) {
         // 拆分字符串,取右
         this.myid = ev.split('feeds/')[1]
-        this.$router.push({path: `/kk-pinglun/${this.myid}`})
+//        this.$router.push({name: 'PingLun', params: {id: this.myid}})
+        this.dataid = ee
+        this.$router.push({name: 'PingLun', params: {id: this.myid, dataid: this.dataid}})
       }
     }
   }
