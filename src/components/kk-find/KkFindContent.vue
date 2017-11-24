@@ -1,26 +1,26 @@
 <template>
 <div class="content">
-<div v-for="item in newContent" class="boxBar">
-  <div v-if="item['topics']" class="BTitle">
-    <span class="title">{{item['title']}}</span>
-    <span class="more" @click="moreGo(item['action'],item['title'])">更多&nbsp;
-      <img src="../../assets/kk-find/kk-find-more.png" alt=">">
-    </span>
-  </div>
-  <div class="boxF">
-    <router-link v-for="ite in item['topics']||item['banners']" to="#" :key="ite['target_id']" :class="'box'+item['item_type']">
-      <div class="boxTop">
-        <img :src="ite['pic']" alt="">
+  <div v-for="item in newContent" class="boxBar">
+    <div v-if="item['topics']" class="BTitle">
+      <span class="title">{{item['title']}}</span>
+      <span class="more" @click="moreGo(item['action'],item['title'])">更多&nbsp;
+        <img src="../../assets/kk-find/kk-find-more.png" alt=">">
+     </span>
+    </div>
+    <div class="boxF">
+      <div v-for="ite in item['topics']||item['banners']"  :key="ite['target_id']" :class="'box'+item['item_type']">
+        <div class="boxTop">
+          <img :src="ite['pic']" alt="">
+        </div>
+        <div v-if="item['topics']" class="boxBottom">
+          <p class="title">{{ite['title']}}</p>
+          <p class="recommended_text">{{ite['recommended_text']}}
+            <span v-if="!ite['recommended_text']" v-for="val in ite['category']">{{val}}</span>
+          </p>
+        </div>
       </div>
-      <div v-if="item['topics']" class="boxBottom">
-        <p class="title">{{ite['title']}}</p>
-        <p class="recommended_text">{{ite['recommended_text']}}
-          <span v-if="!ite['recommended_text']" v-for="val in ite['category']">{{val}}</span>
-        </p>
-      </div>
-    </router-link>
+    </div>
   </div>
-</div>
 </div>
 </template>
 
