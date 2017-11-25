@@ -1,23 +1,33 @@
 <template>
   <div>
     <div class="top">
-      <div>
+      <!--<div @click="isback">-->
         <router-link to="/kk-club">
         <img class="x" src="../../assets/hans/x.png" alt="">
         </router-link>
-      </div>
+      <!--</div>-->
       <div class="btn">
         <div v-for="(jump, i) in jumps" @click="clicked(i)">{{jump.text}}</div>
       </div>
     </div>
     <div class="div1"></div>
-    <div class="box" v-for="(common, index) in parray" :key="common.id">
+    <div class="box" v-for="(common, j) in parray" :key="common.id">
       <div class="box_left">
         <img class="usertx" :src="common.root.user.avatar_url" alt="">
       </div>
       <div class="box_right">
         <p class="username">{{common.root.user.nickname}}</p>
         <p class="usertxt" v-html="huanhang(common.root.content)"></p>
+        <!---->
+        <div class="children_comments" v-if="common.children_comments.length>0" @click="tiao1(common.root.id)">
+          <div v-for="(v,i) in common.children_comments">
+            <span>{{v.user.nickname}}</span>
+            : {{v.content}}
+          </div>
+          <span v-if="common.children_total == 1"></span>
+          <span v-else="common.children_total !== 1">共{{common.children_total}}条回复</span>
+        </div>
+        <!---->
         <div class="box_right_bottom">
           <span class="time">{{common.root.created_at_info}}</span>
           <div class="zang">
@@ -98,12 +108,37 @@
           this.tabs = 'score'
           this.fecthHomeData()
         }
+      },
+      tiao1 (ev) {
+//        console.log(ev)
+        this.myid = ev
+        this.$router.push({name: 'HuiHua', params: {id: this.myid}})
       }
+//      isback () {
+//        this.$router.go(-1)
+//      }
     }
   }
 </script>
 
 <style scoped lang="less">
+  .children_comments {
+    background-color: #F6F9FA;
+    padding: 7px 10px;
+    width: 320px;
+    margin: 15px 0;
+  }
+  .children_comments>div {
+    font-size: 13px;
+  }
+  .children_comments>div>span {
+    color: #757575;
+    font-size: 13px;
+  }
+  .children_comments>span {
+    color: deepskyblue;
+    font-size: 13px;
+  }
   .box{
     width: 100%;
     display: flex;

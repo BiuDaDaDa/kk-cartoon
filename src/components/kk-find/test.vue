@@ -1,11 +1,8 @@
-
 <template>
   <div class="test">
   <mt-navbar v-model="selected">
     <mt-tab-item @click="change1(it)" v-for="it in arr" class="tag" :class="{actTag:TagId = it}" :key="it" :id='it'>选项{{it}}</mt-tab-item>
   </mt-navbar>
-
-  <!-- tab-container -->
   <mt-tab-container v-model="selected" :swipeable=true>
     <mt-tab-container-item v-for="it in arr" :key="it" :id='it'>
       <mt-cell v-for="n in tocArr[it-1]" :key="n" :title="n" />
@@ -13,7 +10,6 @@
   </mt-tab-container>
   </div>
 </template>
-
 <script>
   export default {
     name: '',

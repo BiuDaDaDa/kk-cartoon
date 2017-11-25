@@ -1,7 +1,7 @@
 <template>
   <div id="my-clud">
   <div class="wrap" v-if="isloading">
-    <div class="box" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
+    <div class="box" @touchmove="move" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
       <div class="box_up">
         <div class="box_up_left">
           <img class="usertx" :src="common.user.avatar_url" alt="">
@@ -97,9 +97,11 @@
       jump: function (ev, ee) {
         // 拆分字符串,取右
         this.myid = ev.split('feeds/')[1]
-//        this.$router.push({name: 'PingLun', params: {id: this.myid}})
         this.dataid = ee
         this.$router.push({name: 'PingLun', params: {id: this.myid, dataid: this.dataid}})
+      },
+      move: function () {
+//        console.log(window.scrollY)
       }
     }
   }
