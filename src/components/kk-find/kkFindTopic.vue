@@ -31,7 +31,7 @@
     <div  v-infinite-scroll="loadMore"
           infinite-scroll-disabled="loading"
           infinite-scroll-distance="100">
-      <div v-for="myTopic in topics" class="box">
+      <div v-for="myTopic in topics" @touchstart="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
         <div class="bLeft">
           <img :src="myTopic['cover_image_url']" alt="">
         </div>
@@ -222,6 +222,20 @@
         this.since = 0
         this.topics = []
         this.HuoQuListSort()
+      },
+      changeGo1 () {
+        this.scrollTop1 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+      },
+      changeGo2 (tarId) {
+        this.scrollTop2 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 === this.scrollTop2) {
+          this.cartoonGo(tarId)
+        }
+      },
+      cartoonGo (tarId) {
+        this.$router.push({name: 'kkcartoontitle', params: {id: tarId}})
       }
     },
     computed: {

@@ -2,19 +2,22 @@
   <div>
     <div class="nav">
       <div @touchend="back"><</div>
+      <div><</div>
       <div>精彩点评</div>
       <div>
         <img src="../../assets/kkcartoontitle/ellipsis.png" alt="">
       </div>
     </div>
-    <div class="content">
-      <div class="title">
-        <div class="headimg">
-          <!--<img :src="" alt="">-->
-        </div>
-        <div class="username">1</div>
-      </div>
-    </div>
+    <!--<div class="content">-->
+      <!--<div class="title">-->
+        <!--<div class="headimg">-->
+          <!--&lt;!&ndash;<img :src="" alt="">&ndash;&gt;-->
+        <!--</div>-->
+        <!--<div class="username">1</div>-->
+          <!--<img src="" alt="">-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 
