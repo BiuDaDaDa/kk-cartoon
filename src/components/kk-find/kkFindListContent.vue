@@ -1,7 +1,7 @@
 <template>
 <div class="ListContent">
   <div class="topNav">
-    <img @click="goBack" class="back" src="" alt="<">
+    <img @click="goBack" class="back" src="../../assets/kk-find/kk-find-back.png" alt="<">
     排行榜
   </div>
   <div class="navList">
@@ -11,13 +11,14 @@
   </div>
   <div class="wrap">
     <div class="UpdateList">下次出榜时间:&nbsp;&nbsp;{{UpDateTime}}</div>
-    <div v-for="myTopic in topics" class="box">
+    <div v-for="(myTopic,index) in topics" @touchstart="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
       <div class="bLeft">
         <img :src="myTopic['vertical_image_url']" alt="">
       </div>
       <div class="bRight">
         <div class="topOne">
-          <img src="" alt="1">
+          <img v-if="index===0||index===1||index===2" :src="require('../../assets/kk-find/topList'+index+'.jpg')" alt=''>
+          <span v-if="index!==0&&index!==1&&index!==2">{{index+1<10?'0'+(index+1):index+1}}</span>
         </div>
         <p class="title">{{myTopic['title']}}</p>
         <p class="author">作者：{{myTopic['user']['nickname']}}</p>
@@ -65,7 +66,7 @@
             // 加载数据
             this.topics = res['data']['data']['topics']
             this.UpDateTime = res['data']['data']['next_update_date']
-            console.log(this.topics)
+//            console.log(this.topics)
           },
           failed: function (err) {
             console.log(err)
@@ -74,6 +75,20 @@
       },
       goBack () {
         this.$router.push({ path: '/kkfind' })
+      },
+      changeGo1 () {
+        this.scrollTop1 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+      },
+      changeGo2 (tarId) {
+        this.scrollTop2 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 === this.scrollTop2) {
+          this.cartoonGo(tarId)
+        }
+      },
+      cartoonGo (tarId) {
+        this.$router.push({name: 'kkcartoontitle', params: {id: tarId}})
       }
     },
     mounted () {
@@ -98,6 +113,9 @@
   .topNav .back{
     position: absolute;
     left: 5%;
+    top: 30%;
+    width: 16px;
+    height: 16px;
   }
   .navList{
     width: 100%;
@@ -161,7 +179,17 @@
     right: -20%;
     width: 26px;
     height: 26px;
-    border: 1px solid blue;
+  }
+  .bRight .topOne img{
+    width:150%;
+    height: auto;
+  }
+  .bRight .topOne span{
+    font-family: "Times New Roman";
+    font-size: 22px;
+    font-weight: bolder;
+    color: grey;
+
   }
   .bRight p{
     margin-bottom: 5%;

@@ -1,13 +1,13 @@
 <template>
 <div class="kkFindMoreList">
   <div class="topNav">
-    <img @click="goBack" class="back" src="" alt="<">
+    <img @click="goBack" class="back" src="../../assets/kk-find/kk-find-back.png" alt="<">
     {{countMoreList['1']}}
   </div>
   <div class="wrap"  v-infinite-scroll="loadMore"
         infinite-scroll-disabled="loading"
         infinite-scroll-distance="100">
-    <div v-for="myTopic in topics" class="box">
+    <div v-for="myTopic in topics" class="box" @touchstart="changeGo1" @touchend="changeGo2(myTopic['id'])">
       <div class="bLeft">
         <img :src="myTopic['cover_image_url']" alt="">
       </div>
@@ -58,7 +58,7 @@
             style: 3
           },
           success: function (res) {
-//            console.log(res['data']['data'])
+            console.log(res['data']['data'])
             // 加载数据
             this.topics = this.topics.concat(res['data']['data']['topics'])
             // 判断是否全部加载
@@ -86,6 +86,20 @@
       },
       goBack () {
         this.$router.push({path: '/' + this.countMoreList['2']})
+      },
+      changeGo1 () {
+        this.scrollTop1 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+      },
+      changeGo2 (tarId) {
+        this.scrollTop2 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 === this.scrollTop2) {
+          this.cartoonGo(tarId)
+        }
+      },
+      cartoonGo (tarId) {
+        this.$router.push({name: 'kkcartoontitle', params: {id: tarId}})
       }
     },
     mounted () {
@@ -111,10 +125,14 @@
     top: 0;
     z-index: 20;
     background-color: #fff;
+    border-bottom: 1px solid #ccc;
   }
   .topNav .back{
     position: absolute;
+    top: 30%;
     left: 5%;
+    width: 16px;
+    height: 16px;
   }
   .wrap{
     margin-top: 10%;

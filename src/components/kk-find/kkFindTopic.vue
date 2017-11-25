@@ -1,5 +1,20 @@
 <template>
 <div @touchstart="changePos1" @touchend="changePos2" class="myTopics">
+  <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
+    <div class="Nav" :class="{activeNav:!isShow}">
+      <div class="diBg" :class="{actDiBg:!isShow}">
+        <img @click="genderChange" src="" alt="男">
+      </div>
+      <div class="btnN">
+        <span @click="changeTui" :class="{actBtn:isShow}">推荐</span>
+        <span @click="changeFen" :class="{actBtn:!isShow}">分类</span>
+      </div>
+      <div class="diBg" :class="{actDiBg:!isShow}">
+        <img src="../../assets/kk-find/kk-find-search1.png" alt="🔍">
+      </div>
+    </div>
+  </div>
+  <div class="follow">
   <div  ref="listSort" class="listSort" style="top: 0px">
     <span v-for="tag in tags" class="tagSort"
         :class="{activeTagSort:tagId==tag['tag_id']}" @click="changeTagId(tag['tag_id'])">
@@ -7,16 +22,16 @@
     </span>
   </div>
   <div class="myTopicNav">
-    <span class="muLu" :class="{activeMuLu:isShow === 1}" @click="changeType(1)">推荐</span>
+    <span class="muLu" :class="{activeMuLu:isShow1 === 1}" @click="changeType(1)">推荐</span>
     <span class="fenGe">|</span>
-    <span class="muLu" :class="{activeMuLu:isShow === 2}" @click="changeType(2)">最火热</span>
+    <span class="muLu" :class="{activeMuLu:isShow1 === 2}" @click="changeType(2)">最火热</span>
     <span class="fenGe">|</span>
-    <span class="muLu" :class="{activeMuLu:isShow === 3}" @click="changeType(3)">新上架</span>
+    <span class="muLu" :class="{activeMuLu:isShow1 === 3}" @click="changeType(3)">新上架</span>
   </div>
     <div  v-infinite-scroll="loadMore"
           infinite-scroll-disabled="loading"
           infinite-scroll-distance="100">
-      <div v-for="myTopic in topics" class="box">
+      <div v-for="myTopic in topics" @touchstart="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
         <div class="bLeft">
           <img :src="myTopic['cover_image_url']" alt="">
         </div>
@@ -26,7 +41,7 @@
             <span></span>
           </p>
           <p class="author">{{myTopic['user']['nickname']}}</p>
-          <div class="jie" v-show="isShow===1">
+          <div class="jie" v-show="isShow1===1">
             <span class="zan">
               <img src="../../assets/kk-find/kk-find-zan.png" alt="">
               <span>{{myTopic['likes_count']>100000?Math.floor(myTopic['likes_count']/10000)+'万':myTopic['likes_count']}}</span>
@@ -36,13 +51,13 @@
               <span>{{myTopic['comments_count']>100000?Math.floor(myTopic['comments_count']/10000)+'万':myTopic['comments_count']}}</span>
             </span>
           </div>
-          <div class="jie" v-show="isShow===2">
+          <div class="jie" v-show="isShow1===2">
             <span class="comment">
               <img src="../../assets/kk-find/kk-find-hot.png" alt="">
               <span>{{myTopic['view_count']>100000?myTopic['view_count']>100000000?Math.floor(myTopic['view_count']/100000000)+'亿':Math.floor(myTopic['view_count']/10000)+'万':myTopic['view_count']}}</span>
             </span>
           </div>
-          <div class="jie" v-show="isShow===3">
+          <div class="jie" v-show="isShow1===3">
             <span class="comment">
               <span>{{myTopic['latest_comic_title']}}</span>
             </span>
@@ -50,16 +65,20 @@
         </div>
        </div>
     </div>
+  </div>
+  <FooterNav ></FooterNav>
 </div>
 </template>
 
 <script>
+  import FooterNav from '../../components/kk-nav/FooterNav'
   export default {
     name: '',
+    components: {
+      FooterNav
+    },
     props: {
-      goShow: {
-        type: Boolean
-      }
+      BB: {}
     },
     data () {
       return {
@@ -67,28 +86,38 @@
         topics: [],
         tagId: '0',
         since: '0',
-        gender: '1',
         sort: 1,
         diMsg: '',
         loading: false, // 加载状态
-        isShow: 1,
+        isShow: false,
+        isShow1: 1,
         scrollTop1: '',
-        scrollTop2: '',
-        selected: ''
+        scrollTop2: ''
       }
     },
     methods: {
+      changeTui () {
+        if (!this.isShow) {
+          this.isShow = true
+          this.$router.push({path: '/kkFind'})
+        }
+      },
+      changeFen () {
+        if (this.isShow) {
+          this.isShow = false
+          this.$router.push({path: '/kkFindFen'})
+        }
+      },
       changeTagId (evId) {
         this.loading = true
         // 初始化状态
-        this.sort = 1
         this.since = '0'
         this.topics = []
         this.tagId = evId
         this.HuoQuListSort()
       },
       changeType (type) {
-        this.isShow = type
+        this.isShow1 = type
         this.loading = true
         this.since = '0'
         this.topics = []
@@ -132,7 +161,7 @@
         })
       },
       loadMore () {
-        if (!this.goShow && !this.loading) {
+        if (!this.loading) {
           this.loading = true
           setTimeout(() => {
             this.HuoQuListSort()
@@ -150,6 +179,7 @@
       },
       changePos () {
         let myTimer = null
+        let myTimer2 = null
         let _this = this
         // 向下滑动
         if (this.scrollTop1 < this.scrollTop2 && this.$refs.listSort.style.top === 0 + 'px') {
@@ -169,6 +199,48 @@
             }
           }, 10)
         }
+        if (this.scrollTop1 < this.scrollTop2 && this.$refs.kkFindNav.offsetTop === 0) {
+          clearInterval(myTimer2)
+          myTimer2 = setInterval(function () {
+            _this.$refs.kkFindNav.style.top = _this.$refs.kkFindNav.offsetTop - 1 + 'px'
+            if (_this.$refs.kkFindNav.offsetTop === -60) {
+              clearInterval(myTimer2)
+            }
+          }, 10)
+        } else if (this.scrollTop1 > this.scrollTop2 && this.$refs.kkFindNav.offsetTop === -60) {
+          clearInterval(myTimer2)
+          myTimer2 = setInterval(function () {
+            _this.$refs.kkFindNav.style.top = _this.$refs.kkFindNav.offsetTop + 1 + 'px'
+            if (_this.$refs.kkFindNav.offsetTop === 0) {
+              clearInterval(myTimer2)
+            }
+          }, 10)
+        }
+      },
+      genderChange () {
+        this.$store.commit('genderTo')
+        this.since = 0
+        this.topics = []
+        this.HuoQuListSort()
+      },
+      changeGo1 () {
+        this.scrollTop1 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+      },
+      changeGo2 (tarId) {
+        this.scrollTop2 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 === this.scrollTop2) {
+          this.cartoonGo(tarId)
+        }
+      },
+      cartoonGo (tarId) {
+        this.$router.push({name: 'kkcartoontitle', params: {id: tarId}})
+      }
+    },
+    computed: {
+      gender () {
+        return this.$store.state.gender
       }
     },
     mounted () {
@@ -179,6 +251,63 @@
 </script>
 
 <style scoped lang=less>
+  .myTopics{
+    padding-bottom:15%;
+  }
+  .kkFindNav{
+    padding-top: 20px;
+    width: 100%;
+    position: fixed;
+    z-index: 20;
+
+  }
+  .Nav{
+    display: flex;
+    height: 40px;
+    padding:0 5%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .diBg{
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,.6);
+  }
+  .actDiBg{
+    background-color: #fff;
+  }
+  .btnN{
+    height: 24px;
+    width: 28%;
+    background-color: rgba(0,0,0,.6);
+    border-radius: 12px;
+    border:1px solid rgba(0,0,0,.6);
+  }
+  .btnN span{
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 200;
+    text-align: center;
+    line-height: 24px;
+    color: #fff;
+    padding: 0 10%;
+    outline: none;
+  }
+  .btnN .actBtn{
+    background-color: #fff;
+    color: orange;
+    border-radius: 12px;
+  }
+  .activeNav{
+    background-color: #fff;
+  }
+  .follow{
+    padding-top: 38%;
+  }
   .listSort{
     position: fixed;
     width: 100%;

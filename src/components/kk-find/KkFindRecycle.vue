@@ -1,10 +1,10 @@
 <template>
 <div class="recycle">
   <mt-swipe ref="swipe" :auto="6000">
-    <mt-swipe-item v-for="item in newRecycle" :key="item['id']">
-      <router-link to="#">
+    <mt-swipe-item v-for="item in newRecycle" :key="item['id']" >
+      <div @click="cartoonGo(item['target_id'])">
         <img :src="item['pic']" alt="">
-      </router-link>
+      </div>
     </mt-swipe-item>
   </mt-swipe>
   <div class="bottomBorder"></div>
@@ -24,13 +24,9 @@
         activeIndex: ''
       }
     },
-    beforeUpdate () {
-      // 记录更新前的下标
-      this.activeIndex = this.$refs.swipe.index
-    },
-    watch: {
-      activeIndex: function (val, oldVal) {
-//        console.log('newIndex: %s, oldIndex: %s', val, oldVal)
+    methods: {
+      cartoonGo (tarId) {
+        this.$router.push({name: 'kkcartoontitle', params: {id: tarId}})
       }
     }
   }

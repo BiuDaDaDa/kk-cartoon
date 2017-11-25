@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--选集-->
     <div id="out">
       <div id="mask"></div>
       <router-link to='/' class="back"><</router-link>
@@ -13,7 +14,7 @@
          </button>
        </div>
        <div class="right">
-         总热度&nbsp;{{(jsText.view_count/100000000).toFixed(2)}}亿
+         总热度&nbsp;{{jsText.view_count | getCount}}
        </div>
       </div>
     </div>
@@ -25,14 +26,15 @@
     <div id="serialize" v-if="tf">
       <div>{{jsText.update_status}}{{jsText.update_day}}</div>
       <div>
-        倒序
-        <img src="../../assets/kkcartoontitle/upp.png" alt="" class="order" @click='order' ref="img">
+        <span v-text="text"></span>
+        <img src="../../assets/kkcartoontitle/upp.png" class="order" @touchend='order' ref="img">
       </div>
     </div>
     <ul id="contentList" v-if="tf">
-      <router-link to="/kkcartitle" v-for="(key,i) in jsText.comics"
+      <router-link to="/kkcartitle" v-for="(key,i) in timeArr"
                    :key="key.id" tag="li" class="writings" @touchend.native="kk(i,key.id)"
                    @touchstart.native="start" @touchmove.native="move">
+        <div class="mask" v-if="!key.is_free">{{key.see_first_alert}}</div>
         <img :src="key.cover_image_url" alt="" class="images">
         <div class="rightContent">
           <div class="history" v-if="clock"></div>
@@ -49,12 +51,54 @@
         </div>
       </router-link>
     </ul>
+    <!--详情-->
+    <div v-if="!tf">
+      <div id="introduction">
+        <div id="production">作品简介</div>
+        <div id="text">{{textbox}}</div>
+        <div id="author">
+          <div>作者:</div>
+          <div>
+            <img :src="headimg" alt="" id="headimg">
+          </div>
+          <div>{{nickname}}</div>
+        </div>
+      </div>
+      <!--人气值-->
+      <div id="moods">
+        <div>人气值{{popularity | getCount}}</div>
+        <div>总评论{{comments | getCount}}</div>
+        <div>{{count | getCount}}人已关注</div>
+      </div>
+      <!--精彩点评-->
+      <div>
+        <div id="title">
+          <div>精彩点评</div>
+          <div>投稿</div>
+        </div>
+        <ul id="reply">
+          <router-link to='/' tag="li" class="replys" :key="index" v-for="(value,index) in commentArr"
+                       @touchend.native="info(value.topic_id)" @touchmove="slide">
+            <img :src="value.user.avatar_url" alt="" class="headimage">
+            <div class="content">
+              <p class="username">{{value.user.nickname}}</p>
+              <p class="created_at">{{(value.created_at)/1000 | capitalize}}</p>
+              <div class="call">{{value.likes_count}}</div>
+              <div class="courtent">{{value.content}}</div>
+            </div>
+          </router-link>
+          <p id="essence">暂无更多精华</p>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 <script>
   var list = document.getElementsByClassName('listContent')
   var histories = document.getElementsByClassName('history')
+  var tf = true
   var count = 0
+  var num = 0
   export default {
     name: '',
     data () {
@@ -65,7 +109,15 @@
         listArray: ['详情', '选集'],
         timeArr: [],
         clock: true,
-        tf: true
+        tf: true,
+        text: '正序',
+        textbox: '',
+        headimg: '',
+        nickname: '',
+        popularity: '',
+        comments: '',
+        count: '',
+        commentArr: []
       }
     },
     filters: {
@@ -112,11 +164,19 @@
             time = day1
           }
         } else {
-          console.log('年份')
           var years = a.substr(0, 10).replace(/\//g, '-')
           time = years
         }
         return time
+      },
+      getCount: function (count) {
+        if (count / 100000 < 1) {
+          return count
+        } else if (count / 100000000 < 1) {
+          return parseInt(count / 10000) + '万'
+        } else {
+          return (count / 100000000).toFixed(2) + '亿'
+        }
       }
     },
     methods: {
@@ -148,14 +208,18 @@
         if (i === 0) {
           this.tf = false
           let url = {
-            url: '/kkv2/review/topic/1062',
+            url: '/kkv2/review/topic/' + this.$route.params.id,
             type: 'get',
             params: {
               limit: 20,
               since: 0
             },
+            headers: {
+              'X-Device': 'A:eef09de00f4e0b31'
+            },
             success: function (res) {
-              console.log(res)
+              console.log(res.data.data.reviews)
+              this.commentArr = res.data.data.reviews
             },
             failed: function (err) {
               console.log(err)
@@ -176,14 +240,29 @@
         }
       },
       order: function () {
-        console.log(this.$refs.img.src)
+        tf = !tf
+        if (tf) {
+          this.text = '正序'
+        } else {
+          this.text = '倒序'
+        }
+        this.timeArr.reverse()
+      },
+      slide: function () {
+        num = 1
+      },
+      info: function (id) {
+        if (num === 0) {
+          this.$router.push({name: 'kkcommentinfo', params: { id: id }})
+        }
+        num = 0
       }
     },
     mounted () {
       var _that = this
       let ace = this.$route.params.id
       let url = {
-        url: 'kkv1/topics/' + ace,
+        url: '/kkv1/topics/' + ace,
         type: 'get',
         headers: {},
         params: {
@@ -195,6 +274,13 @@
         success: function (res) {
           _that.timeArr = res.data.data.comics
           _that.jsText = res.data.data
+          _that.textbox = res.data.data.description
+          _that.headimg = res.data.data.user.avatar_url
+          _that.nickname = res.data.data.user.nickname
+          _that.popularity = res.data.data.popularity_value
+          _that.comments = res.data.data.comments_count
+          _that.count = res.data.data.fav_count
+          console.log(res.data.data.user)
         },
         failed: function (err) {
           console.log(err)
@@ -317,6 +403,17 @@
   }
   .writings {
     padding: 5px;
+    position: relative;
+  }
+  .mask {
+    position: absolute;
+    width: 29%;
+    height: 70px;
+    background-color: rgba(0,0,0,0.4);
+    top: 4px;
+    color: #fde23d;
+    text-align: center;
+    line-height: 70px;
   }
   .rightContent {
     display: inline-block;
@@ -355,11 +452,142 @@
   }
   .timer {
     float: left;
+    font-size: 13px;
   }
   .zan {
     padding-left: 20px;
     background: url("../../assets/zan.png") no-repeat left;
     float: right;
     color: #b7cacb;
+  }
+  #introduction {
+    width: 100%;
+    padding: 10px 5px;
+  }
+  #production {
+    font-size: 14px;
+  }
+  #text {
+    margin-top: 10px;
+    width: 92%;
+    font-size: 13px;
+  }
+  #headimg {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  #author {
+    margin-top: 10px;
+    position: relative;
+    height: 30px;
+  }
+  #author>div {
+    position: absolute;
+    display: inline-block;
+  }
+  #author div:nth-child(1) {
+    left: 0;
+    top: 5px;
+    font-size: 13px;
+    color: #5F5F5F;
+  }
+  #author div:nth-child(2) {
+    left: 35px;
+  }
+  #author div:nth-child(3) {
+    left: 75px;
+    top: 5px;
+    font-size: 13px;
+  }
+  #moods {
+    position: relative;
+    height: 30px;
+    border-bottom: 3px solid #F6F9FA;
+  }
+  #moods>div {
+    position: absolute;
+    display: inline-block;
+    padding-left: 25px;
+    font-size: 13px;
+  }
+  #moods div:nth-child(1) {
+    background: url("../../assets/kkcartoontitle/crow.png") no-repeat left;
+  }
+  #moods div:nth-child(2) {
+    background: url("../../assets/kkcartoontitle/reply.png") no-repeat left 1px;
+    left: 40%;
+  }
+  #moods div:nth-child(3) {
+    background: url("../../assets/kkcartoontitle/counter.png") no-repeat left;
+    left: 70%;
+  }
+  #title {
+    overflow: hidden;
+  }
+  #title div:nth-child(1) {
+    float: left;
+  }
+  #title div:nth-child(2) {
+    float: right;
+    padding-left: 26px;
+    background: url("../../assets/kkcartoontitle/pen.png") no-repeat 7px;
+    background-color: #DBEEFD;
+    width: 46px;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 12px;
+  }
+  .replys {
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    background-color: rgb(245,245,245);
+    border-bottom: 1px solid #F4F4F4;
+  }
+  .headimage {
+    width: 40px;
+    height: 40px;
+    padding: 10px 5px;
+    border-radius: 50%;
+    vertical-align: top;
+  }
+  .content {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 10px;
+    width: 85%;
+    margin-top: 10px;
+  }
+  .username {
+    color: #797979;
+    position: absolute;
+    width: 160px;
+  }
+  .created_at {
+    position: absolute;
+    top: 25px;
+    font-size: 12px;
+    color: #BDBDBD;
+  }
+  .call {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    color: #B1B1B1;
+    font-size: 14px;
+    padding-left: 16px;
+    background: url("../../assets/kkcartoontitle/call.png") no-repeat left;
+  }
+  .courtent {
+    margin-top: 50px;
+    color: #848484;
+  }
+  #essence {
+    width: 200px;
+    margin: auto;
+    text-align: center;
+    font-size: 14px;
+    color: #848484;
+    margin-top: 20px;
   }
 </style>

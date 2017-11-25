@@ -1,11 +1,12 @@
 <template>
   <div>
     <div id="nav">
-      <div id="close">X</div>
+      <div id="close" @touchend="back">X</div>
       <div id="comment">
         <div id="new">最新评论</div>
         <div id="hot">最热评论</div>
       </div>
+      <p>{{this.$route.params.id}}</p>
     </div>
     <ul id="content" @touchmove="move">
       <li v-for="(v,i) in array" class="list">
@@ -42,6 +43,9 @@
         if (window.scrollY > document.body.offsetHeight * 0.6) {
           console.log('aaaa')
         }
+      },
+      back: function () {
+        this.$router.push({name: 'kksection', params: {id: this.$route.params.id}})
       }
     },
     filters: {
