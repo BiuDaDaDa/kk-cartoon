@@ -122,7 +122,7 @@
             for (let i = 2; i < res['data']['data']['infos'].length; i++) {
               this.newContent.push(res['data']['data']['infos'][i])
             }
-            console.log(this.newContent)
+//            console.log(this.newContent)
           },
           failed: function (err) {
             console.log(err)
