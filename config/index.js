@@ -17,6 +17,8 @@ module.exports = {
         pathRewrite: {
           '^/kuaikanv1': '/v1'
         },
+        //可以是对象也可以是字符串
+        cookieDomainRewrite: "localhost",
         headers: {
           Host: 'api.kuaikanmanhua.com'
         }
@@ -26,6 +28,7 @@ module.exports = {
         pathRewrite: {
           '^/kuaikanv2': '/v2'
         },
+        cookieDomainRewrite: "localhost",
         headers: {
           Host: 'api.kuaikanmanhua.com'
         }
@@ -35,6 +38,7 @@ module.exports = {
         pathRewrite: {
           '^/kuaikanv3': '/v3'
         },
+        cookieDomainRewrite: "localhost",
         headers: {
           Host: 'api.kuaikanmanhua.com'
         }
@@ -44,6 +48,7 @@ module.exports = {
         pathRewrite: {
           '^/kkv1': '/v1'
         },
+        cookieDomainRewrite: "localhost",
         headers: {
           Host: 'api.kkmh.com'
         }
@@ -53,6 +58,7 @@ module.exports = {
         pathRewrite: {
           '^/kkv2': '/v2'
         },
+        cookieDomainRewrite: "localhost",
         headers: {
           Host: 'api.kkmh.com'
         }
@@ -62,6 +68,7 @@ module.exports = {
         pathRewrite: {
           '^/kkv3': '/v3'
         },
+        cookieDomainRewrite: "localhost",
         headers: {
           Host: 'api.kkmh.com'
         }

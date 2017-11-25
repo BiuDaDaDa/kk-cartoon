@@ -62,10 +62,10 @@
   .read-all{
     width: 100vw;
     min-height: 94vh;
+    background-color: #f8f9fb;
     /*background-color: red;*/
     img{
       width: 100%;
-      height: 94vh;
     }
   }
 </style>

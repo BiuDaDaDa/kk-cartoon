@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="exit-login">
-        <button>退出当前账号</button>
+        <button @click="outLogin">退出当前账号</button>
       </div>
 
 
@@ -98,6 +98,23 @@
               textTwo: ''
             }
           ]
+        }
+      },
+      methods: {
+        outLogin () {
+          this.$request({
+            type: 'get',
+            url: '/kuaikanv1/account/signout',
+            heders: {
+              'X-Device': 'A:bcce411315f9d871'
+            },
+            success (res) {
+              this.$router.push({path: '/user'})
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
         }
       }
     }
