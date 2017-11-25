@@ -3,9 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+
 import store from './store'
 
-// 全引入 mint-ui
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import request from './common/js/requestServerSetting'

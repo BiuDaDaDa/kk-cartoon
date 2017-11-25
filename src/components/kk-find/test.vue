@@ -1,8 +1,15 @@
+
 <!--<template>-->
   <!--<div class="test">-->
   <!--<mt-navbar v-model="selected">-->
     <!--<mt-tab-item @click="change1(it)" v-for="it in arr" class="tag" :class="{actTag:TagId = it}" :id='it'>选项{{it}}</mt-tab-item>-->
   <!--</mt-navbar>-->
+
+<template>
+  <div class="test">
+  <mt-navbar v-model="selected">
+    <mt-tab-item @click="change1(it)" v-for="it in arr" class="tag" :class="{actTag:TagId = it}" :id='it'>选项{{it}}</mt-tab-item>
+  </mt-navbar>
 
   <!--&lt;!&ndash; tab-container &ndash;&gt;-->
   <!--<mt-tab-container v-model="selected" :swipeable=true>-->

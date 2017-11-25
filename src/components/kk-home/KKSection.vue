@@ -91,6 +91,11 @@
         <div id="tool" @touchend="tool">&nbsp;</div>
       </div>
     </div>
+
+    <mt-actionsheet
+      :actions= "action"
+      v-model="tool">
+    </mt-actionsheet>
   </div>
 </template>
 
@@ -106,7 +111,17 @@
         targed: '',
         zan_count: '',
         authorArr: [],
-        commentsArr: []
+        commentsArr: [],
+        action: [
+          {
+            name: '第一行',
+            method: console.log('第一行')
+          },
+          {
+            name: '第二行',
+            method: console.log('第二行')
+          }
+        ]
       }
     },
     methods: {
@@ -124,7 +139,8 @@
             kk_c_t: 1511430018881,
             kk_s_t: 1511430016139,
             target_id: i,
-            target_type: 'comment'
+            target_type: 'comment',
+            tt: false
           },
           success: function (res) {
             console.log(res.data)
@@ -139,6 +155,7 @@
         console.log('点击分享')
       },
       tool: function () {
+        this.tt = !this.tt
         console.log('这是工具')
       },
       move: function () {

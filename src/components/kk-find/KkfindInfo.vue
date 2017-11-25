@@ -2,7 +2,7 @@
 <div @touchstart="changePos1" @touchend="changePos2" class="kkFind">
   <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
     <div class="Nav" :class="{activeNav:!isShow}">
-      <div class="diBg" :class="{actDiBg:!isShow}">
+      <div @click="genderChange"  class="diBg" :class="{actDiBg:!isShow}">
         <img src="" alt="男">
       </div>
       <div class="btnN">
@@ -10,7 +10,7 @@
         <span @click="changeFen" :class="{actBtn:!isShow}">分类</span>
       </div>
       <div class="diBg" :class="{actDiBg:!isShow}">
-        <img src="" alt="🔍">
+        <img src="../../assets/kk-find/kk-find-search.png" alt="🔍">
       </div>
     </div>
   </div>
@@ -33,10 +33,7 @@
       </button>
     </div>
   </div>
-  <div v-show="!isShow" class="follow">
-    <myTopic :goShow="isShow"/>
-    <!-- 控制无限加载 -->
-  </div>
+  <FooterNav></FooterNav>
 </div>
 </template>
 
@@ -44,21 +41,20 @@
   import Recycle from './KkFindRecycle'
   import List from './KkFindList'
   import myContent from './KkFindContent'
-  import myTopic from './KkFindTopic'
+  import FooterNav from '../../components/kk-nav/FooterNav'
   export default {
     name: '',
     components: {
       Recycle,
       List,
       myContent,
-      myTopic
+      FooterNav
     },
     data () {
       return {
         newRecycle: [],
         newList: [],
         newContent: [],
-        gender: 1,
         isShow: true,
         scrollTop1: '',
         scrollTop2: ''
@@ -66,10 +62,16 @@
     },
     methods: {
       changeTui () {
-        this.isShow = true
+        if (!this.isShow) {
+          this.isShow = true
+          this.$router.push({path: '/kkFind'})
+        }
       },
       changeFen () {
-        this.isShow = false
+        if (this.isShow) {
+          this.isShow = false
+          this.$router.push({path: '/kkFindFen'})
+        }
       },
       changePos1 () {
         this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
@@ -101,38 +103,53 @@
             }
           }, 10)
         }
+      },
+      HuoQuInfo () {
+        this.$request({
+          type: 'get',
+          url: 'kuaikanv1/topic_new/discovery_list',
+          headers: {
+            'X-Device': 'A:eef09de00f4e0b31'
+//          'User-Agent': 'Kuaikan/4.6.6/46600(Android;5.1.1;MI 4S;kuaikan220;WIFI;780*480)'
+          },
+          params: {
+            'gender': this.gender,
+            'operator_count': '6'
+          },
+          success: function (res) {
+            this.newRecycle = res['data']['data']['infos'][0]['banners']
+            this.newList = res['data']['data']['infos'][1]['banners']
+            for (let i = 2; i < res['data']['data']['infos'].length; i++) {
+              this.newContent.push(res['data']['data']['infos'][i])
+            }
+//          console.log(this.newList)
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        })
+      },
+      genderChange () {
+        this.$store.commit('genderTo')
+        this.newContent = []
+        this.HuoQuInfo()
+      }
+    },
+    computed: {
+      gender () {
+        return this.$store.state.gender
       }
     },
     mounted () {
-      this.$request({
-        type: 'get',
-        url: 'kuaikanv1/topic_new/discovery_list',
-        headers: {
-          'X-Device': 'A:eef09de00f4e0b31'
-//          'User-Agent': 'Kuaikan/4.6.6/46600(Android;5.1.1;MI 4S;kuaikan220;WIFI;780*480)'
-        },
-        params: {
-          'gender': this.gender,
-          'operator_count': '6'
-        },
-        success: function (res) {
-          this.newRecycle = res['data']['data']['infos'][0]['banners']
-          this.newList = res['data']['data']['infos'][1]['banners']
-          for (let i = 2; i < res['data']['data']['infos'].length; i++) {
-            this.newContent.push(res['data']['data']['infos'][i])
-          }
-//          console.log(res['data']['data']['infos'])
-        },
-        failed: function (err) {
-          console.log(err)
-        }
-      })
+      this.HuoQuInfo()
     }
   }
 </script>
 
 <style scoped lang=less>
-
+  .kkFind{
+    padding-bottom:15%;
+  }
   .kkFindNav{
     padding-top: 20px;
     width: 100%;
@@ -215,7 +232,5 @@
     width: 20px;
     height: 20px;
   }
-  .follow{
-    padding-top: 38%;
-  }
+
 </style>

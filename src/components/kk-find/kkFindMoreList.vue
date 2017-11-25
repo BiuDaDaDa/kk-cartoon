@@ -1,7 +1,7 @@
 <template>
 <div class="kkFindMoreList">
   <div class="topNav">
-    <img @click="goBack" class="back" src="" alt="<">
+    <img @click="goBack" class="back" src="../../assets/kk-find/kk-find-back.png" alt="<">
     {{countMoreList['1']}}
   </div>
   <div class="wrap"  v-infinite-scroll="loadMore"
@@ -111,10 +111,14 @@
     top: 0;
     z-index: 20;
     background-color: #fff;
+    border-bottom: 1px solid #ccc;
   }
   .topNav .back{
     position: absolute;
+    top: 30%;
     left: 5%;
+    width: 16px;
+    height: 16px;
   }
   .wrap{
     margin-top: 10%;
