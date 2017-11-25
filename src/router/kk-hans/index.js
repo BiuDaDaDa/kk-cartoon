@@ -4,7 +4,8 @@ import Club from '@/components/kk-club/Club'
 import ZuiXin from '@/components/kk-club/ZuiXin'
 import PingLun from '@/components/kk-club/PingLun'
 import DaPing from '@/components/kk-club/DaPing'
-
+import PingLunTow from '@/components/kk-club/PingLunTow'
+import HuiHua from '@/components/kk-club/HuiHua'
 export default [
   {
     path: '/kk-tabs',
@@ -37,8 +38,18 @@ export default [
     component: PingLun
   },
   {
+    path: '/kk-pingluntow/:myid?/:dataid?',
+    name: 'PingLunTow',
+    component: PingLunTow
+  },
+  {
     path: '/kk-daping/:id?',
     name: 'DaPing',
     component: DaPing
+  },
+  {
+    path: '/kk-huihua/:myid?',
+    name: 'HuiHua',
+    component: HuiHua
   }
 ]

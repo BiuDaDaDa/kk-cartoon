@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <div class="top">
+    <div class="top" ref="head">
       <router-link to="/kk-club">
       <img src="../../assets/hans/houtui.png" alt="">
       </router-link>
@@ -8,6 +8,7 @@
       <img src="../../assets/hans/gengduo.png" alt="">
     </div>
      <!--连接 -->
+    <div @touchmove="move">
     <div class="box1" v-if="isloading">
       <div class="box_up">
         <div class="box_up_left">
@@ -35,7 +36,7 @@
             <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
             <span>{{arrayPing.likes_count}}</span>
           </div>
-          <div class="pinglun">
+          <div class="pinglun" @click="clicked(feed1)">
             <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
             <span>{{arrayPing.comments_count}}</span>
           </div>
@@ -54,6 +55,13 @@
       <div class="box_right">
         <p class="username">{{common.root.user.nickname}}</p>
         <p class="usertxt" v-html="huanhang(common.root.content)"></p>
+        <!---->
+        <div class="children_comments" v-if="common.children_comments.length>0">
+          <div v-for="(v,i) in common.children_comments">
+            <span>{{v.user.nickname}}</span>
+            : {{v.content}}
+          </div>
+        </div>
         <div class="box_right_bottom">
           <span class="time">{{common.root.created_at_info}}</span>
           <div class="zang">
@@ -71,7 +79,7 @@
       <p>请联系邮箱legal@kuaikuanmanhua.com</p>
     </div>
     <!--发布评论-->
-    <div class="fabu">
+    <div class="fabu" ref="foot">
       <div class="fabu_left">
         <i class="tp"></i>
         <input class="input" type="text" placeholder="吐槽神马的尽管来">
@@ -83,6 +91,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -158,12 +167,45 @@
         } else {
           return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + (new Date(parseInt(nS)).getHours()) + ':' + (new Date(parseInt(nS)).getMinutes())
         }
+      },
+      move: function () {
+        if (window.scrollY >= 45 && window.scrollY <= 899) {
+          this.$refs.head.style.display = 'none'
+          this.$refs.foot.style.display = 'none'
+          this.$refs.head.className = ''
+        } else if (window.scrollY >= 900 || window.screenY === 0) {
+          this.$refs.head.className = 'top'
+          this.$refs.head.style.display = 'flex'
+          this.$refs.foot.style.display = 'flex'
+          this.$refs.foot.className = 'fabu'
+        }
+      },
+      clicked (ev) {
+//        console.log(ev)
+        this.myid = ev
+        this.$router.push({path: `/kk-daping/${this.myid}`})
       }
     }
   }
 </script>
 
 <style scoped lang="less">
+  .children_comments {
+    background-color: #F6F9FA;
+    padding: 7px 10px;
+    width: 320px;
+    margin: 15px 0;
+  }
+  .children_comments>div {
+    font-size: 13px;
+  }
+  .children_comments>div>span {
+    color: #757575;
+    font-size: 13px;
+  }
+  .wrap{
+    display: flex;
+  }
   .fabu{
     width: 90%;
     position: fixed;

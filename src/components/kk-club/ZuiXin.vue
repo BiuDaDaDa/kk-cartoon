@@ -99,7 +99,7 @@
         this.myid = ev.split('feeds/')[1]
 //        this.$router.push({name: 'PingLun', params: {id: this.myid}})
         this.dataid = ee
-        this.$router.push({name: 'PingLun', params: {id: this.myid, dataid: this.dataid}})
+        this.$router.push({name: 'PingLunTow', params: {id: this.myid, dataid: this.dataid}})
       }
     }
   }

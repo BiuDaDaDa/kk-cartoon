@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <div class="top">
+    <div class="top" ref="head">
       <router-link to="/kk-club">
         <img src="../../assets/hans/houtui.png" alt="">
       </router-link>
@@ -8,78 +8,87 @@
       <img src="../../assets/hans/gengduo.png" alt="">
     </div>
     <!--连接 -->
-    <div class="box1" v-if="isloading">
-      <div class="box_up">
-        <div class="box_up_left">
-          <img class="usertx1" :src="arrayPing.user.avatar_url" alt="">
-          <span class="username">{{arrayPing.user.nickname}}</span>
-          <p>{{arrayPing.updated_at}}</p>
-        </div>
-        <div class="box_up_right">
-          <img src="../../assets/hans/jia.png" alt="">
-          <span>关注</span>
-        </div>
-      </div>
-      <div class="box_content">
-        <p v-html="huanhang(arrayPing.content.text)"></p>
-      </div>
-      <div class="box_img">
-        <img :class="'fbtu'+ arrayPing.content.images.length" v-for="(value, index) in arrayPing.content.images" :src="arrayPing.content.image_base + value" alt="">
-      </div>
-      <div class="box_bottom">
-        <div class="box_bottom_left">
-          <span v-html="getLocalTime(arrayPing.updated_at)"></span>
-        </div>
-        <div class="box_bottom_right">
-          <div class="dianzang">
-            <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
-            <span>{{arrayPing.likes_count}}</span>
+    <div @touchmove="move">
+      <div class="box1" v-if="isloading">
+        <div class="box_up">
+          <div class="box_up_left">
+            <img class="usertx1" :src="arrayPing.user.avatar_url" alt="">
+            <span class="username">{{arrayPing.user.nickname}}</span>
+            <p>{{arrayPing.updated_at}}</p>
           </div>
-          <div class="pinglun">
-            <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
+          <div class="box_up_right">
+            <img src="../../assets/hans/jia.png" alt="">
+            <span>关注</span>
+          </div>
+        </div>
+        <div class="box_content">
+          <p v-html="huanhang(arrayPing.content.text)"></p>
+        </div>
+        <div class="box_img">
+          <img :class="'fbtu'+ arrayPing.content.images.length" v-for="(value, index) in arrayPing.content.images" :src="arrayPing.content.image_base + value" alt="">
+        </div>
+        <div class="box_bottom">
+          <div class="box_bottom_left">
+            <span v-html="getLocalTime(arrayPing.updated_at)"></span>
+          </div>
+          <div class="box_bottom_right">
+            <div class="dianzang">
+              <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
+              <span>{{arrayPing.likes_count}}</span>
+            </div>
+            <div class="pinglun">
+              <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
+              <span>{{arrayPing.comments_count}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--评论 -->
+      <div class="zuixinpinglun">
+        <div class="huandian"></div>
+        <span>最新评论</span>
+      </div>
+      <div class="box" v-for="(common, index) in Zuiarray" :key="common.id">
+        <div class="box_left">
+          <img class="usertx" :src="common.root.user.avatar_url" alt="">
+        </div>
+        <div class="box_right">
+          <p class="username">{{common.root.user.nickname}}</p>
+          <p class="usertxt" v-html="huanhang(common.root.content)"></p>
+          <!---->
+          <div class="children_comments" v-if="common.children_comments.length>0">
+            <div v-for="(v,i) in common.children_comments">
+              <span>{{v.user.nickname}}</span>
+              : {{v.content}}
+            </div>
+          </div>
+          <div class="box_right_bottom">
+            <span class="time">{{common.root.created_at_info}}</span>
+            <div class="zang">
+              <img class="zangtp" src="../../assets/hans/dianzang.png" alt="">
+              <span v-show="isShow(common.root.likes_count)">{{common.root.likes_count}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chakan">
+        <span>查看更多评论</span>
+      </div>
+      <div class="footer">
+        <p>如发现作者发布的内容,对您的权利有所侵害</p>
+        <p>请联系邮箱legal@kuaikuanmanhua.com</p>
+      </div>
+      <!--发布评论-->
+      <div class="fabu" ref="foot">
+        <div class="fabu_left">
+          <i class="tp"></i>
+          <input class="input" type="text" placeholder="吐槽神马的尽管来">
+        </div>
+        <div class="fabu_right">
+          <img src="../../assets/hans/pinglun1.png" alt="">
+          <div class="num">
             <span>{{arrayPing.comments_count}}</span>
           </div>
-        </div>
-      </div>
-    </div>
-    <!--评论 -->
-    <div class="zuixinpinglun">
-      <div class="huandian"></div>
-      <span>最新评论</span>
-    </div>
-    <div class="box" v-for="(common, index) in Zuiarray" :key="common.id">
-      <div class="box_left">
-        <img class="usertx" :src="common.root.user.avatar_url" alt="">
-      </div>
-      <div class="box_right">
-        <p class="username">{{common.root.user.nickname}}</p>
-        <p class="usertxt" v-html="huanhang(common.root.content)"></p>
-        <div class="box_right_bottom">
-          <span class="time">{{common.root.created_at_info}}</span>
-          <div class="zang">
-            <img class="zangtp" src="../../assets/hans/dianzang.png" alt="">
-            <span v-show="isShow(common.root.likes_count)">{{common.root.likes_count}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="chakan">
-      <span>查看更多评论</span>
-    </div>
-    <div class="footer">
-      <p>如发现作者发布的内容,对您的权利有所侵害</p>
-      <p>请联系邮箱legal@kuaikuanmanhua.com</p>
-    </div>
-    <!--发布评论-->
-    <div class="fabu">
-      <div class="fabu_left">
-        <i class="tp"></i>
-        <input class="input" type="text" placeholder="吐槽神马的尽管来">
-      </div>
-      <div class="fabu_right">
-        <img src="../../assets/hans/pinglun1.png" alt="">
-        <div class="num">
-          <span>{{arrayPing.comments_count}}</span>
         </div>
       </div>
     </div>
@@ -122,7 +131,7 @@
           'uid': '',
           'since': '0',
           'page_num': '1',
-          'catalog_type': '2'
+          'catalog_type': '1'
         },
         success: function (res) {
           that.isloading = true
@@ -158,12 +167,40 @@
         } else {
           return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + (new Date(parseInt(nS)).getHours()) + ':' + (new Date(parseInt(nS)).getMinutes())
         }
+      },
+      move: function () {
+        if (window.scrollY >= 45 && window.scrollY <= 899) {
+          this.$refs.head.style.display = 'none'
+          this.$refs.foot.style.display = 'none'
+          this.$refs.head.className = ''
+        } else if (window.scrollY >= 900 || window.screenY === 0) {
+          this.$refs.head.className = 'top'
+          this.$refs.head.style.display = 'flex'
+          this.$refs.foot.style.display = 'flex'
+          this.$refs.foot.className = 'fabu'
+        }
       }
     }
   }
 </script>
 
 <style scoped lang="less">
+  .children_comments {
+    background-color: #F6F9FA;
+    padding: 7px 10px;
+    width: 320px;
+    margin: 15px 0;
+  }
+  .children_comments>div {
+    font-size: 13px;
+  }
+  .children_comments>div>span {
+    color: #757575;
+    font-size: 13px;
+  }
+  .wrap{
+    display: flex;
+  }
   .fabu{
     width: 90%;
     position: fixed;
