@@ -262,7 +262,7 @@
       var _that = this
       let ace = this.$route.params.id
       let url = {
-        url: 'kkv1/topics/' + ace,
+        url: '/kkv1/topics/' + ace,
         type: 'get',
         headers: {},
         params: {
@@ -452,6 +452,7 @@
   }
   .timer {
     float: left;
+    font-size: 13px;
   }
   .zan {
     padding-left: 20px;

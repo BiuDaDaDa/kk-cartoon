@@ -16,7 +16,7 @@ export default [
     component: KKAttention
   },
   {
-    path: '/kkcartitle',
+    path: '/kkcartitle/:id',
     name: 'kkcartoontitle',
     component: KKCartoonTitle
   },

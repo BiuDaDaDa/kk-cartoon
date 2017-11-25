@@ -2,10 +2,14 @@
   <div>
     <div ref="head">
       <div id="nav">
-        <router-link id="back" tag="div" to="/"><</router-link>
+        <router-link id="back" tag="div" to="/" @touchend.native="back"><</router-link>
         <p id="title">{{title}}</p>
-        <router-link id="complete" tag="div" to="/">全集</router-link>
+        <router-link id="complete" tag="div" to="/" @touchend.native="back">全集</router-link>
       </div>
+      <mt-actionsheet
+        :actions= "action"
+        v-model="sheetVisible">
+      </mt-actionsheet>
     </div>
     <!--中间内容-->
     <div id="content" @touchmove="move">
@@ -88,14 +92,10 @@
           <div id="comment_count">{{comments}}</div>
         </router-link>
         <div id="share" @touchend="share">&nbsp;</div>
-        <div id="tool" @touchend="tool">&nbsp;</div>
+        <div id="tool" @touchend="tool" @click="actionSheet">&nbsp;</div>
       </div>
     </div>
 
-    <mt-actionsheet
-      :actions= "action"
-      v-model="tool">
-    </mt-actionsheet>
   </div>
 </template>
 
@@ -115,19 +115,33 @@
         action: [
           {
             name: '第一行',
-            method: console.log('第一行')
+            method: this.you
           },
           {
             name: '第二行',
-            method: console.log('第二行')
+            method: this.wu
           }
-        ]
+        ],
+        sheetVisible: false
       }
     },
     methods: {
+      actionSheet: function () {
+        this.sheetVisible = true
+        console.log(this.sheetVisible)
+      },
+      you: function () {
+        console.log('aa')
+      },
+      wu: function () {
+        console.log('bb')
+      },
       linkto: function () {
         console.log(this.targed)
         this.$router.push({ name: 'kkcomment', params: {id: this.targed} })
+      },
+      back: function () {
+        this.$router.push({name: 'kkcartoontitle'})
       },
       call: function (i) {
         console.log(i)
@@ -155,7 +169,6 @@
         console.log('点击分享')
       },
       tool: function () {
-        this.tt = !this.tt
         console.log('这是工具')
       },
       move: function () {
@@ -244,10 +257,10 @@
     font-size: 14px;
     text-align: center;
     position: absolute;
-    width: 110px;
+    width: 180px;
     left: 50%;
     line-height: 40px;
-    margin-left: -50px;
+    margin-left: -90px;
   }
   #complete {
     position: absolute;
@@ -488,7 +501,7 @@
   .commentext {
     width: 320px;
     word-wrap: break-word;
-    height: 30px;
+    border: 1px solid red;
     margin-top: 10px;
   }
   .children_comments {
