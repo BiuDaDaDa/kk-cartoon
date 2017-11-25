@@ -11,7 +11,7 @@
   </div>
   <div class="wrap">
     <div class="UpdateList">下次出榜时间:&nbsp;&nbsp;{{UpDateTime}}</div>
-    <div v-for="(myTopic,index) in topics" class="box">
+    <div v-for="(myTopic,index) in topics" @touchstart="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
       <div class="bLeft">
         <img :src="myTopic['vertical_image_url']" alt="">
       </div>
@@ -75,6 +75,20 @@
       },
       goBack () {
         this.$router.push({ path: '/kkfind' })
+      },
+      changeGo1 () {
+        this.scrollTop1 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+      },
+      changeGo2 (tarId) {
+        this.scrollTop2 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 === this.scrollTop2) {
+          this.cartoonGo(tarId)
+        }
+      },
+      cartoonGo (tarId) {
+        this.$router.push({name: 'kkcartoontitle', params: {id: tarId}})
       }
     },
     mounted () {

@@ -1,18 +1,22 @@
 <template>
 <div class="content">
-  <div v-for="item in newContent" class="boxBar">
-    <div v-if="item['topics']" class="BTitle">
-      <span class="title">{{item['title']}}</span>
-      <span class="more" @click="moreGo(item['action'],item['title'])">更多&nbsp;
+  <div class="boxBar" v-for="item in newContent">
+    <div class="BTitle" v-if="item['topics']">
+      <span class="title">
+        {{item['title']}}
+      </span>
+      <span class="more" @click="moreGo(item['action'],item['title'])">
+        更多&nbsp;
         <img src="../../assets/kk-find/kk-find-more.png" alt=">">
      </span>
     </div>
     <div class="boxF">
-      <div v-for="ite in item['topics']||item['banners']"  :key="ite['target_id']" :class="'box'+item['item_type']">
+      <div :class="'box'+item['item_type']" v-for="ite in item['topics']||item['banners']"
+           @touchstart="changeGo1" @touchend="changeGo2(ite['target_id'])" :key="ite['target_id']">
         <div class="boxTop">
           <img :src="ite['pic']" alt="">
         </div>
-        <div v-if="item['topics']" class="boxBottom">
+        <div class="boxBottom" v-if="item['topics']" >
           <p class="title">{{ite['title']}}</p>
           <p class="recommended_text">{{ite['recommended_text']}}
             <span v-if="!ite['recommended_text']" v-for="val in ite['category']">{{val}}</span>
@@ -42,14 +46,25 @@
         this.$router.push({path: '/kkFindMore'})
         let tt = {0: act, 1: tle, 2: 'kkfind'}
         this.$store.commit('increment', tt)
+      },
+      changeGo1 () {
+        this.scrollTop1 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+      },
+      changeGo2 (tarId) {
+        this.scrollTop2 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 === this.scrollTop2) {
+          this.cartoonGo(tarId)
+        }
+      },
+      cartoonGo (tarId) {
+        this.$router.push({name: 'kkcartoontitle', params: {id: tarId}})
       }
     }
   }
 </script>
 <style scoped lang=less>
-  a{
-    text-decoration: none;
-  }
 .boxBar{
   margin: 10px 0;
   width: 100%;
@@ -88,7 +103,7 @@
     height:127px;
   }
   .box18 .boxTop{
-    height: auto;
+    height: 203px;
    }
   .box4,.box5{
     width: 33%;
