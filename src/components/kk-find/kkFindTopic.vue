@@ -1,5 +1,5 @@
 <template>
-<div @touchstart="changePos1" @touchend="changePos2" class="myTopics">
+<div class="myTopics">
   <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
     <div class="Nav" :class="{activeNav:!isShow}">
       <div class="diBg" :class="{actDiBg:!isShow}">
@@ -30,55 +30,57 @@
     </div>
   </div>
   <div class="follow">
-  <div  ref="listSort" class="listSort" style="top: 0px">
-    <span v-for="tag in tags" class="tagSort"
-        :class="{activeTagSort:tagId==tag['tag_id']}" @click="changeTagId(tag['tag_id'])">
-      <mt-tab-item :id="tagId==tag['tag_id']">{{tag['title']}}</mt-tab-item>
-    </span>
-  </div>
-  <div class="myTopicNav">
-    <span class="muLu" :class="{activeMuLu:isShow1 === 1}" @click="changeType(1)">推荐</span>
-    <span class="fenGe">|</span>
-    <span class="muLu" :class="{activeMuLu:isShow1 === 2}" @click="changeType(2)">最火热</span>
-    <span class="fenGe">|</span>
-    <span class="muLu" :class="{activeMuLu:isShow1 === 3}" @click="changeType(3)">新上架</span>
-  </div>
-    <div  v-infinite-scroll="loadMore"
-          infinite-scroll-disabled="loading"
-          infinite-scroll-distance="100">
-      <div v-for="myTopic in topics" @touchmove="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
-        <div class="bLeft">
-          <img :src="myTopic['cover_image_url']" alt="">
-        </div>
-        <div class="bRight">
-          <p class="title">{{myTopic['title']}}</p>
-          <p v-show="false" class="tags">
-            <span></span>
-          </p>
-          <p class="author">{{myTopic['user']['nickname']}}</p>
-          <div class="jie" v-show="isShow1===1">
-            <span class="zan">
-              <img src="../../assets/kk-find/kk-find-zan.png" alt="">
-              <span>{{myTopic['likes_count']>100000?Math.floor(myTopic['likes_count']/10000)+'万':myTopic['likes_count']}}</span>
-            </span>
-            <span  class="comment">
-              <img src="../../assets/kk-find/kk-find-comment.png" alt="">
-              <span>{{myTopic['comments_count']>100000?Math.floor(myTopic['comments_count']/10000)+'万':myTopic['comments_count']}}</span>
-            </span>
+    <div  ref="listSort" class="listSort" style="top: 0px">
+      <span v-for="tag in tags" class="tagSort"
+          :class="{activeTagSort:tagId==tag['tag_id']}" @click="changeTagId(tag['tag_id'])">
+        <mt-tab-item :id="tagId==tag['tag_id']">{{tag['title']}}</mt-tab-item>
+      </span>
+    </div>
+    <div class="detection" @touchstart="changePos1" @touchend="changePos2">
+    <div class="myTopicNav">
+      <span class="muLu" :class="{activeMuLu:isShow1 === 1}" @click="changeType(1)">推荐</span>
+      <span class="fenGe">|</span>
+      <span class="muLu" :class="{activeMuLu:isShow1 === 2}" @click="changeType(2)">最火热</span>
+      <span class="fenGe">|</span>
+      <span class="muLu" :class="{activeMuLu:isShow1 === 3}" @click="changeType(3)">新上架</span>
+    </div>
+      <div  v-infinite-scroll="loadMore"
+            infinite-scroll-disabled="loading"
+            infinite-scroll-distance="100">
+        <div v-for="myTopic in topics" @touchmove="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
+          <div class="bLeft">
+            <img :src="myTopic['cover_image_url']" alt="">
           </div>
-          <div class="jie" v-show="isShow1===2">
-            <span class="comment">
-              <img src="../../assets/kk-find/kk-find-hot.png" alt="">
-              <span>{{myTopic['view_count']>100000?myTopic['view_count']>100000000?Math.floor(myTopic['view_count']/100000000)+'亿':Math.floor(myTopic['view_count']/10000)+'万':myTopic['view_count']}}</span>
-            </span>
+          <div class="bRight">
+            <p class="title">{{myTopic['title']}}</p>
+            <p v-show="false" class="tags">
+              <span></span>
+            </p>
+            <p class="author">{{myTopic['user']['nickname']}}</p>
+            <div class="jie" v-show="isShow1===1">
+              <span class="zan">
+                <img src="../../assets/kk-find/kk-find-zan.png" alt="">
+                <span>{{myTopic['likes_count']>100000?Math.floor(myTopic['likes_count']/10000)+'万':myTopic['likes_count']}}</span>
+              </span>
+              <span  class="comment">
+                <img src="../../assets/kk-find/kk-find-comment.png" alt="">
+                <span>{{myTopic['comments_count']>100000?Math.floor(myTopic['comments_count']/10000)+'万':myTopic['comments_count']}}</span>
+              </span>
+            </div>
+            <div class="jie" v-show="isShow1===2">
+              <span class="comment">
+                <img src="../../assets/kk-find/kk-find-hot.png" alt="">
+                <span>{{myTopic['view_count']>100000?myTopic['view_count']>100000000?Math.floor(myTopic['view_count']/100000000)+'亿':Math.floor(myTopic['view_count']/10000)+'万':myTopic['view_count']}}</span>
+              </span>
+            </div>
+            <div class="jie" v-show="isShow1===3">
+              <span class="comment">
+                <span>{{myTopic['latest_comic_title']}}</span>
+              </span>
+            </div>
           </div>
-          <div class="jie" v-show="isShow1===3">
-            <span class="comment">
-              <span>{{myTopic['latest_comic_title']}}</span>
-            </span>
-          </div>
-        </div>
-       </div>
+         </div>
+      </div>
     </div>
   </div>
   <FooterNav ></FooterNav>

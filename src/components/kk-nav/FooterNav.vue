@@ -14,6 +14,7 @@
       </div>
 
       <div class="kk-club">
+        <router-link to="/kk-tabs"></router-link>
         <router-link to="/kk-club"></router-link>
         <img :src="clubSrc" alt="">
         <h3 ref="clubRef">V社区</h3>
@@ -42,7 +43,6 @@
     },
     mounted () {
       console.log(window.location.href.split('8081')[1])
-//        console.log(window.location.href.split('8081')[1])
       let link = window.location.href.split('8081')[1]
       if (link === '/user') {
         this.userSrc = require('../../assets/kk-nav/kk-nav-user-c.png')
@@ -53,7 +53,8 @@
       } else if (link === '/kkFind' || link === '/kkFindFen') {
         this.findSrc = require('../../assets/kk-nav/kk-nav-find-c.png')
         this.$refs.findRef.style.color = '#fce13c'
-      } else if (link === '/kk-club') {
+      } else if (link === '/kk-tabs') {
+      } else if (link === '/kk-club' || link === '/kk-attention') {
         this.clubSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
         this.$refs.clubRef.style.color = '#fce13c'
       }
@@ -93,7 +94,5 @@
         color: #939393;
       }
     }
-
-
   }
 </style>
