@@ -41,7 +41,7 @@
       }
     },
     mounted () {
-      console.log(window.location.href.split('8081')[1])
+//        console.log(window.location.href.split('8081')[1])
       let link = window.location.href.split('8081')[1]
       if (link === '/user') {
         this.userSrc = require('../../assets/kk-nav/kk-nav-user-c.png')
@@ -52,7 +52,7 @@
       } else if (link === '/kkFind' || link === '/kkFindFen') {
         this.findSrc = require('../../assets/kk-nav/kk-nav-find-c.png')
         this.$refs.findRef.style.color = '#fce13c'
-      } else if (link === '/kk-tabs') {
+      } else if (link === '/kk-club') {
         this.clubSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
         this.$refs.clubRef.style.color = '#fce13c'
       }

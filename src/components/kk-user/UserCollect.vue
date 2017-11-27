@@ -9,17 +9,21 @@
       </div>
     </div>
 
-    <div class="collect-all">
-      <div class="collect-for">
+    <div class="collect-all" v-if="userLog">
+      <div class="collect-for" v-for="collectValue,collectIndex in userCollect">
         <div class="collect-img">
-          <img src="" alt="">
+          <img :src="collectValue.cover_image_url" alt="">
         </div>
 
         <div class="collect-title">
-          <h2>第11话 擅闯禁地的惩罚</h2>
-          <h3>云天谣</h3>
+          <h2>{{collectValue.title}}</h2>
+          <h3>{{collectValue.topic.title}}</h3>
         </div>
       </div>
+    </div>
+
+    <div class="unlog-collect-all">
+      <router-link to="/userLogin"></router-link>
     </div>
 
 
@@ -29,7 +33,36 @@
 
 <script>
     export default {
-      name: 'UserCollect'
+      name: 'UserCollect',
+      data () {
+        return {
+          userLog: false,
+          userCollect: []
+        }
+      },
+      mounted () {
+        let useCookie = document.cookie.indexOf('session')
+        if (useCookie === -1) {
+          this.userLog = false
+        } else {
+          this.$request({
+            type: 'get',
+            url: '/kuaikanv1/fav/comics',
+            success (res) {
+              if (res.data.data === undefined) {
+                this.userLog = false
+              } else {
+                this.userLog = true
+                this.userCollect = res.data.data.comics
+//                console.log(this.userCollect)
+              }
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
+        }
+      }
     }
 </script>
 
@@ -71,6 +104,17 @@
     }
   }
   /* -----------头部----------- */
+  .unlog-collect-all{
+    width: 100vw;
+    height: 93.9vh;
+    background-image: url(../../assets/kk-user/unlog/kk-unlog-collect.png);
+    background-size:100%;
+    background-repeat:no-repeat;
+    a{
+      width: 100%;
+      height: 100%;
+    }
+  }
   .collect-all{
     width: 100%;
     min-height: 93.9vh;
@@ -88,6 +132,11 @@
       .collect-img{
         width: 30%;
         height: 11vh;
+        overflow: hidden;
+        img{
+          width: 110%;
+          height: 100%;
+        }
         /*background-color: aqua;*/
       }
       .collect-title{

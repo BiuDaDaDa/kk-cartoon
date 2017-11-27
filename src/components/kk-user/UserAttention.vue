@@ -12,54 +12,60 @@
     <!-- -----头部----- -->
 
 
-    <!--<mt-navbar v-model="selected" class="mt-tags">-->
-      <!--<mt-tab-item id="s1" class="mt-tags-title">-->
-        <!--<span>作品</span>-->
-      <!--</mt-tab-item>-->
-      <!--<mt-tab-item id="s2" class="mt-tags-title">-->
-        <!--<span>作者</span>-->
-      <!--</mt-tab-item>-->
-    <!--</mt-navbar>-->
+    <mt-navbar v-model="selected" class="mt-tags">
+      <mt-tab-item id="s1" class="mt-tags-title">
+        <span>作品</span>
+      </mt-tab-item>
+      <mt-tab-item id="s2" class="mt-tags-title">
+        <span>作者</span>
+      </mt-tab-item>
+    </mt-navbar>
 
     <!--tab-container -->
-    <!--<mt-tab-container v-model="selected" :swipeable=true>-->
-      <!--&lt;!&ndash;标签1&ndash;&gt;-->
-      <!--<mt-tab-container-item id="s1">-->
-        <!--<div class="pro-all">-->
-          <!--<div class="pro-for">-->
-            <!--<div class="pro-img">-->
-              <!--<img src="" alt="">-->
-            <!--</div>-->
+    <mt-tab-container v-model="selected" :swipeable=true>
+      <!--标签1-->
+      <mt-tab-container-item id="s1" v-show="isShow">
+        <div class="pro-all" v-if="userLog">
+          <div class="pro-for" v-for="workValue,workIndex in userWork">
+            <div class="pro-img">
+              <img :src="workValue.cover_image_url" alt="">
+            </div>
 
-            <!--<div class="pro-title">-->
-                <!--<h2>无形门之汴京摸鱼</h2>-->
-                <!--<h3>渣克+海分形</h3>-->
-                <!--<h4>更新至：第一话 父子特工</h4>-->
+            <div class="pro-title">
+                <h2>{{workValue.title}}</h2>
+                <h3>{{workValue.user.nickname}}</h3>
+                <h4>更新至：{{workValue.latest_comic_title}}</h4>
 
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</mt-tab-container-item>-->
+            </div>
+          </div>
+        </div>
+        <div class="unlog-pro-all">
+          <router-link to="/userLogin"></router-link>
+        </div>
+      </mt-tab-container-item>
       <!--标签1-->
 
       <!--标签2-->
-      <mt-tab-container-item id="s2">
-        <div class="author-all">
-          <div class="author-for">
+      <mt-tab-container-item id="s2" v-show="!isShow">
+        <div class="author-all" v-if="userLog">
+          <div class="author-for" v-for="authorValue,authorIndex in userAuthor">
             <div class="author-img">
-              <img src="" alt="">
+              <img :src="authorValue.avatar_url" alt="">
             </div>
 
             <div class="author-name">
-              <h5>快看漫画</h5>
-              <h6>认证：快看漫画APP 官方账号</h6>
+              <h5>{{authorValue.nickname}}</h5>
+              <h6>{{authorValue.u_intro}}</h6>
             </div>
           </div>
+        </div>
+        <div class="unlog-author-all">
+          <router-link to="/userLogin"></router-link>
         </div>
       </mt-tab-container-item>
       <!--标签2-->
 
-    <!--</mt-tab-container>-->
+    </mt-tab-container>
     <!--tab-container -->
 
   </div>
@@ -70,7 +76,50 @@
       name: 'UserAttention',
       data: function () {
         return {
-          selected: 2
+          selected: 's1',
+          userLog: false,
+          userWork: [],
+          userAuthor: [],
+          isShow: true
+        }
+      },
+      mounted () {
+        let useCookie = document.cookie.indexOf('session')
+        if (useCookie === -1) {
+          this.userLog = false
+        } else {
+          this.$request({
+            type: 'get',
+            url: '/kuaikanv1/fav/topics',
+            success (res) {
+              if (res.data.data === undefined) {
+                this.userLog = false
+              } else {
+                this.userLog = true
+                this.userWork = res.data.data.topics
+                console.log(this.userWork)
+              }
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
+          this.$request({
+            type: 'get',
+            url: '/kuaikanv1/feeds/following_author_list?since=0',
+            success (res) {
+              if (res.data.data === undefined) {
+                this.userLog = false
+              } else {
+                this.userLog = true
+                this.userAuthor = res.data.data.author_list
+                console.log(this.userAuthor)
+              }
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
         }
       }
     }
@@ -142,6 +191,18 @@
   }
 
   /* -----------下部公共部分----------- */
+   .unlog-pro-all{
+     width: 100vw;
+     height: 88.9vh;
+     background-color: #f8f9fb;
+     background-image: url(../../assets/kk-user/unlog/kk-unlog-attention.png);
+     background-size:100%;
+     background-repeat:no-repeat;
+     a{
+       width: 100%;
+       height: 100%;
+     }
+   }
    .pro-all{
      width: 100%;
      min-height: 88.9vh;
@@ -155,9 +216,12 @@
        .pro-img{
          width: 45%;
          height: 100%;
-         background-color: blue;
+         /*background-color: blue;*/
+         display: flex;
+         overflow: hidden;
+         align-items: center;
          img{
-           width: 100%;
+           height: 100%;
          }
        }
        .pro-title{
@@ -180,10 +244,25 @@
            font-size: 15px;
            font-weight: normal;
            color: #c3c3c3;
+           overflow: hidden;
+           text-overflow:ellipsis;
+           white-space: nowrap;
          }
        }
      }
    }
+  .unlog-author-all{
+    width: 100vw;
+    height: 88.9vh;
+    background-color: #f8f9fb;
+    background-image: url(../../assets/kk-user/unlog/kk-unlog-attention.png);
+    background-size:100%;
+    background-repeat:no-repeat;
+    a{
+      width: 100%;
+      height: 100%;
+    }
+  }
   .author-all{
     width: 100%;
     min-height: 88.9vh;

@@ -63,10 +63,9 @@
   .auto-all{
     width: 100vw;
     min-height: 94vh;
-    /*background-color: red;*/
+    background-color: #f8f9fb;
     img{
       width: 100%;
-      height: 94vh;
     }
   }
 </style>

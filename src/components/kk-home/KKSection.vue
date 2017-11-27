@@ -6,12 +6,51 @@
         <p id="title">{{title}}</p>
         <router-link id="complete" tag="div" to="/" @touchend.native="back">全集</router-link>
       </div>
-      <mt-actionsheet
-        :actions= "action"
-        v-model="sheetVisible">
-      </mt-actionsheet>
-    </div>
+      <mt-popup
+        v-model="popupVisible"
+        position="bottom">
+        <div id="popup">
+          &nbsp;
+          <p id="shin">分享</p>
+          <div id="social">
+            <div class="dian">
+              <img src="../../assets/kkcartoontitle/weichat.png" alt="">
+              <div>微信</div>
+            </div>
+            <div class="dian">
+              <img src="../../assets/kkcartoontitle/friend.png" alt="">
+              <p>朋友圈</p>
+            </div>
+            <div class="dian">
+              <img src="../../assets/kkcartoontitle/QQ.png" alt="">
+              <p>QQ</p>
+            </div>
+            <div class="dian">
+              <img src="../../assets/kkcartoontitle/qqkj.png" alt="">
+              <p>QQ空间</p>
+            </div>
+            <div class="dian">
+              <img src="../../assets/kkcartoontitle/weibo.png" alt="">
+              <p>微博</p>
+            </div>
+          </div>
+          <div id="collect">
+            <div class="dian">
+              <img src="../../assets/kkcartoontitle/collect.png" alt="">
+              <p>收藏</p>
+            </div>
+            <div class="dian">
+              <img src="../../assets/kkcartoontitle/report.png" alt="">
+              <p>举报</p>
+            </div>
+          </div>
+          <!--分割线-->
+          <div id="line">&nbsp;</div>
+          <div id="abolish" @click="abolish">取消</div>
+        </div>
+      </mt-popup>
     <!--中间内容-->
+  </div>
     <div id="content" @touchmove="move">
       <img  :src="k" alt="" class="iamges" v-for="(k,i) in images">
     </div>
@@ -91,11 +130,11 @@
         <router-link to='/' tag="div" id="discuss" @touchend.native="linkto">
           <div id="comment_count">{{comments}}</div>
         </router-link>
-        <div id="share" @touchend="share">&nbsp;</div>
+        <div id="share" @touchend="share" @click="shartt">&nbsp;</div>
         <div id="tool" @touchend="tool" @click="actionSheet">&nbsp;</div>
       </div>
     </div>
-
+    <!--弹出-->
   </div>
 </template>
 
@@ -112,29 +151,15 @@
         zan_count: '',
         authorArr: [],
         commentsArr: [],
-        action: [
-          {
-            name: '第一行',
-            method: this.you
-          },
-          {
-            name: '第二行',
-            method: this.wu
-          }
-        ],
-        sheetVisible: false
+        popupVisible: false
       }
     },
     methods: {
-      actionSheet: function () {
-        this.sheetVisible = true
-        console.log(this.sheetVisible)
+      shartt: function () {
+        this.popupVisible = true
       },
-      you: function () {
-        console.log('aa')
-      },
-      wu: function () {
-        console.log('bb')
+      abolish: function () {
+        this.popupVisible = false
       },
       linkto: function () {
         console.log(this.targed)
@@ -390,6 +415,7 @@
   }
   .text {
     color: #626262;
+    width: 100px;
   }
   .share {
     position: absolute;
@@ -501,7 +527,6 @@
   .commentext {
     width: 320px;
     word-wrap: break-word;
-    border: 1px solid red;
     margin-top: 10px;
   }
   .children_comments {
@@ -540,5 +565,58 @@
     color: #289CE0;
     margin-bottom: 100px;
     padding-top: 15px;
+  }
+  #popup {
+    background-color: #E5E3E1;
+    width: 432px;
+    position: relative;
+    height: 280px;
+  }
+  #shin {
+    position: absolute;
+    top: 10px;
+    width: 100px;
+    font-size: 13px;
+    text-align: center;
+    left: 50%;
+    margin-left: -50px;
+  }
+  #social {
+    position: absolute;
+    top: 50px;
+    left: 30px;
+    width: 360px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .dian {
+    text-align: center;
+    display: inline-block;
+  }
+  #collect {
+    position: absolute;
+    top: 140px;
+    left: 30px;
+  }
+  #collect div:nth-child(2) {
+    margin-left: 20px;
+  }
+  #line {
+    position: absolute;
+    top: 230px;
+    width: 100%;
+    height: 1px;
+    background-color: darkgray;
+  }
+  #abolish {
+    position: absolute;
+    width: 60px;
+    left: 50%;
+    margin-left: -30px;
+    font-size: 20px;
+    text-align: center;
+    top: 240px;
   }
 </style>

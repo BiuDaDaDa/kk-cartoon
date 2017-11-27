@@ -26,10 +26,12 @@
         </router-link>
       </div>
     </div>
+    <FooterNav></FooterNav>
   </div>
 </template>
 
 <script>
+  import FooterNav from '../kk-nav/FooterNav.vue'
   var day = new Date()
   var nowDay = day.getDay()
   var dayarray = []
@@ -68,6 +70,9 @@
         weekArr: weekDay,
         url: ''
       }
+    },
+    components: {
+      FooterNav
     },
     methods: {
       tiao: function () {
