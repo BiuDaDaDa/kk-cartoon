@@ -2,6 +2,7 @@
 import Tabs from '@/components/kk-club/Tabs'
 import Club from '@/components/kk-club/Club'
 import ZuiXin from '@/components/kk-club/ZuiXin'
+import kkClubAttention from '@/components/kk-club/kkClubAttention'
 import PingLun from '@/components/kk-club/PingLun'
 import DaPing from '@/components/kk-club/DaPing'
 import PingLunTow from '@/components/kk-club/PingLunTow'
@@ -32,6 +33,11 @@ export default [
     path: '/kk-club',
     name: 'ZuiXin',
     component: ZuiXin
+  },
+  {
+    path: '/kk-attention',
+    name: 'ClubAttention',
+    component: kkClubAttention
   },
   {
     path: '/kk-pinglun/:myid?/:dataid?',

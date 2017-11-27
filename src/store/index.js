@@ -4,7 +4,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     countMoreList: '1',
-    gender: 1
+    // find-More
+    gender: 1,
+    // 性别
+    deploy: 'down',
+    // 展开
+    kkClubURL: ''
+    // club的url
   },
   mutations: {
     increment (state, tt) {
@@ -16,6 +22,12 @@ export default new Vuex.Store({
       } else {
         state.gender = 1
       }
+    },
+    deployGo (state, isDeploy) {
+      state.deploy = isDeploy
+    },
+    clubURLGo (state, clubURL) {
+      state.kkClubURL = clubURL
     }
   }
 })
