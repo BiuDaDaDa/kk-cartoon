@@ -15,7 +15,6 @@
 
       <div class="kk-club">
         <router-link to="/kk-club"></router-link>
-        <router-link to="/kk-tabs"></router-link>
         <img :src="clubSrc" alt="">
         <h3 ref="clubRef">V社区</h3>
       </div>
