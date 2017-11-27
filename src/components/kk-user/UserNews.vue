@@ -18,44 +18,9 @@
       </mt-tab-item>
     </mt-navbar>
 
-     <!--tab-container -->
-    <!--<mt-tab-container v-model="selected" :swipeable=true>-->
-      <!--<mt-tab-container-item id="s1">-->
-        <!--<div class="user-pl-all">-->
-          <!--<div class="downlist">-->
-            <!--<span class="downlist-tags" @click="listTagsClicked">{{changeTags}}</span>-->
-            <!--<img src="../../assets/kk-user/kk-user-down.png" alt="">-->
-            <!--<div class="user-downlist-none" v-show="noneShow">-->
-              <!--<div class="none-img">-->
-                <!--<img src="../../assets/kk-user/kk-user-up.png" alt="">-->
-              <!--</div>-->
-              <!--<div class="none-down">-->
-                <!--<span class="none-span-one" @click="returnClicked">回复我的</span>-->
-                <!--<span @click="mineClicked">我发出的</span>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="user-pl-content-all"></div>-->
-
-        <!--</div>-->
-      <!--</mt-tab-container-item>-->
-
-      <!--<mt-tab-container-item id="s2">-->
-        <!--<mt-cell v-for="n in s2" :title="'测试 ' + n" />-->
-      <!--</mt-tab-container-item>-->
-    <!--</mt-tab-container>-->
-          <!--<div class="user-pl-content-all"></div>-->
-
-        <!--</div>-->
-      <!--</mt-tab-container-item>-->
-
-      <!--<mt-tab-container-item id="s2">-->
-        <!--<mt-cell v-for="n in s2" :title="'测试 ' + n" />-->
-      <!--</mt-tab-container-item>-->
-    <!--</mt-tab-container>-->
     <mt-tab-container v-model="selected" :swipeable=true>
       <mt-tab-container-item id="s1">
-        <div class="user-pl-all">
+        <div class="user-pl-all" v-if="userLog">
           <div class="downlist">
             <span class="downlist-tags" @click="listTagsClicked">{{changeTags}}</span>
             <img src="../../assets/kk-user/kk-user-down.png" alt="">
@@ -64,12 +29,8 @@
                 <img src="../../assets/kk-user/kk-user-up.png" alt="">
               </div>
               <div class="none-down">
-                <span class="none-span-one" @click="returnClicked">
-                   <router-link :to="userChoose">回复我的</router-link>
-                </span>
-                <span @click="mineClicked">
-                  <router-link :to="userChoose">我发出的</router-link>
-                </span>
+                <span class="none-span-one" @click="returnClicked">回复我的</span>
+                <span @click="mineClicked">我发出的</span>
               </div>
             </div>
           </div>
@@ -78,35 +39,49 @@
             <router-view></router-view>
           </div>
         </div>
+        <div class="unlog-user-pl-all" v-if="!userLog">
+          <router-link to="/userLogin"></router-link>
+        </div>
       </mt-tab-container-item>
 
       <mt-tab-container-item id="s2">
 
-        <div class="inform-all">
-
-          <div class="inform-top">
-            <span>2017-11-15</span>
-          </div>
-
-          <div class="inform-body">
-            <div class="inform-body-header">
-              <img src="../../assets/kk-user/kk-user-xzs.jpg" alt="">
-              <span>快看小助手</span>
+        <div class="inform-all" v-if="userLog">
+          <div class="inform-for" v-for="informValue,informIndex in userMessage">
+            <div class="inform-top">
+              <span>2017-11-15</span>
             </div>
 
-            <div class="inform-body-content"></div>
+            <div class="inform-body">
+              <div class="inform-body-header">
+                <img :src="informValue.send_user.avatar_url" alt="">
+                <span>{{informValue.send_user.nickname}}</span>
+              </div>
 
-            <div class="inform-body-footer">
-              <span>立即体验</span>
+              <div class="inform-body-content">
+                <pre>
+                  {{informValue.description}}
+                </pre>
+              </div>
+
+              <div class="inform-body-footer">
+                <span>{{informValue.target_guide_name}}</span>
+              </div>
             </div>
           </div>
 
         </div>
 
+        <div class="unlog-inform-all" v-if="!userLog">
+          <div class="uia-top">
+            <span>登录后可查看全部通知</span>
+            <button @click="toUserLogin">登录</button>
+          </div>
+          <div class="uia-bottom"></div>
+        </div>
+
       </mt-tab-container-item>
     </mt-tab-container>
->>>>>>> f590627032231e8466c1de8e34358c8942f4cdc4
->>>>>>> 0efd7ba24f56676e78d560dce2720dc3b7924020
 
   </div>
 </template>
@@ -116,10 +91,34 @@
     name: 'UserNews',
     data () {
       return {
-        selected: 1,
+        selected: 's1',
         noneShow: false,
         changeTags: '回复我的',
-        userChoose: ''
+        userLog: false,
+        userMessage: []
+      }
+    },
+    mounted () {
+      let useCookie = document.cookie.indexOf('session')
+      if (useCookie === -1) {
+        this.userLog = false
+      } else {
+        this.$request({
+          type: 'get',
+          url: '/kuaikanv2/messages/all?start_time=1511089083341',
+          success (res) {
+//            console.log(res.data.data)
+            if (res.data.data === undefined) {
+              this.userLog = false
+            } else {
+              this.userLog = true
+              this.userMessage = res.data.data.messages
+            }
+          },
+          failed (err) {
+            console.log(err)
+          }
+        })
       }
     },
     methods: {
@@ -129,12 +128,15 @@
       returnClicked () {
         this.changeTags = '回复我的'
         this.noneShow = !this.noneShow
-        this.userChoose = '/userNews/reply'
+        this.$router.push({path: '/userNews/reply'})
       },
       mineClicked () {
         this.changeTags = '我发出的'
         this.noneShow = !this.noneShow
-        this.userChoose = '/userNews/sendout'
+        this.$router.push({path: '/userNews/sendout'})
+      },
+      toUserLogin () {
+        this.$router.push({path: '/userLogin'})
       }
     }
   }
@@ -200,7 +202,19 @@
       }
     }
   }
-
+  .unlog-user-pl-all{
+    width: 100vw;
+    height: 89vh;
+    background-color: #f8f9fb;
+    background-image: url(../../assets/kk-user/unlog/kk-unlog-comment.png);
+    -webkit-background-size: 100%;
+    background-size: 100%;
+    background-repeat:no-repeat;
+    a{
+      width: 100%;
+      height: 100%;
+    }
+  }
   .user-pl-all{
     border-top: 3px solid #f9f8fd;
     background-color: #f9f8fd;
@@ -250,10 +264,8 @@
           padding: 10px 10px;
           span{
             display: block;
-            a{
-              color: #fff;
-              margin: 0 5px;
-            }
+            color: #fff;
+            margin: 0 5px;
           }
           .none-span-one{
             padding-bottom: 10px;
@@ -264,65 +276,107 @@
       }
     }
   }
+  .unlog-inform-all{
+    width: 100vw;
+    height: 88.9vh;
+    background-color: red;
+    .uia-top{
+      width: 90vw;
+      height: 10%;
+      background-color: #fee6e6;
+      padding: 0 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      button{
+        width: 15vw;
+        height: 50%;
+        background-color: #fbe338;
+        border: none;
+        outline: none;
+        border-radius: 15px;
+        color: #735300;
+        font-size: 15px;
+      }
+    }
+    .uia-bottom{
+      width: 100vw;
+      height: 100%;
+      background-color: #f8f9fb;
+      background-image: url(../../assets/kk-user/unlog/kk-unlog-message.png);
+      -webkit-background-size: 100% 100%;
+      background-size: 100%;
+      background-repeat:no-repeat;
+    }
+  }
   .inform-all{
     width: 100%;
     min-height: 88.9vh;
     background-color: #f9f8fd;
-    .inform-top{
-      width: 100%;
-      margin: 0 auto;
-      text-align: center;
-      span{
-        color: #a4a5a7;
-        font-size: 14px;
-        line-height: 40px;
-      }
-    }
-    .inform-body{
-      margin: 0 auto;
-      width: 90%;
-      height: 60vh;
-      background-color: white;
-      font-size: 15px;
-      .inform-body-header{
-        width: 90%;
-        height: 10%;
-        /*background-color: red;*/
-        border-bottom: 1px solid #f1f1f1;
+    .inform-for{
+      width: 100vw;
+      .inform-top{
+        width: 100%;
         margin: 0 auto;
-        display: flex;
-        align-items: center;
-        img{
-          vertical-align: middle;
-          width: 5%;
-          height: 40%;
-        }
+        text-align: center;
         span{
-          vertical-align: middle;
-          margin-left: 5%;
+          color: #a4a5a7;
+          font-size: 14px;
+          line-height: 40px;
         }
       }
-      .inform-body-content{
-        display: flex;
-        width: 90%;
-        height: 78%;
+      .inform-body{
         margin: 0 auto;
-        /*background-color: #654;*/
-      }
-      .inform-body-footer{
         width: 90%;
-        height: 10%;
-        /*background-color: red;*/
-        background-image: url(../../assets/kk-user/kk-user-right.png);
-        background-size: 5% 40%;
-        background-repeat:no-repeat;
-        background-position:right;
-        border-top: 1px solid #f1f1f1;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        span{
-          color: #eab953;
+        height: 60vh;
+        background-color: white;
+        font-size: 15px;
+        .inform-body-header{
+          width: 90%;
+          height: 10%;
+          /*background-color: red;*/
+          border-bottom: 1px solid #f1f1f1;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          img{
+            vertical-align: middle;
+            width: 5%;
+            height: 40%;
+          }
+          span{
+            vertical-align: middle;
+            margin-left: 5%;
+          }
+        }
+        .inform-body-content{
+          display: flex;
+          width: 88%;
+          height: 78%;
+          margin: 0 auto;
+          pre{
+            margin: 0 auto;
+            color: black;
+            white-space: pre-wrap;
+            line-height: 25px;
+          }
+          /*background-color: #654;*/
+        }
+        .inform-body-footer{
+          width: 90%;
+          height: 10%;
+          /*background-color: red;*/
+          background-image: url(../../assets/kk-user/kk-user-right.png);
+          background-size: 5% 40%;
+          background-repeat:no-repeat;
+          background-position:right;
+          border-top: 1px solid #f1f1f1;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          span{
+            color: #eab953;
+          }
         }
       }
     }

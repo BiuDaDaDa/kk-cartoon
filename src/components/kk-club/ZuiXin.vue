@@ -142,7 +142,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 20px;
+    margin-left: 10px;
   }
   .box_bottom{
     display: flex;
@@ -151,6 +151,7 @@
   }
   .usertx{
     width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: 1px solid #ccc;
     margin-right: 10px;

@@ -15,6 +15,7 @@
 
       <div class="kk-club">
         <router-link to="/kk-tabs"></router-link>
+        <router-link to="/kk-club"></router-link>
         <img :src="clubSrc" alt="">
         <h3 ref="clubRef">V社区</h3>
       </div>
@@ -53,6 +54,7 @@
         this.findSrc = require('../../assets/kk-nav/kk-nav-find-c.png')
         this.$refs.findRef.style.color = '#fce13c'
       } else if (link === '/kk-tabs') {
+      } else if (link === '/kk-club') {
         this.clubSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
         this.$refs.clubRef.style.color = '#fce13c'
       }
@@ -92,7 +94,5 @@
         color: #939393;
       }
     }
-
-
   }
 </style>

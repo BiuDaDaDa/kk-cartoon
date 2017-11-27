@@ -397,14 +397,14 @@
     margin-right: 5px;
   }
   .top{
-    width: 90%;
+    width: 95.5%;
     position: fixed;
     left: 0;
     top: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 10px;
     background-color: white;
     border-bottom: 1px solid #ccc;
   }

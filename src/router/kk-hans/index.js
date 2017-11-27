@@ -6,6 +6,7 @@ import PingLun from '@/components/kk-club/PingLun'
 import DaPing from '@/components/kk-club/DaPing'
 import PingLunTow from '@/components/kk-club/PingLunTow'
 import HuiHua from '@/components/kk-club/HuiHua'
+import ZuoZhe from '@/components/kk-club/ZuoZhe'
 export default [
   {
     path: '/kk-tabs',
@@ -51,5 +52,10 @@ export default [
     path: '/kk-huihua/:myid?',
     name: 'HuiHua',
     component: HuiHua
+  },
+  {
+    path: '/kk-zuozhe/:userid?',
+    name: 'ZuoZhe',
+    component: ZuoZhe
   }
 ]

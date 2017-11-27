@@ -204,7 +204,9 @@
     font-size: 13px;
   }
   .wrap{
+    width: 414px;
     display: flex;
+    background-color: rgb(220,220,220);
   }
   .fabu{
     width: 90%;
@@ -254,10 +256,6 @@
     border-radius: 45%;
     color: white;
     padding: 1px 6px;
-  }
-  .wrap{
-    background-color: rgb(220,220,220);
-    /*padding-top: 60px;*/
   }
   .box1{
     background-color: white;
@@ -402,14 +400,14 @@
     margin-right: 5px;
   }
   .top{
-    width: 90%;
+    width: 95.5%;
     position: fixed;
     left: 0;
     top: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 10px;
     background-color: white;
     border-bottom: 1px solid #ccc;
   }

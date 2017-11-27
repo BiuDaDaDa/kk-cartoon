@@ -13,14 +13,16 @@
       <div class="log-content">
         <div class="log-phone">
           <img src="../../assets/kk-user/log/kk-log-phone-gray.png" alt="">
-          <input type="text" placeholder="支持中国大陆" @focus="phoneFocus">
+          <input type="text" placeholder="支持中国大陆" @focus="phoneFocus" v-model="phone">
         </div>
 
         <div class="log-pass">
           <img src="../../assets/kk-user/log/kk-log-lock-gray.png" alt="">
-          <input type="password" placeholder="8-30位数字或英文" @focus="passFocus">
+          <input type="password" placeholder="8-30位数字或英文" @focus="passFocus" v-model="password">
         </div>
       </div>
+
+      <h6 v-show="loginHintShow">{{loginHint}}</h6>
 
       <button @click="loginClicked">登录</button>
 
@@ -57,7 +59,12 @@
     export default {
       name: 'UserLogin',
       data () {
-        return {}
+        return {
+          phone: '',
+          password: '',
+          loginHint: '',
+          loginHintShow: false
+        }
       },
       methods: {
         phoneFocus () {
@@ -67,23 +74,37 @@
           this.$refs.logAllRef.style.backgroundImage = 'url(' + require('../../assets/kk-user/log/kk-log-pass.png') + ')'
         },
         loginClicked () {
-          this.$request({
-            type: 'post',
-            url: '/kkv1/phone/signin',
-            params: {
-              'phone': '18840801110',
-              'password': 'ymy1993224'
-            },
-            headers: {
-              'X-Device': 'A:bcce411315f9d871'
-            },
-            success (res) {
-              console.log(res)
-            },
-            failed (err) {
-              console.log(err)
-            }
-          })
+          if (this.phone.length !== 11) {
+            this.loginHintShow = true
+            this.loginHint = '您输入的手机号无效，请重新输入'
+          } else if (this.password.length <= 7) {
+            this.loginHintShow = true
+            this.loginHint = '密码长度至少为8位'
+          } else {
+            this.$request({
+              type: 'post',
+              url: '/kkv1/phone/signin',
+              params: {
+                'phone': this.phone,
+                'password': this.password
+              },
+              headers: {
+                'X-Device': 'A:bcce411315f9d871'
+              },
+              success (res) {
+//                console.log(res.headers)
+                if (res.data.code === '600004') {
+                  this.loginHintShow = true
+                  this.loginHint = '账号或者密码不对orz'
+                } else {
+                  this.$router.push({path: '/user'})
+                }
+              },
+              failed (err) {
+                console.log(err)
+              }
+            })
+          }
         }
       }
     }
@@ -166,13 +187,27 @@
         }
       }
     }
+    h6{
+      width: 60vw;
+      height: 3vh;
+      /*background-color: firebrick;*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 52.7vh;
+      left: 20vw;
+      color: red;
+      font-size: 14px;
+      font-weight: normal;
+    }
     button{
       width: 60vw;
       height: 7.5vh;
       background-color: #323f48;
       border-radius: 15px;
       position: absolute;
-      top: 55vh;
+      top: 56vh;
       left: 20vw;
       color: #fff;
       font-size: 17px;

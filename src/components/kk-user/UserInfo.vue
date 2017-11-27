@@ -14,21 +14,33 @@
     <div class="info-all">
       <div class="info-img">
         <div class="img-all">
-          <img src="../../assets/kk-user/kk-user-head.jpg" alt="">
+          <img :src="infoUrl" alt="">
         </div>
       </div>
 
       <div class="info-content">
-        <div class="info-for" v-for="infoValue,infoIndex in userInfo">
-          <h2>{{infoValue.tags}}</h2>
-          <h3>{{infoValue.name}}</h3>
+        <div class="info-for">
+          <h2>昵称</h2>
+          <input type="text" :value="infoName">
+        </div>
+        <div class="info-for">
+          <h2>性别</h2>
+          <input type="text" :value="infoSex === 1 ? '男' : '女'">
+        </div>
+        <div class="info-for">
+          <h2>生日</h2>
+          <input type="text" :value="infoBirthday">
         </div>
       </div>
 
       <div class="info-id">
-        <span>uid: 92670787</span>
+        <span>{{infoId}}</span>
       </div>
     </div>
+    <div class="user-sex"></div>
+    <!--<div class="user-birthday">-->
+      <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
+    <!--</div>-->
   </div>
 </template>
 
@@ -37,20 +49,56 @@
       name: 'UserInfo',
       data () {
         return {
-          userInfo: [
+          infoName: '',
+          infoSex: '',
+          infoBirthday: '',
+          infoUrl: '',
+          infoId: '',
+          slots: [
             {
-              tags: '昵称',
-              name: 'Moriarty24'
+              flex: 1,
+              values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
+              className: 'slot1',
+              textAlign: 'right'
             },
             {
-              tags: '性别',
-              name: '男'
-            },
-            {
-              tags: '昵称',
-              name: '1997-01-01'
+              divider: true,
+              content: '-',
+              className: 'slot2'
+            }, {
+              flex: 1,
+              values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
+              className: 'slot3',
+              textAlign: 'left'
             }
           ]
+        }
+      },
+      mounted () {
+        this.$request({
+          type: 'get',
+          url: '/kuaikanv1/users/me',
+          heders: {
+            'X-Device': 'A:bcce411315f9d871'
+          },
+          success (res) {
+            this.infoName = res.data.data.nickname
+            this.infoSex = res.data.data.gender
+            this.infoBirthday = res.data.data.birthday
+            this.infoUrl = res.data.data.avatar_url
+            this.infoId = res.data.data.id
+//            console.log(res.data.data.avatar_url)
+          },
+          failed (err) {
+            console.log(err)
+          }
+        })
+      },
+      methods: {
+        onValuesChange (picker, values) {
+          if (values[0] > values[1]) {
+            picker.setSlotValue(1, values[0])
+          }
         }
       }
     }
@@ -139,9 +187,12 @@
           margin-left: 2vw;
           margin-right: 4vw;
         }
-        h3{
+        input{
           font-size: 17px;
-          font-weight: 400;
+          font-weight: 300;
+          width: 70vw;
+          border: none;
+          outline: none;
         }
       }
     }

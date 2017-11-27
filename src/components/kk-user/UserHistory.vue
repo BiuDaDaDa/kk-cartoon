@@ -34,7 +34,39 @@
 
 <script>
     export default {
-      name: 'UserHistory'
+      name: 'UserHistory',
+      data () {
+        return {
+          readHistory: []
+        }
+      },
+      mounted () {
+        let useCookie = document.cookie.indexOf('session')
+        if (useCookie === -1) {
+          this.userLog = false
+        } else {
+          this.$request({
+            type: 'get',
+            url: '/kuaikanv1/topic_new/check_update',
+            params: {
+              'topic_ids': '1576,1191,1671,133,1690,544,78'
+            },
+            success (res) {
+              console.log(res)
+              if (res.data.data === undefined) {
+                this.userLog = false
+              } else {
+                this.userLog = true
+                this.userWork = res.data.data.topics
+                console.log(this.userWork)
+              }
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
+        }
+      }
     }
 </script>
 

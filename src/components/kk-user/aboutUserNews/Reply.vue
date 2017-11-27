@@ -1,36 +1,36 @@
 <template>
   <div>
     <div class="reply-all">
-      <div class="reply-for">
+      <div class="reply-for" v-for="replyValue,replyIndex in userReply">
 
         <div class="reply-top">
           <div class="reply-userimg">
-            <img src="../../../assets/kk-user/test1.jpg" alt="">
+            <img :src="replyValue.user.avatar_url" alt="">
           </div>
 
           <div class="reply-userinfo">
-            <span>read富坚帝国</span>
-            <span class="reply-userinfo-time">11-20 20:48</span>
+            <span>{{replyValue.user.nickname}}</span>
+            <span class="reply-userinfo-time">{{replyValue.created_at_info}}</span>
           </div>
           <button>回复</button>
         </div>
 
         <div class="reply-content">
-          <span>666</span>
+          <span>{{replyValue.content}}</span>
         </div>
 
         <div class="reply-which">
           <div class="rw-top">
-            <span>我：随手就是一个赞</span>
+            <span>{{replyValue.target_comment.content}}</span>
           </div>
 
           <div class="rw-bottom">
             <div class="rw-ct-img">
-              <img src="" alt="">
+              <img :src="replyValue.target_comic.cover_image_url" alt="">
             </div>
             <div class="rw-ct-title">
-              <span>第6话 噩耗</span>
-              <span class="rw-ct-carton">烬天录</span>
+              <span>{{replyValue.target_comic.title}}</span>
+              <span class="rw-ct-carton">{{replyValue.target_comic.topic_title}}</span>
             </div>
           </div>
         </div>
@@ -42,7 +42,28 @@
 
 <script>
     export default {
-      name: 'Reply'
+      name: 'Reply',
+      data () {
+        return {
+          userReply: []
+        }
+      },
+      mounted () {
+        let useCookie = document.cookie.indexOf('session')
+        if (useCookie !== -1) {
+          this.$request({
+            type: 'get',
+            url: '/kuaikanv2/comments/replies',
+            success (res) {
+//              console.log(res.data.data.comments)
+              this.userReply = res.data.data.comments
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
+        }
+      }
     }
 </script>
 
@@ -67,7 +88,7 @@
         position: relative;
         .reply-userimg{
           width: 10%;
-          height: 70%;
+          height: 75%;
           border-radius: 50%;
           overflow: hidden;
           margin-left: 2%;
@@ -77,7 +98,6 @@
           background-repeat:no-repeat;
           img{
             width: 100%;
-            height: 100%;
           }
         }
         .reply-userinfo{
@@ -136,9 +156,10 @@
           .rw-ct-img{
             width: 40%;
             height: 100%;
-            background-color: red;
+            /*background-color: red;*/
+            overflow: hidden;
             img{
-              width: 100%;
+              width: 110%;
               height: 100%;
             }
           }

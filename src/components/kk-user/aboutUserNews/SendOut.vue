@@ -1,30 +1,30 @@
 <template>
   <div>
     <div class="sendout-all">
-      <div class="sendout-for">
+      <div class="sendout-for" v-for="sendValue,sendIndex in userSend">
         <div class="sf-top">
-          <span>随手就是一个赞</span>
+          <span>{{sendValue.content}}</span>
         </div>
 
         <div class="sf-center">
           <div class="sfc-img">
-            <img src="" alt="">
+            <img :src="sendValue.target_comic.cover_image_url" alt="">
           </div>
 
           <div class="sfc-title">
-            <div class="sfc-zj">第六话 噩耗</div>
-            <div class="sfc-carton">烬天录</div>
+            <div class="sfc-zj">{{sendValue.target_comic.title}}</div>
+            <div class="sfc-carton">{{sendValue.target_comic.topic_title}}</div>
           </div>
         </div>
 
         <div class="sf-bottom">
           <div class="sfb-time">
-            <span>11-20 19:12</span>
+            <span>{{sendValue.created_at_info}}</span>
           </div>
 
           <div class="sfb-zan">
             <img src="../../../assets/kk-user/kk-user-zan.png" alt="">
-            <span>1</span>
+            <span>{{sendValue.likes_count}}</span>
             <button>删除</button>
           </div>
         </div>
@@ -35,7 +35,28 @@
 
 <script>
     export default {
-      name: 'Comment'
+      name: 'Comment',
+      data () {
+        return {
+          userSend: []
+        }
+      },
+      mounted () {
+        let useCookie = document.cookie.indexOf('session')
+        if (useCookie !== -1) {
+          this.$request({
+            type: 'get',
+            url: '/kuaikanv2/comments/me',
+            success (res) {
+              console.log(res.data.data.comments)
+              this.userSend = res.data.data.comments
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
+        }
+      }
     }
 </script>
 
@@ -71,6 +92,11 @@
           width: 40%;
           height: 100%;
           background-color: royalblue;
+          overflow: hidden;
+          img{
+            width: 110%;
+            height: 100%;
+          }
         }
         .sfc-title{
           width: 60%;

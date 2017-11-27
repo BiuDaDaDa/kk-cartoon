@@ -47,7 +47,7 @@
       name: 'TradeDetail',
       data: function () {
         return {
-          selected: 2
+          selected: 's1'
         }
       }
     }
@@ -122,17 +122,17 @@
   .forever{
     width: 100vw;
     min-height: 88.9vh;
+    background-color: #f8f9fb;
     img{
       width: 100vw;
-      height: 88.9vh;
     }
   }
   .three-days{
     width: 100vw;
     min-height: 88.9vh;
+    background-color: #f8f9fb;
     img{
       width: 100vw;
-      height: 88.9vh;
     }
   }
 </style>

@@ -4,12 +4,12 @@
       <div class="user-top"></div>
 
       <div class="user-bottom">
-        <router-link class="userIn" to="/userLogin">
-          <div class="user-head">
+        <router-link class="userIn" :to="logOrInfo">
+          <div class="user-head" ref="userImg">
           </div>
         </router-link>
         <div class="user-bottom-body">
-          <span class="user-name">登录</span>
+          <span class="user-name">{{userName}}</span>
           <ul class="user-name-firstul">
             <div class="user-name-bb" v-for="newsValue, newsIndex in userNews" @click="turnClicked(newsIndex)" ref="turnStyle">
               <li>
@@ -40,12 +40,14 @@
       },
       data () {
         return {
+          userName: '',
+          logOrInfo: '',
           userNews: [
             {
               name: '我的消息',
               src: require('../../assets/kk-user/kk-user-news.png'),
               show: false,
-              userInfo: 'userNews'
+              userInfo: 'userNews/reply'
             },
             {
               name: '我的钱包',
@@ -97,6 +99,33 @@
             }
           ],
           turnStyle: ''
+        }
+      },
+      mounted () {
+//        let useCookie = document.cookie.split(';')[1].split('=')[0]
+        let useCookie = document.cookie.indexOf('session')
+        if (useCookie === -1) {
+          this.userName = '登录'
+          this.logOrInfo = '/userLogin'
+        } else {
+          this.$request({
+            type: 'get',
+            url: '/kuaikanv1/users/me',
+            success (res) {
+//              console.log(res.data.data)
+              if (res.data.data.nickname === undefined) {
+                this.userName = '登录'
+                this.logOrInfo = '/userLogin'
+              } else {
+                this.userName = res.data.data.nickname
+                this.logOrInfo = '/userInfo'
+                this.$refs.userImg.style.backgroundImage = 'url(' + res.data.data.avatar_url + ')'
+              }
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
         }
       },
       methods: {
@@ -195,6 +224,9 @@
           background-image: none;
         }
         border-bottom: 3px solid #fafafa;
+      }
+      .user-name-bb:nth-child(9){
+        margin-bottom: 8vh;
       }
       .user-name-bb{
         width: 100%;
