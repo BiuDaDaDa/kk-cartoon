@@ -1,25 +1,33 @@
 <template>
   <div id="app" class="wrap">
     <div class="box">
-      <router-link class="title" to="/kk-club">热门</router-link>
-      <router-link class="title" to="/kk-zuixin">评论</router-link>
+      <router-link class="title" to="/kk-club" ><span class="title1" ref="rm" @click="clicked">热门</span></router-link>
+      <router-link class="title" to="/kk-zuixin"><span class="title1" ref="pl" @click="dianji">最新</span></router-link>
     </div>
     <router-view></router-view>
-    <!--<my-club/>-->
     <my-nav/>
   </div>
 </template>
 
 <script>
   import MyNav from '../../components/kk-nav/FooterNav.vue'
-//  import MyClub from '../../components/kk-nav/Club.vue'
   export default {
     components: {
       MyNav
-//      MyClub
     },
     name: 'Tabs',
+    mounted () {
+      this.$refs.rm.style.borderBottom = '2px solid #f0d63e'
+    },
     methods: {
+      clicked () {
+        this.$refs.rm.style.borderBottom = '2px solid #f0d63e'
+        this.$refs.pl.style.borderBottom = 'none'
+      },
+      dianji () {
+        this.$refs.pl.style.borderBottom = '2px solid #f0d63e'
+        this.$refs.rm.style.borderBottom = 'none'
+      }
     }
   }
 </script>
@@ -31,7 +39,7 @@
   .box{
     position: fixed;
     left: 0;
-    top: 0px;
+    top: 0;
     width: 100%;
     border-bottom: 1px solid #ccc;
     display: flex;
@@ -40,8 +48,12 @@
   }
   .title{
     color: black;
-    border-bottom: 2px solid rgb(240,214,62);
     box-sizing: border-box;
     padding: 10px 25px;
+  }
+  .title1{
+    color: black;
+    box-sizing: border-box;
+    padding: 8px 25px;
   }
 </style>

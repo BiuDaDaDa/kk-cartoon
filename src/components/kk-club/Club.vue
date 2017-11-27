@@ -116,22 +116,6 @@
 </script>
 
 <style scoped lang="less">
-  /*.top{*/
-    /*position: fixed;*/
-    /*left: 0;*/
-    /*top: 0;*/
-    /*display: flex;*/
-    /*width: 100%;*/
-    /*border-bottom: 1px solid #ccc;*/
-    /*justify-content: space-around;*/
-    /*background-color: white;*/
-  /*}*/
-  /*.title{*/
-    /*color: black;*/
-    /*border-bottom: 2px solid rgb(240,214,62);*/
-    /*box-sizing: border-box;*/
-    /*padding: 10px 25px;*/
-  /*}*/
   .wrap{
     background-color: rgb(247,247,247);
     padding-top: 45px;

@@ -1,10 +1,10 @@
 <template>
   <div id="my-clud">
     <div class="wrap" v-if="isloading">
-      <div class="box" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
+      <div class="box" @touchmove="move" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
         <div class="box_up">
           <div class="box_up_left">
-            <img class="usertx" :src="common.user.avatar_url" alt="">
+            <img class="usertx" :src="common.user.avatar_url" alt="" @click="zuozhe(common.user.id)" onClick="event.cancelBubble = true">
             <span class="username">{{common.user.nickname}}</span>
           </div>
           <div class="box_up_right">
@@ -97,9 +97,15 @@
       jump: function (ev, ee) {
         // 拆分字符串,取右
         this.myid = ev.split('feeds/')[1]
-//        this.$router.push({name: 'PingLun', params: {id: this.myid}})
         this.dataid = ee
         this.$router.push({name: 'PingLunTow', params: {id: this.myid, dataid: this.dataid}})
+      },
+      move: function () {
+//        console.log(window.scrollY)
+      },
+      zuozhe (ev) {
+        this.userid = ev
+        this.$router.push({name: 'ZuoZhe', params: {userid: this.userid}})
       }
     }
   }
@@ -109,6 +115,7 @@
   .wrap{
     background-color: rgb(247,247,247);
     padding-top: 45px;
+    width: 414px;
   }
   .box{
     background-color: white;
