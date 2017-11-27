@@ -7,7 +7,7 @@
   <div class="wrap"  v-infinite-scroll="loadMore"
         infinite-scroll-disabled="loading"
         infinite-scroll-distance="100">
-    <div v-for="myTopic in topics" class="box">
+    <div v-for="myTopic in topics" class="box" @touchmove="changeGo1" @touchend="changeGo2(myTopic['id'])">
       <div class="bLeft">
         <img :src="myTopic['cover_image_url']" alt="">
       </div>
@@ -42,7 +42,8 @@
         topics: [],
         offset: '0',
         diMsg: '',
-        loading: false // 加载状态
+        loading: false, // 加载状态
+        isGo: 1
       }
     },
     methods: {
@@ -85,7 +86,22 @@
         }
       },
       goBack () {
-        this.$router.push({path: '/' + this.countMoreList['2']})
+        window.history.back()
+//        this.$router.push({path: '/' + this.countMoreList['2']})
+      },
+      changeGo1 () {
+        this.isGo = 0
+        // 默认定义了
+      },
+      changeGo2 (tarId) {
+        if (this.isGo === 1) {
+          this.cartoonGo(tarId)
+        } else {
+          this.isGo = 1
+        }
+      },
+      cartoonGo (tarId) {
+        this.$router.push({name: 'kkcartoontitle', params: {id: tarId}})
       }
     },
     mounted () {
@@ -132,6 +148,11 @@
     height: 117px;
     margin-right: 5%;
     float: left;
+    background-image: url(../../assets/kk-find/kk-mhbg.jpg);
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
   }
   .bLeft img{
     width: 100%;

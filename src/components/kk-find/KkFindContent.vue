@@ -1,26 +1,30 @@
 <template>
 <div class="content">
-<div v-for="item in newContent" class="boxBar">
-  <div v-if="item['topics']" class="BTitle">
-    <span class="title">{{item['title']}}</span>
-    <span class="more" @click="moreGo(item['action'],item['title'])">更多&nbsp;
-      <img src="../../assets/kk-find/kk-find-more.png" alt=">">
-    </span>
-  </div>
-  <div class="boxF">
-    <router-link v-for="ite in item['topics']||item['banners']" to="#" :key="ite['target_id']" :class="'box'+item['item_type']">
-      <div class="boxTop">
-        <img :src="ite['pic']" alt="">
+  <div class="boxBar" v-for="item in newContent">
+    <div class="BTitle" v-if="item['topics']">
+      <span class="title">
+        {{item['title']}}
+      </span>
+      <span class="more" @click="moreGo(item['action'],item['title'])">
+        更多&nbsp;
+        <img src="../../assets/kk-find/kk-find-more.png" alt=">">
+     </span>
+    </div>
+    <div class="boxF">
+      <div :class="'box'+item['item_type']" v-for="ite in item['topics']||item['banners']"
+           @touchmove="changeGo1" @touchend="changeGo2(ite['target_id'])" :key="ite['target_id']">
+        <div class="boxTop">
+          <img :src="ite['pic']" alt="">
+        </div>
+        <div class="boxBottom" v-if="item['topics']" >
+          <p class="title">{{ite['title']}}</p>
+          <p class="recommended_text">{{ite['recommended_text']}}
+            <span v-if="!ite['recommended_text']" v-for="val in ite['category']">{{val}}</span>
+          </p>
+        </div>
       </div>
-      <div v-if="item['topics']" class="boxBottom">
-        <p class="title">{{ite['title']}}</p>
-        <p class="recommended_text">{{ite['recommended_text']}}
-          <span v-if="!ite['recommended_text']" v-for="val in ite['category']">{{val}}</span>
-        </p>
-      </div>
-    </router-link>
+    </div>
   </div>
-</div>
 </div>
 </template>
 
@@ -34,7 +38,8 @@
     },
     data () {
       return {
-        rec: false
+        rec: false,
+        isGo: 1
       }
     },
     methods: {
@@ -42,14 +47,24 @@
         this.$router.push({path: '/kkFindMore'})
         let tt = {0: act, 1: tle, 2: 'kkfind'}
         this.$store.commit('increment', tt)
+      },
+      changeGo1 () {
+        this.isGo = 0
+      },
+      changeGo2 (tarId) {
+        if (this.isGo === 1) {
+          this.cartoonGo(tarId)
+        } else {
+          this.isGo = 1
+        }
+      },
+      cartoonGo (tarId) {
+        this.$router.push({name: 'kkcartoontitle', params: {id: tarId}})
       }
     }
   }
 </script>
 <style scoped lang=less>
-  a{
-    text-decoration: none;
-  }
 .boxBar{
   margin: 10px 0;
   width: 100%;
@@ -88,7 +103,7 @@
     height:127px;
   }
   .box18 .boxTop{
-    height: auto;
+    height: 203px;
    }
   .box4,.box5{
     width: 33%;
@@ -113,6 +128,11 @@
   }
   .boxF .boxTop{
     width: 100%;
+    background-image: url(../../assets/kk-find/kk-mhbg.jpg);
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
   }
   .boxF img{
     width: 100%;

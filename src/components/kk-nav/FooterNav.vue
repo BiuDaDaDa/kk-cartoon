@@ -15,6 +15,7 @@
 
       <div class="kk-club">
         <router-link to="/kk-club"></router-link>
+        <router-link to="/kk-tabs"></router-link>
         <img :src="clubSrc" alt="">
         <h3 ref="clubRef">V社区</h3>
       </div>
@@ -42,6 +43,7 @@
     },
     mounted () {
       console.log(window.location.href.split('8081')[1])
+//        console.log(window.location.href.split('8081')[1])
       let link = window.location.href.split('8081')[1]
       if (link === '/user') {
         this.userSrc = require('../../assets/kk-nav/kk-nav-user-c.png')

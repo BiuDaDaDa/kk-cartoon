@@ -7,7 +7,8 @@
     </ul>
     <div id="mainContent">
       <div v-for="(k,i) in array" class="content">
-        <router-link to="/" tag="div" class="nav" @touchend.native="link(k.topic.id)" @touchstart.native='tiao'>
+        <router-link to="/" tag="div" class="nav"
+                     @touchend.native="link(k.topic.id)" @touchstart.native='tiao'>
           <div class="title">{{k.label_text}}</div>
           <p class="heading">{{k.topic.title}}</p>
           <router-link to="/" class="all">全集&nbsp;></router-link>
@@ -25,10 +26,12 @@
         </router-link>
       </div>
     </div>
+    <FooterNav></FooterNav>
   </div>
 </template>
 
 <script>
+  import FooterNav from '../kk-nav/FooterNav.vue'
   var day = new Date()
   var nowDay = day.getDay()
   var dayarray = []
@@ -67,6 +70,9 @@
         weekArr: weekDay,
         url: ''
       }
+    },
+    components: {
+      FooterNav
     },
     methods: {
       tiao: function () {

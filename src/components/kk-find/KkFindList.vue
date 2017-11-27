@@ -36,7 +36,12 @@
   }
 .list .imgF{
   width: 15%;
-  height: auto;
+  height: 80px;
+  background-image: url(../../assets/kk-find/kk-mhbg.jpg);
+  background-repeat:no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center center;
 }
 .list .imgF img{
   width: 100%;
