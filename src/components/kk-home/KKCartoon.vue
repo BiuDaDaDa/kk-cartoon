@@ -1,6 +1,21 @@
 <template>
-  <div class="hello" @touchmove="touch">
-    <ul id="dayList" ref="list">
+  <div class="hello" @touchmove="touch" @touchstart="changePos1" @touchend="changePos2">
+    <div class="topDi"></div>
+    <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
+      <div class="Nav">
+        <div class="diBg" >
+            <img src="../../assets/kkcartoontitle/kk-games.png" alt="">
+        </div>
+        <div class="btnN">
+          <span @click="changeFen" :class="{actBtn:!isShow}">关注</span>
+          <span  @click="changeTui" :class="{actBtn:isShow}">热门</span>
+        </div>
+        <div class="diBg">
+          <img src="../../assets/kk-find/kk-find-search1.png" alt="🔍">
+        </div>
+      </div>
+    </div>
+    <ul id="dayList" ref="list" style="top: 60px">
       <router-link tag="li" v-for="(key,i) in dayarray" :key="key.id" to="/" class="list" @touchstart.native="tab(i)">
         {{key}}
       </router-link>
@@ -9,7 +24,7 @@
       <div v-for="(k,i) in array" class="content">
         <router-link to="/" tag="div" class="nav"
                      @touchend.native="link(k.topic.id)" @touchstart.native='tiao'>
-          <div class="title">{{k.label_text}}</div>
+          <div class="title" :style="{backgroundColor:k.label_color}">{{k.label_text}}</div>
           <p class="heading">{{k.topic.title}}</p>
           <router-link to="/" class="all">全集&nbsp;></router-link>
           <p class="author">作者:&nbsp;&nbsp;{{k.topic.user.nickname}}</p>
@@ -68,13 +83,59 @@
         array: [],
         dayarray: arrayday,
         weekArr: weekDay,
-        url: ''
+        url: '',
+        isShow: true
       }
     },
     components: {
       FooterNav
     },
     methods: {
+      changeTui () {
+        if (!this.isShow) {
+          this.isShow = true
+          this.$router.push({path: '/'})
+        }
+      },
+      changeFen () {
+        if (this.isShow) {
+          this.isShow = false
+          this.$router.push({path: '/attention'})
+        }
+      },
+      changePos1 () {
+        this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+      },
+      changePos2 () {
+        this.scrollTop2 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 !== this.scrollTop2) {
+          this.changePos()
+        }
+      },
+      changePos () {
+        let myTimer = null
+        let _this = this
+        // 向下滑动
+        if (this.scrollTop1 < this.scrollTop2 && this.$refs.kkFindNav.offsetTop === 0) {
+          clearInterval(myTimer)
+          myTimer = setInterval(function () {
+            _this.$refs.kkFindNav.style.top = _this.$refs.kkFindNav.offsetTop - 1 + 'px'
+            _this.$refs.list.style.top = _this.$refs.list.offsetTop - 1 + 'px'
+            if (_this.$refs.kkFindNav.offsetTop === -40) {
+              clearInterval(myTimer)
+            }
+          }, 10)
+        } else if (this.scrollTop1 > this.scrollTop2 && this.$refs.kkFindNav.offsetTop === -40) {
+          clearInterval(myTimer)
+          myTimer = setInterval(function () {
+            _this.$refs.kkFindNav.style.top = _this.$refs.kkFindNav.offsetTop + 1 + 'px'
+            _this.$refs.list.style.top = _this.$refs.list.offsetTop + 1 + 'px'
+            if (_this.$refs.kkFindNav.offsetTop === 0) {
+              clearInterval(myTimer)
+            }
+          }, 10)
+        }
+      },
       tiao: function () {
         num = 0
       },
@@ -87,13 +148,13 @@
       },
       touch: function () {
         num = 1
-        if (window.scrollY > 10) {
-          this.$refs.list.className = 'fixed'
-        } else {
-          this.$refs.list.className = ''
-        }
-        if (window.scrollY > 3200) {
-        }
+//        if (window.scrollY > 10) {
+//          this.$refs.list.className = 'fixed'
+//        } else {
+//          this.$refs.list.className = ''
+//        }
+//        if (window.scrollY > 3200) {
+//        }
       },
       tab: function (i) {
         num = 0
@@ -150,6 +211,55 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .topDi{
+    height: 20px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 25;
+    background-color: yellow;
+  }
+  .kkFindNav{
+    padding-top: 20px;
+    width: 100%;
+    position: fixed;
+    z-index: 20;
+    background-color: yellow;
+  }
+  .Nav{
+    display: flex;
+    height: 40px;
+    padding:0 5%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .diBg{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+  .btnN{
+    height: 24px;
+    width: 28%;
+    background-color: rgb(0,0,0);
+    border-radius: 12px;
+    border:1px solid rgb(0,0,0);
+  }
+  .btnN span{
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 200;
+    text-align: center;
+    line-height: 24px;
+    color: yellow;
+    padding: 0 10%;
+    outline: none;
+  }
+  .btnN .actBtn{
+    background-color: yellow;
+    color: #000;
+    border-radius: 12px;
+  }
   h1, h2 {
     font-weight: normal;
   }
@@ -169,20 +279,16 @@
     height: 50px;
   }
   #mainContent {
-    margin-top: -15px;
+    margin-top: 90px;
   }
   .content {
     margin-top: 10px;
     padding-top: 10px;
   }
-  .fixed {
-    position: fixed;
-    top: -17px;
-  }
 
   .title {
     font-size: 12px;
-    background-color: cornflowerblue;
+    /*background-color: cornflowerblue;*/
     color: white;
     width: 32px;
     height: 18px;
@@ -233,8 +339,7 @@
     width: 100%;
     border-bottom: 1px solid darkgray;
     background-color: white;
-    margin-top: 20px;
-    top: -20px;
+    position: fixed;
   }
   #dayList li:last-child {
     border-bottom: 2px solid #E4C93D;

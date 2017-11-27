@@ -131,7 +131,7 @@
           <div id="comment_count">{{comments}}</div>
         </router-link>
         <div id="share" @touchend="share" @click="shartt">&nbsp;</div>
-        <div id="tool" @touchend="tool" @click="actionSheet">&nbsp;</div>
+        <div id="tool" @touchend="tool">&nbsp;</div>
       </div>
     </div>
     <!--弹出-->
