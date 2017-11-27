@@ -6,26 +6,28 @@
     </div>
     <router-view></router-view>
     <!--<my-club/>-->
+    <my-nav/>
   </div>
 </template>
 
 <script>
+  import MyNav from '../../components/kk-nav/FooterNav.vue'
+//  import MyClub from '../../components/kk-nav/Club.vue'
   export default {
+    components: {
+      MyNav
+//      MyClub
+    },
     name: 'Tabs',
-//    data () {
-//      return {
-//        tabs: [
-//          {text: '热门'},
-//          {text: '评论'}
-//        ]
-//      }
-//    },
     methods: {
     }
   }
 </script>
 
 <style scoped lang="less">
+  .wrap{
+    width: 100%;
+  }
   .box{
     position: fixed;
     left: 0;

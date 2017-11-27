@@ -7,7 +7,7 @@
         </router-link>
       <!--</div>-->
       <div class="btn">
-        <div v-for="(jump, i) in jumps" @click="clicked(i)">{{jump.text}}</div>
+        <div v-for="(jump, i) in jumps" class="tabs" @click="clicked(i)">{{jump.text}}</div>
       </div>
     </div>
     <div class="div1"></div>
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+  var tab = document.getElementsByClassName('tabs')
   export default {
     name: 'DaPing',
     data () {
@@ -107,6 +108,15 @@
         } else {
           this.tabs = 'score'
           this.fecthHomeData()
+        }
+        for (var j = 0; j < tab.length; j++) {
+          if (j === i) {
+            tab[j].style.backgroundColor = 'rgb(200,200,200)'
+            tab[j].style.color = 'white'
+          } else {
+            tab[j].style.backgroundColor = 'rgb(230,230,230)'
+            tab[j].style.color = 'black'
+          }
         }
       },
       tiao1 (ev) {
@@ -239,7 +249,7 @@
     display: flex;
     padding: 6px 0;
   }
-  .btn div{
+  .tabs{
     padding: 6px 30px;
     background-color: rgb(230,230,230);
     border: 1px solid #ccc;

@@ -1,10 +1,14 @@
 <template>
   <div id="my-clud">
   <div class="wrap" v-if="isloading">
+    <!--<div class="top">-->
+      <!--<span class="title">热门</span>-->
+      <!--<span class="title">评论</span>-->
+    <!--</div>-->
     <div class="box" @touchmove="move" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
       <div class="box_up">
         <div class="box_up_left">
-          <img class="usertx" :src="common.user.avatar_url" alt="">
+          <img class="usertx" :src="common.user.avatar_url" alt="" @click="zuozhe(common.user.id)" onClick="event.cancelBubble = true">
           <span class="username">{{common.user.nickname}}</span>
         </div>
         <div class="box_up_right">
@@ -102,15 +106,36 @@
       },
       move: function () {
 //        console.log(window.scrollY)
+      },
+      zuozhe (ev) {
+        this.userid = ev
+        this.$router.push({name: 'ZuoZhe', params: {userid: this.userid}})
       }
     }
   }
 </script>
 
 <style scoped lang="less">
+  /*.top{*/
+    /*position: fixed;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    /*display: flex;*/
+    /*width: 100%;*/
+    /*border-bottom: 1px solid #ccc;*/
+    /*justify-content: space-around;*/
+    /*background-color: white;*/
+  /*}*/
+  /*.title{*/
+    /*color: black;*/
+    /*border-bottom: 2px solid rgb(240,214,62);*/
+    /*box-sizing: border-box;*/
+    /*padding: 10px 25px;*/
+  /*}*/
   .wrap{
     background-color: rgb(247,247,247);
     padding-top: 45px;
+    width: 414px;
   }
   .box{
     background-color: white;
@@ -144,7 +169,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 20px;
+    margin-left: 10px;
   }
   .box_bottom{
     display: flex;
@@ -153,6 +178,7 @@
   }
   .usertx{
     width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: 1px solid #ccc;
     margin-right: 10px;
