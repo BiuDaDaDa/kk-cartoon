@@ -1,5 +1,20 @@
 <template>
-  <div id="my-clud">
+  <div id="my-clud" @touchstart="changePos1" @touchend="changePos2">
+    <div class="topDi"></div>
+    <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
+      <div class="Nav">
+        <div class="diBg" >
+          <img src="../../assets/kkcartoontitle/kk-games.png" alt="">
+        </div>
+        <div class="btnN">
+          <span @click="changeFen" :class="{actBtn:!isShow}">关注</span>
+          <span  @click="changeTui" :class="{actBtn:isShow}">热门</span>
+        </div>
+        <div class="diBg">
+          <img src="../../assets/kk-find/kk-find-search1.png" alt="🔍">
+        </div>
+      </div>
+    </div>
   <div class="wrap" v-if="isloading">
     <!--<div class="top">-->
       <!--<span class="title">热门</span>-->
@@ -48,7 +63,8 @@
     data () {
       return {
         isloading: false,
-        array: []
+        array: [],
+        isShow: true
 //        feed: []
       }
     },
@@ -56,6 +72,49 @@
       this.fecthHomeData()
     },
     methods: {
+      changeTui () {
+        if (!this.isShow) {
+          this.isShow = true
+          this.$router.push({path: '/'})
+        }
+      },
+      changeFen () {
+        if (this.isShow) {
+          this.isShow = false
+          this.$router.push({path: '/attention'})
+        }
+      },
+      changePos1 () {
+        this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+      },
+      changePos2 () {
+        this.scrollTop2 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 !== this.scrollTop2) {
+          this.changePos()
+        }
+      },
+      changePos () {
+        let myTimer = null
+        let _this = this
+        // 向下滑动
+        if (this.scrollTop1 < this.scrollTop2 && this.$refs.kkFindNav.offsetTop === 0) {
+          clearInterval(myTimer)
+          myTimer = setInterval(function () {
+            _this.$refs.kkFindNav.style.top = _this.$refs.kkFindNav.offsetTop - 1 + 'px'
+            if (_this.$refs.kkFindNav.offsetTop === -40) {
+              clearInterval(myTimer)
+            }
+          }, 10)
+        } else if (this.scrollTop1 > this.scrollTop2 && this.$refs.kkFindNav.offsetTop === -40) {
+          clearInterval(myTimer)
+          myTimer = setInterval(function () {
+            _this.$refs.kkFindNav.style.top = _this.$refs.kkFindNav.offsetTop + 1 + 'px'
+            if (_this.$refs.kkFindNav.offsetTop === 0) {
+              clearInterval(myTimer)
+            }
+          }, 10)
+        }
+      },
       fecthHomeData () {
         let that = this
         this.$request({
@@ -116,6 +175,55 @@
 </script>
 
 <style scoped lang="less">
+  .topDi{
+    height: 20px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 25;
+    background-color: yellow;
+  }
+  .kkFindNav{
+    padding-top: 20px;
+    width: 100%;
+    position: fixed;
+    z-index: 20;
+    background-color: yellow;
+  }
+  .Nav{
+    display: flex;
+    height: 40px;
+    padding:0 5%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .diBg{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+  .btnN{
+    height: 24px;
+    width: 28%;
+    background-color: rgb(0,0,0);
+    border-radius: 12px;
+    border:1px solid rgb(0,0,0);
+  }
+  .btnN span{
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 200;
+    text-align: center;
+    line-height: 24px;
+    color: yellow;
+    padding: 0 10%;
+    outline: none;
+  }
+  .btnN .actBtn{
+    background-color: yellow;
+    color: #000;
+    border-radius: 12px;
+  }
   /*.top{*/
     /*position: fixed;*/
     /*left: 0;*/
@@ -134,7 +242,7 @@
   /*}*/
   .wrap{
     background-color: rgb(247,247,247);
-    padding-top: 45px;
+    padding-top: 115px;
     width: 414px;
   }
   .box{

@@ -1,5 +1,5 @@
 <template>
-  <div class="hello" @touchmove="touch" @touchstart="changePos1" @touchend="changePos2">
+  <div class="hello">
     <div class="topDi"></div>
     <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
       <div class="Nav">
@@ -20,6 +20,7 @@
         {{key}}
       </router-link>
     </ul>
+    <div class="detection" @touchmove="touch" @touchstart="changePos1" @touchend="changePos2">
     <div id="mainContent">
       <div v-for="(k,i) in array" class="content">
         <router-link to="/" tag="div" class="nav"
@@ -40,6 +41,7 @@
           </div>
         </router-link>
       </div>
+    </div>
     </div>
     <FooterNav></FooterNav>
   </div>
