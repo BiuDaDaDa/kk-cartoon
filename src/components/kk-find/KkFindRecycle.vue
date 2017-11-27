@@ -2,7 +2,7 @@
 <div class="recycle">
   <mt-swipe ref="swipe" :auto="6000">
     <mt-swipe-item v-for="item in newRecycle" :key="item['id']" >
-      <div @click="cartoonGo(item['target_id'])">
+      <div class="imgF" @click="cartoonGo(item['target_id'])">
         <img :src="item['pic']" alt="">
       </div>
     </mt-swipe-item>
@@ -50,5 +50,14 @@
     position: absolute;
     bottom: -30px;
     left: -10%;
+  }
+  .imgF{
+    width: 100%;
+    height: 280px;
+    background-image: url(../../assets/kk-find/kk-mhbg.jpg);
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
   }
 </style>

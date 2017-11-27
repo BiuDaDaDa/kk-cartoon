@@ -3,7 +3,22 @@
   <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
     <div class="Nav" :class="{activeNav:!isShow}">
       <div @click="genderChange"  class="diBg" :class="{actDiBg:!isShow}">
-        <img src="" alt="男">
+        <div v-if="gender===1" class="changeSex" >
+          <span class="man">
+            <img src="../../assets/kk-find/kk-find-man.png" alt="男">
+          </span>
+          <span class="woman">
+            <img src="../../assets/kk-find/kk-find-woman.png" alt="女">
+          </span>
+        </div>
+        <div v-if="gender===0" class="changeSex" >
+          <span class="man1">
+            <img src="../../assets/kk-find/kk-find-man.png" alt="男">
+          </span>
+          <span class="woman1">
+            <img src="../../assets/kk-find/kk-find-woman.png" alt="女">
+          </span>
+        </div>
       </div>
       <div class="btnN">
         <span @click="changeTui" :class="{actBtn:isShow}">推荐</span>
@@ -167,14 +182,52 @@
   .diBg{
     width: 24px;
     height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 50%;
     background-color: rgba(0,0,0,.6);
   }
   .actDiBg{
     background-color: #fff;
+  }
+  .changeSex{
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .man,.woman,.man1,.woman1{
+    display: flex;
+    align-items: center;
+    width: 9px;
+    height: 10px;
+    position: absolute;
+    padding: 1px;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    background-color: rgb(27,27,27);
+
+  }
+  .changeSex .man{
+    z-index: 30;
+    bottom: 15%;
+    right: 15%;
+  }
+  .changeSex .woman{
+    top: 15%;
+    left: 15%;
+    z-index: 28;
+  }
+  .changeSex .man1{
+    top: 15%;
+    left: 15%;
+    z-index: 28;
+  }
+  .changeSex .woman1{
+    z-index: 30;
+    bottom: 15%;
+    right: 15%;
+  }
+  .changeSex img{
+    width: 100%;
+    height: 100%;
   }
   .btnN{
     height: 24px;
