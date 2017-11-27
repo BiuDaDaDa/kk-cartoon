@@ -25,16 +25,6 @@ export default [
     ]
   },
   {
-    path: '/kk-club',
-    name: 'Club',
-    component: Club
-  },
-  {
-    path: '/kk-club',
-    name: 'ZuiXin',
-    component: ZuiXin
-  },
-  {
     path: '/kk-attention',
     name: 'ClubAttention',
     component: kkClubAttention
