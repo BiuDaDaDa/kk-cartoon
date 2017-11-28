@@ -15,7 +15,7 @@
       </div>
     </div>
   </div>
-  <p class="AttentionShow">快来关注吧！</p>
+  <p class="AttentionShow" @click="jump"></p>
   <MyNav></MyNav>
 </div>
 </template>
@@ -75,6 +75,9 @@
             }
           }, 10)
         }
+      },
+      jump () {
+        this.$router.push({name: 'UserLogin'})
       }
     }
   }
@@ -131,7 +134,11 @@
     border-radius: 12px;
   }
   .AttentionShow{
-    font-size: 32px;
     margin-top: 90px;
+    width: 100%;
+    height: 85vh;
+    background-image: url("../../assets/kk-user/unlog/kk-unlog-collect.png");
+    background-size:100%;
+    background-repeat:no-repeat;
   }
 </style>

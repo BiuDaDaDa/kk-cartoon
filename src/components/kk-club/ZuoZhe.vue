@@ -78,7 +78,7 @@
         dtarray: [],
         topics: [],
         isShow: true,
-        isSee: true,
+        isSee: false,
         userid: this.$route.params.userid
       }
     },
@@ -197,6 +197,19 @@
     text-align: center;
     padding-bottom: 40px;
     line-height: 30px;
+    position: relative;
+  }
+  .top_usertx:before{
+    content: '';
+    background: url(../../assets/hans/v.png);
+    background-repeat: repeat;
+    background-size: 20px 20px;
+    position: absolute;
+    left: 225px;
+    top: 60px;
+    z-index: 10;
+    width: 20px;
+    height: 20px;
   }
   .usertx{
     border: 1px solid #ccc;
@@ -245,6 +258,19 @@
   .box_up_left{
     display: flex;
     align-items: center;
+    position: relative;
+  }
+  .box_up_left:before{
+    content: '';
+    background: url(../../assets/hans/v.png);
+    background-repeat: repeat;
+    background-size: 17px 17px;
+    position: absolute;
+    left: 33px;
+    bottom: 0;
+    z-index: 10;
+    width: 17px;
+    height: 17px;
   }
   .box_up_right{
     padding: 5px 7px;

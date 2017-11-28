@@ -36,7 +36,7 @@
               <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
               <span>{{arrayPing.likes_count}}</span>
             </div>
-            <div class="pinglun">
+            <div class="pinglun" @click="clicked(feed1)">
               <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
               <span>{{arrayPing.comments_count}}</span>
             </div>
@@ -183,6 +183,11 @@
       zuozhe (ev) {
         this.userid = ev
         this.$router.push({name: 'ZuoZhe', params: {userid: this.userid}})
+      },
+      clicked (ev) {
+//        console.log(ev)
+        this.myid = ev
+        this.$router.push({path: `/kk-daping/${this.myid}`})
       }
     }
   }
