@@ -42,7 +42,7 @@
       }
     },
     mounted () {
-      console.log(window.location.href.split('8081')[1])
+//      console.log(window.location.href.split('8081')[1])
       let link = window.location.href.split('8081')[1]
       if (link === '/user') {
         this.userSrc = require('../../assets/kk-nav/kk-nav-user-c.png')

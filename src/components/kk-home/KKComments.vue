@@ -3,10 +3,9 @@
     <div id="nav">
       <div id="close" @touchend="back">X</div>
       <div id="comment">
-        <div id="new">最新评论</div>
-        <div id="hot">最热评论</div>
+        <div id="new" @touchend="newComment" ref="new">最新评论</div>
+        <div id="hot" @touchend="hotComment" ref="hot">最热评论</div>
       </div>
-      <p>{{this.$route.params.id}}</p>
     </div>
     <ul id="content" @touchmove="move">
       <li v-for="(v,i) in array" class="list">
@@ -22,7 +21,7 @@
           </div>
           <div class="time">
             <div class="left">{{v.root.created_at_info}}</div>
-            <div class="right">&nbsp;{{v.root.likes_count_info | capitalize}}</div>
+            <div class="right" @touchend="call(v.root.id)">&nbsp;{{v.root.likes_count_info | capitalize}}</div>
           </div>
         </div>
       </li>
@@ -45,7 +44,79 @@
         }
       },
       back: function () {
-        this.$router.push({name: 'kksection', params: {id: this.$route.params.id}})
+        this.$router.go(-1)
+      },
+      call: function (val) {
+        var a = new Date().getTime()
+        console.log(a)
+        let url = {
+          url: '/kkv2/like/add',
+          type: 'post',
+          data: {
+            target_id: val,
+            target_type: 'comment',
+            app_id: 1000000027,
+            kk_c_t: a
+          },
+          success: function (res) {
+            console.log(res)
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        }
+        this.$request(url)
+      },
+      newComment: function () {
+        this.$refs.new.style.backgroundColor = '#AEAEAE'
+        this.$refs.hot.style.backgroundColor = '#FAFAFA'
+        let ace = this.$route.params.id
+        var that = this
+        let url = {
+          url: '/kkv2/comments/floor_list',
+          type: 'get',
+          params: {
+            limit: 20,
+            offset: 0,
+            order: 'time',
+            target_id: ace,
+            target_type: 'comic',
+            total: 1
+          },
+          success: function (res) {
+            console.log(res.data.data.comment_floors[0].root.id)
+            that.array = res.data.data.comment_floors
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        }
+        this.$request(url)
+      },
+      hotComment: function () {
+        this.$refs.hot.style.backgroundColor = '#AEAEAE'
+        this.$refs.new.style.backgroundColor = '#FAFAFA'
+        let ace = this.$route.params.id
+        var that = this
+        let url = {
+          url: '/kkv2/comments/floor_list',
+          type: 'get',
+          params: {
+            limit: 20,
+            offset: 0,
+            order: 'score',
+            target_id: ace,
+            target_type: 'comic',
+            total: 1
+          },
+          success: function (res) {
+            that.array = res.data.data.comment_floors
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        }
+        this.$request(url)
       }
     },
     filters: {
@@ -72,7 +143,6 @@
           total: 1
         },
         success: function (res) {
-          console.log(res.data.data.comment_floors[0].root.created_at_info)
           that.array = res.data.data.comment_floors
         },
         failed: function (err) {

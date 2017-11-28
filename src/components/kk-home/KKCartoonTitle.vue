@@ -3,8 +3,8 @@
     <!--选集-->
     <div id="out">
       <div id="mask"></div>
-      <router-link to='/' class="back"><</router-link>
-      <button class="attention">+关注</button>
+      <div class="back" @click="back"><</div>
+      <button class="attention" @touchend="attention(path)">+关注</button>
       <img :src="jsText.cover_image_url" alt="" class="image">
       <div class="title">{{jsText.title}}</div>
       <div id="foot">
@@ -30,6 +30,7 @@
         <img src="../../assets/kkcartoontitle/upp.png" class="order" @touchend='order' ref="img">
       </div>
     </div>
+    <p @touchend="shouhuo">获取</p>
     <ul id="contentList" v-if="tf">
       <router-link to="/kkcartitle" v-for="(key,i) in timeArr"
                    :key="key.id" tag="li" class="writings" @touchend.native="kk(i,key.id)"
@@ -56,12 +57,14 @@
       <div id="introduction">
         <div id="production">作品简介</div>
         <div id="text">{{textbox}}</div>
-        <div id="author">
-          <div>作者:</div>
-          <div>
-            <img :src="headimg" alt="" id="headimg">
+        <div class="author">
+          <div class="zz">作者:</div>
+          <div class="authors" v-for="(k,i) in authors">
+            <div @touchend="autopass(k.id)">
+              <img :src="headimg" alt="" class="headimg">
+            </div>
+            <div>{{k.nickname}}</div>
           </div>
-          <div>{{nickname}}</div>
         </div>
       </div>
       <!--人气值-->
@@ -78,7 +81,7 @@
         </div>
         <ul id="reply">
           <router-link to='/' tag="li" class="replys" :key="index" v-for="(value,index) in commentArr"
-                       @touchend.native="info(value.topic_id)" @touchmove="slide">
+                       @touchend.native="info(value.topic_id,value)" @touchmove="slide">
             <img :src="value.user.avatar_url" alt="" class="headimage">
             <div class="content">
               <p class="username">{{value.user.nickname}}</p>
@@ -95,7 +98,15 @@
 </template>
 <script>
   var list = document.getElementsByClassName('listContent')
-  var histories = document.getElementsByClassName('history')
+//  var histories = document.getElementsByClassName('history')
+  var arrstr = document.cookie.split(';')
+  for (var i = 0; i < arrstr.length; i++) {
+    var temp = arrstr[i].split('=')
+    console.log(temp)
+    if (temp[0] === ' id') {
+      console.log('aaa')
+    }
+  }
   var tf = true
   var count = 0
   var num = 0
@@ -117,7 +128,9 @@
         popularity: '',
         comments: '',
         count: '',
-        commentArr: []
+        commentArr: [],
+        authors: [],
+        path: 0
       }
     },
     filters: {
@@ -180,17 +193,48 @@
       }
     },
     methods: {
+      shouhuo: function () {
+        var id = document.cookie.split(';')[0].split('=')[1]
+        console.log(id)
+        if (id === '1') {
+          console.log('aaa')
+        }
+//        for (var j = 0; j < histories.length; j++) {
+//          if (j + '' === id) {
+//            histories[j].style.display = 'block'
+//          } else {
+//            histories[j].style.display = 'none'
+//          }
+//        }
+      },
+      attention: function (val) {
+        console.log(val)
+        let url = {
+          url: '/kkv1/topics/' + val + '/fav',
+          type: 'post',
+//          headers: {
+//            Cookie: 'session=ff711f2c-a14e-4cd4-9e4d-8c0862b15a2e;uid=92661336;Path=/;Created=533469266;kk_s_t=1511832175947;Domain=.kkmh.com;Expires=2017-12-12 09:54:36 +0000;'
+//          },
+          success: function (res) {
+            console.log(res)
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        }
+        this.$request(url)
+      },
+      back: function () {
+        window.history.back()
+      },
       kk: function (i, val) {
         if (count === 0) {
           this.$router.push({ name: 'kksection', params: {id: val} })
-          for (var j = 0; j < histories.length; j++) {
-            if (j === i) {
-              histories[j].style.display = 'block'
-            } else {
-              histories[j].style.display = 'none'
-            }
-          }
+          document.cookie = 'id=' + i
         }
+      },
+      autopass: function (val) {
+        this.$router.push({name: 'kkauthor', params: {id: val}})
       },
       start: function () {
         count = 0
@@ -251,9 +295,10 @@
       slide: function () {
         num = 1
       },
-      info: function (id) {
+      info: function (id, val) {
         if (num === 0) {
           this.$router.push({name: 'kkcommentinfo', params: { id: id }})
+          this.$store.commit('commentInfoTo', val)
         }
         num = 0
       }
@@ -280,7 +325,9 @@
           _that.popularity = res.data.data.popularity_value
           _that.comments = res.data.data.comments_count
           _that.count = res.data.data.fav_count
-          console.log(res.data.data.user)
+          _that.authors = res.data.data.related_authors
+          _that.path = res.data.data.id
+          console.log(res.data.data.id)
         },
         failed: function (err) {
           console.log(err)
@@ -472,33 +519,30 @@
     width: 92%;
     font-size: 13px;
   }
-  #headimg {
+  .headimg {
     width: 30px;
     height: 30px;
     border-radius: 50%;
   }
-  #author {
+  .author {
     margin-top: 10px;
-    position: relative;
+    /*position: relative;*/
     height: 30px;
   }
-  #author>div {
-    position: absolute;
+  .author div {
     display: inline-block;
   }
-  #author div:nth-child(1) {
-    left: 0;
-    top: 5px;
+  .zz {
     font-size: 13px;
     color: #5F5F5F;
   }
-  #author div:nth-child(2) {
-    left: 35px;
+  .authors div:nth-child(1) {
+    vertical-align: middle;
+    margin-left: 5px;
   }
-  #author div:nth-child(3) {
-    left: 75px;
-    top: 5px;
+  .authors div:nth-child(2) {
     font-size: 13px;
+    white-space:nowrap;
   }
   #moods {
     position: relative;

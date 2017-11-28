@@ -9,8 +9,9 @@ export default new Vuex.Store({
     // 性别
     deploy: 'down',
     // 展开
-    kkClubURL: ''
+    kkClubURL: '',
     // club的url
+    commentInfo: ''
   },
   mutations: {
     increment (state, tt) {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     clubURLGo (state, clubURL) {
       state.kkClubURL = clubURL
+    },
+    commentInfoTo (state, val) {
+      state.commentInfo = val
     }
   }
 })

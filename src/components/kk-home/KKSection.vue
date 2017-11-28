@@ -2,9 +2,9 @@
   <div>
     <div ref="head">
       <div id="nav">
-        <router-link id="back" tag="div" to="/" @touchend.native="back"><</router-link>
+        <div id="back" @click="back"><</div>
         <p id="title">{{title}}</p>
-        <router-link id="complete" tag="div" to="/" @touchend.native="back">全集</router-link>
+        <div id="complete" @click="back">全集</div>
       </div>
       <mt-popup
         v-model="popupVisible"
@@ -95,9 +95,9 @@
       </div>
     </div>
     <div id="cross">
-      <div class="previous_posts"><&nbsp;上一篇</div>
+      <div class="previous_posts" @touchend="previous"><&nbsp;上一篇</div>
       <div class="line"></div>
-      <div class="next_chapter">下一篇&nbsp;></div>
+      <div class="next_chapter" @touchend="next">下一篇&nbsp;></div>
     </div>
     <!--作者-->
     <div class="author">
@@ -180,15 +180,36 @@
         switchValue: false,
         value: true,
         night: false,
-        nextParams: 0
+        nextParams: 0,
+        previousParams: 0
       }
     },
     methods: {
       previous: function () {
-        console.log('上一页')
+        scrollTo(0, 0)
+        let ace = this.previousParams
+        let url = {
+          url: '/kkv2/comic/' + ace,
+          type: 'get',
+          success: function (res) {
+            this.title = res.data.data.title
+            this.images = res.data.data.images
+            this.comments = res.data.data.comments_count
+            this.targed = res.data.data.id
+            this.zan_count = res.data.data.likes_count
+            this.authorArr = res.data.data.topic.related_authors
+            this.nextParams = res.data.data.next_comic_id
+            this.previousParams = res.data.data.previous_comic_id
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        }
+        this.$request(url)
       },
       next: function () {
-        console.log('下一页')
+        scrollTo(0, 0)
+        console.log(window.scrollY)
         let ace = this.nextParams
         let url = {
           url: '/kkv2/comic/' + ace,
@@ -200,7 +221,8 @@
             this.targed = res.data.data.id
             this.zan_count = res.data.data.likes_count
             this.authorArr = res.data.data.topic.related_authors
-            console.log(res.data.data)
+            this.nextParams = res.data.data.next_comic_id
+            this.previousParams = res.data.data.previous_comic_id
           },
           failed: function (err) {
             console.log(err)
@@ -210,6 +232,7 @@
       },
       shartt: function () {
         this.popupVisible = true
+        this.$refs.foot.style.display = 'none'
       },
       abolish: function () {
         this.popupVisible = false
@@ -219,7 +242,7 @@
         this.$router.push({ name: 'kkcomment', params: {id: this.targed} })
       },
       back: function () {
-        this.$router.push({name: 'kkcartoontitle'})
+        window.history.back()
       },
       call: function (i) {
         console.log(i)
@@ -248,23 +271,20 @@
       },
       tool: function () {
         this.switchValue = true
+        this.$refs.foot.style.display = 'none'
       },
       move: function () {
         var that = this
-        console.log(window.scrollY)
         if (window.scrollY > 1 && window.scrollY <= 6800) {
           this.$refs.head.style.display = 'none'
           this.$refs.foot.style.display = 'none'
           this.$refs.head.className = ''
         } else if (window.scrollY >= 7000) {
-          this.$refs.head.className = 'head'
           this.$refs.head.style.display = 'block'
           this.$refs.foot.style.display = 'block'
-          this.$refs.foot.className = 'foot'
         } else if (window.scrollY > 5600) {
           if (num === 0) {
             num = 1
-            console.log('aaa')
             let url = {
               url: '/kkv2/comments/hot_floor_list',
               type: 'get',
@@ -282,6 +302,8 @@
             }
             this.$request(url)
           }
+        } else if (window.scrollY === 0) {
+          this.$refs.head.style.display = 'block'
         }
       }
     },
@@ -299,6 +321,7 @@
           that.zan_count = res.data.data.likes_count
           that.authorArr = res.data.data.topic.related_authors
           that.nextParams = res.data.data.next_comic_id
+          that.previousParams = res.data.data.previous_comic_id
           console.log(res.data.data)
         },
         failed: function (err) {
@@ -315,17 +338,6 @@
     position: relative;
     height: 40px;
     border-bottom: 1px solid darkgray;
-  }
-  .head {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    background-color: white;
-  }
-  .foot {
-    position: fixed;
-    bottom: 0;
-    background-color: rgb(245,245,245);
   }
   #back {
     position: absolute;
@@ -626,7 +638,7 @@
     width: 432px;
     position: relative;
     height: 280px;
-    z-index: 30;
+    z-index: 120;
   }
   #shin {
     position: absolute;
