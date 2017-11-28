@@ -10,7 +10,7 @@
           <span @click="changeFen" :class="{actBtn:!isShow}">关注</span>
           <span  @click="changeTui" :class="{actBtn:isShow}">广场</span>
         </div>
-        <div class="diBg">
+        <div class="diBg" @click="search1">
           <img src="../../assets/kk-find/kk-find-search1.png" alt="🔍">
         </div>
       </div>
@@ -75,6 +75,9 @@
             }
           }, 10)
         }
+      },
+      search1 () {
+        this.$router.push({name: 'Search'})
       }
     },
     computed: {
