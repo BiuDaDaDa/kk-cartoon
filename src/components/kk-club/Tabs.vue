@@ -131,6 +131,8 @@
   .btnN span{
     display: inline-block;
     font-size: 14px;
+    width: 47%;
+    min-width: 42px;
     font-weight: 200;
     text-align: center;
     line-height: 24px;

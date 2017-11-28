@@ -122,6 +122,8 @@
     display: inline-block;
     font-size: 14px;
     font-weight: 200;
+    width: 47%;
+    min-width: 42px;
     text-align: center;
     line-height: 24px;
     color: yellow;

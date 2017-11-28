@@ -145,7 +145,10 @@
   }
   .bLeft{
     width: 45%;
-    height: 117px;
+    min-width: 90px;
+    /*height: 117px;*/
+    height: 28.2609vw;
+    min-height: 117px;
     margin-right: 5%;
     float: left;
     background-image: url(../../assets/kk-find/kk-mhbg.jpg);
