@@ -180,15 +180,36 @@
         switchValue: false,
         value: true,
         night: false,
-        nextParams: 0
+        nextParams: 0,
+        previousParams: 0
       }
     },
     methods: {
       previous: function () {
-        console.log('上一页')
+        scrollTo(0, 0)
+        let ace = this.previousParams
+        let url = {
+          url: '/kkv2/comic/' + ace,
+          type: 'get',
+          success: function (res) {
+            this.title = res.data.data.title
+            this.images = res.data.data.images
+            this.comments = res.data.data.comments_count
+            this.targed = res.data.data.id
+            this.zan_count = res.data.data.likes_count
+            this.authorArr = res.data.data.topic.related_authors
+            this.nextParams = res.data.data.next_comic_id
+            this.previousParams = res.data.data.previous_comic_id
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        }
+        this.$request(url)
       },
       next: function () {
-        console.log('下一页')
+        scrollTo(0, 0)
+        console.log(window.scrollY)
         let ace = this.nextParams
         let url = {
           url: '/kkv2/comic/' + ace,
@@ -200,7 +221,8 @@
             this.targed = res.data.data.id
             this.zan_count = res.data.data.likes_count
             this.authorArr = res.data.data.topic.related_authors
-            console.log(res.data.data)
+            this.nextParams = res.data.data.next_comic_id
+            this.previousParams = res.data.data.previous_comic_id
           },
           failed: function (err) {
             console.log(err)
@@ -299,6 +321,7 @@
           that.zan_count = res.data.data.likes_count
           that.authorArr = res.data.data.topic.related_authors
           that.nextParams = res.data.data.next_comic_id
+          that.previousParams = res.data.data.previous_comic_id
           console.log(res.data.data)
         },
         failed: function (err) {

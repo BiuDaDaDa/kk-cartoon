@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <!--<template>-->
   <!--<div>-->
     <!--<div id="nav">-->
@@ -52,7 +52,6 @@
     <!--right: 25px;-->
   <!--}-->
 <!--</style>-->
-=======
 <template>
   <div>
     <div class="nav">
@@ -115,4 +114,3 @@
     right: 25px;
   }
 </style>
->>>>>>> cbf81df6bd5111ac6491a7ceff1b8ab247236129
