@@ -12,12 +12,12 @@
 
       <div class="log-content">
         <div class="log-phone">
-          <img src="../../assets/kk-user/log/kk-log-phone-gray.png" alt="">
+          <img :src="phoneImg" alt="">
           <input type="text" placeholder="支持中国大陆" @focus="phoneFocus" v-model="phone">
         </div>
 
         <div class="log-pass">
-          <img src="../../assets/kk-user/log/kk-log-lock-gray.png" alt="">
+          <img :src="passImg" alt="">
           <input type="password" placeholder="8-30位数字或英文" @focus="passFocus" v-model="password">
         </div>
       </div>
@@ -63,15 +63,21 @@
           phone: '',
           password: '',
           loginHint: '',
-          loginHintShow: false
+          loginHintShow: false,
+          phoneImg: require('../../assets/kk-user/log/kk-log-phone-gray.png'),
+          passImg: require('../../assets/kk-user/log/kk-log-lock-gray.png')
         }
       },
       methods: {
         phoneFocus () {
           this.$refs.logAllRef.style.backgroundImage = 'url(' + require('../../assets/kk-user/log/kk-log-phone.png') + ')'
+          this.phoneImg = require('../../assets/kk-user/log/kk-log-phone-black.png')
+          this.passImg = require('../../assets/kk-user/log/kk-log-lock-gray.png')
         },
         passFocus () {
           this.$refs.logAllRef.style.backgroundImage = 'url(' + require('../../assets/kk-user/log/kk-log-pass.png') + ')'
+          this.phoneImg = require('../../assets/kk-user/log/kk-log-phone-gray.png')
+          this.passImg = require('../../assets/kk-user/log/kk-log-lock-black.png')
         },
         loginClicked () {
           if (this.phone.length !== 11) {
@@ -92,8 +98,8 @@
                 'X-Device': 'A:bcce411315f9d871'
               },
               success (res) {
-//                console.log(res.headers)
-                if (res.data.code === '600004') {
+                console.log(res.data.code)
+                if (res.data.code === 600004) {
                   this.loginHintShow = true
                   this.loginHint = '账号或者密码不对orz'
                 } else {

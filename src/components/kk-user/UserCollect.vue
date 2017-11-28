@@ -49,7 +49,7 @@
             type: 'get',
             url: '/kuaikanv1/fav/comics',
             success (res) {
-              if (res.data.data === undefined) {
+              if (res.data.code === 401) {
                 this.userLog = false
               } else {
                 this.userLog = true

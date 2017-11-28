@@ -108,7 +108,7 @@
             type: 'get',
             url: '/kuaikanv1/feeds/following_author_list?since=0',
             success (res) {
-              if (res.data.data === undefined) {
+              if (res.data.code === 401) {
                 this.userLog = false
               } else {
                 this.userLog = true

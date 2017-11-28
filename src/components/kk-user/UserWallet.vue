@@ -68,6 +68,19 @@
         let useCookie = document.cookie.indexOf('session')
         if (useCookie === -1) {
           this.$router.push({path: '/userLogin'})
+        } else {
+          this.$request({
+            type: 'get',
+            url: '/kuaikanv1/users/me',
+            success (res) {
+              if (res.data.code === 401) {
+                this.$router.push({path: '/userLogin'})
+              }
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
         }
       },
       methods: {
