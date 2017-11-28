@@ -8,6 +8,7 @@ import DaPing from '@/components/kk-club/DaPing'
 import PingLunTow from '@/components/kk-club/PingLunTow'
 import HuiHua from '@/components/kk-club/HuiHua'
 import ZuoZhe from '@/components/kk-club/ZuoZhe'
+import FangDa from '@/components/kk-club/FangDa'
 export default [
   {
     path: '/kk-tabs',
@@ -53,5 +54,10 @@ export default [
     path: '/kk-zuozhe/:userid?',
     name: 'ZuoZhe',
     component: ZuoZhe
+  },
+  {
+    path: '/kk-fangda/:imageid?',
+    name: 'FangDa',
+    component: FangDa
   }
 ]

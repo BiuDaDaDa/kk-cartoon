@@ -26,7 +26,7 @@
     </div>
     <!---->
     <div class="box1" v-for="(common, i) in numarray.children_comments">
-      <div class="box_left">
+      <div class="box_left1">
         <img class="usertx" :src="common.user.avatar_url" alt="">
       </div>
       <div class="box_right">
@@ -136,6 +136,24 @@
   .box_left{
     width: 53px;
     margin-right:  10px;
+    position: relative;
+  }
+  .box_left1{
+    width: 53px;
+    margin-right:  10px;
+    position: relative;
+  }
+  .box_left:before{
+    content: '';
+    background: url(../../assets/hans/v.png);
+    background-repeat: repeat;
+    background-size: 17px 17px;
+    position: absolute;
+    left: 35px;
+    top: 35px;
+    z-index: 10;
+    width: 17px;
+    height: 17px;
   }
   .box_right{
     width: 90%;
@@ -162,7 +180,7 @@
   }
   .div1{
     margin: 15px 0;
-    padding: 0 10px;
+    /*padding: 0 10px;*/
   }
   /**/
   .top{

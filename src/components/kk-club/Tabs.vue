@@ -20,7 +20,6 @@
       <router-link class="title" :class="{actTitle:kkClubURL === '/kk-zuixin'}" to="/kk-zuixin">评论</router-link>
     </div>
     <router-view></router-view>
-    <!--<my-club/>-->
     <my-nav/>
   </div>
 </template>
@@ -150,6 +149,7 @@
   .box{
     position: fixed;
     left: 0;
+    z-index: 100;
     width: 100%;
     border-bottom: 1px solid #ccc;
     display: flex;

@@ -16,7 +16,7 @@
           <p v-html="huanhang(common.content.text)"></p>
         </div>
         <div class="box_img">
-          <img :class="'fbtu'+ common.content.images.length" v-for="(value, index) in common.content.images" :src="common.content.image_base + value" alt="">
+          <img :class="'fbtu'+ common.content.images.length" v-for="(value, i) in common.content.images" :src="common.content.image_base + value" @click="fangda(common.content.images[i])" onClick="event.cancelBubble = true" alt="">
         </div>
         <div class="box_bottom">
           <div class="box_bottom_left">
@@ -34,6 +34,7 @@
           </div>
         </div>
       </div>
+      <div class="gao"></div>
     </div>
   </div>
 </template>
@@ -121,6 +122,10 @@
       zuozhe (ev) {
         this.userid = ev
         this.$router.push({name: 'ZuoZhe', params: {userid: this.userid}})
+      },
+      fangda (val) {
+        this.imageid = val
+        this.$router.push({name: 'FangDa', params: {imageid: this.imageid}})
       }
     }
   }
@@ -131,7 +136,7 @@
     background-color: rgb(247,247,247);
     padding-top: 45px;
     width: 414px;
-    padding-top: 115px;
+    padding-top: 105px;
   }
   .box{
     background-color: white;
@@ -149,6 +154,19 @@
   .box_up_left{
     display: flex;
     align-items: center;
+    position: relative;
+  }
+  .box_up_left:before{
+    content: '';
+    background: url(../../assets/hans/v.png);
+    background-repeat: repeat;
+    background-size: 17px 17px;
+    position: absolute;
+    left: 33px;
+    bottom: 0;
+    z-index: 10;
+    width: 17px;
+    height: 17px;
   }
   .box_up_right{
     padding: 5px 7px;
@@ -217,5 +235,8 @@
   .rou{
     display: flex;
     align-items: center;
+  }
+  .gao{
+    padding-bottom: 59px;
   }
 </style>
