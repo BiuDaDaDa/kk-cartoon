@@ -98,7 +98,7 @@
 </template>
 <script>
   var list = document.getElementsByClassName('listContent')
-  var histories = document.getElementsByClassName('history')
+//  var histories = document.getElementsByClassName('history')
   var tf = true
   var count = 0
   var num = 0
