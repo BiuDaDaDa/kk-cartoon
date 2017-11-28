@@ -85,7 +85,7 @@
 
 <style scoped lang=less>
   .topDi{
-    height: 20px;
+    height: 2.71vh;
     width: 100%;
     position: fixed;
     top: 0;
@@ -93,7 +93,7 @@
     background-color: yellow;
   }
   .kkFindNav{
-    padding-top: 20px;
+    padding-top: 2.71vh;
     width: 100%;
     position: fixed;
     z-index: 20;
@@ -101,29 +101,29 @@
   }
   .Nav{
     display: flex;
-    height: 40px;
+    height: 5.43vh;
     padding:0 5%;
     justify-content: space-between;
     align-items: center;
   }
   .diBg{
-    width: 24px;
-    height: 24px;
+    width: 5.79vw;
+    height: 3.26vh;
     border-radius: 50%;
   }
   .btnN{
-    height: 24px;
+    height: 3.26vh;
     width: 28%;
     background-color: rgb(0,0,0);
     border-radius: 12px;
-    border:1px solid rgb(0,0,0);
+    border:0.24vw solid rgb(0,0,0);
   }
   .btnN span{
     display: inline-block;
     font-size: 14px;
     font-weight: 200;
     text-align: center;
-    line-height: 24px;
+    line-height: 3.26vh;
     color: yellow;
     padding: 0 10%;
     outline: none;
