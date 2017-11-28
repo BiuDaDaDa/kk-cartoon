@@ -10,7 +10,7 @@
       </div>
       <div class="top_usertx">
         <img class="usertx" :src="zlarray.avatar_url" alt="">
-        <p>{{zlarray.nickname}}</p>
+        <p style="color: #FDFDFD">{{zlarray.nickname}}</p>
         <p class="fensi" v-text="qq(zlarray.follower_cnt)"></p>
         <p>{{zlarray.u_intro}}</p>
       </div>
@@ -22,46 +22,46 @@
     </div>
     <!---->
     <div class="box1_bg">
-    <div class="box1" v-for="(dt, i) in dtarray" v-show="isShow">
-      <div class="box_up">
-        <div class="box_up_left">
-          <img class="usertx1" :src="dt.user.avatar_url" alt="">
-          <span class="username">{{dt.user.nickname}}</span>
-        </div>
-      </div>
-      <div class="box_content">
-        <p v-html="huanhang(dt.content.text)"></p>
-      </div>
-      <div class="box_img">
-        <img :class="'fbtu'+ dt.content.images.length" v-for="(value, index) in dt.content.images" :src="dt.content.image_base + value" alt="">
-      </div>
-      <div class="box_bottom">
-        <div class="box_bottom_left">
-          <span v-html="getLocalTime(dt.updated_at)"></span>
-        </div>
-        <div class="box_bottom_right">
-          <div class="dianzang">
-            <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
-            <span>{{dt.likes_count}}</span>
-          </div>
-          <div class="pinglun" @click="pinglun(dt.share_url)">
-            <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
-            <span>{{dt.comments_count}}</span>
+      <div class="box1" v-for="(dt, i) in dtarray" v-show="isShow">
+        <div class="box_up">
+          <div class="box_up_left">
+            <img class="usertx1" :src="dt.user.avatar_url" alt="">
+            <span class="username">{{dt.user.nickname}}</span>
           </div>
         </div>
+        <div class="box_content">
+          <p v-html="huanhang(dt.content.text)"></p>
+        </div>
+        <div class="box_img">
+          <img :class="'fbtu'+ dt.content.images.length" v-for="(value, index) in dt.content.images" :src="dt.content.image_base + value" alt="">
+        </div>
+        <div class="box_bottom">
+          <div class="box_bottom_left">
+            <span v-html="getLocalTime(dt.updated_at)"></span>
+          </div>
+          <div class="box_bottom_right">
+            <div class="dianzang">
+              <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
+              <span>{{dt.likes_count}}</span>
+            </div>
+            <div class="pinglun">
+              <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
+              <span>{{dt.comments_count}}</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
     <div class="box2" v-show="isSee">
       <p class="p1">简介</p>
-      <p class="p1">{{zlarray.intro || '作者辛苦赶稿,都没来的及填写资料哦'}}</p>
+      <p class="p1">{{zlarray.intro || '作者辛苦赶稿,都没来得及填写资料哦'}}</p>
       <p class="p1">TA的作品</p>
-      <div class="zuoping"  v-for="(topic, i) in topics" @click="jump(topic.id)">
+      <div class="zuoping"  v-for="(topic, i) in topics">
         <img class="zuopingtp" :src="topic.cover_image_url" alt="">
         <div class="zuoping_left">
           <p class="zuopingtitle">{{topic.title}}</p>
           <div class="hidden">
-            <span class="zuopingjieshao">{{topic.description}}</span>
+            <div class="zuopingjieshao">{{topic.description}}</div>
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@
         topics: [],
         isShow: true,
         isSee: true,
-        userid: this.$route.params.userid
+        userid: this.$route.params.id
       }
     },
     mounted () {
@@ -119,7 +119,6 @@
           success: function (res) {
             that.isloading = true
             that.dtarray = res.data.data.feeds
-//            console.log(that.dtarray)
           },
           failed: function () {}
         })
@@ -156,20 +155,12 @@
         this.$router.go(-1)
       },
       qq (val) {
-        if (val >= 10000) {
-          val = parseInt(val / 10000) + '万粉丝'
-        } else if (val <= 10000) {
-          val = val + '粉丝'
+        if (val >= 100000) {
+          val = parseInt(val / 10000) + '  万粉丝'
+        } else {
+          val = val + '  粉丝'
         }
         return val
-      },
-      jump (ev) {
-        this.dataid = ev
-        this.$router.push({name: 'kkcartoontitle', params: {id: this.dataid}})
-      },
-      pinglun (ev) {
-        this.myid = ev.split('feeds/')[1]
-        this.$router.push({path: `/kk-daping/${this.myid}`})
       }
     }
   }
@@ -204,14 +195,13 @@
     height: 80px;
   }
   .fensi{
-    width: 15%;
+    width: 20%;
     background-color: rgba(0,0,0,.5);
     margin: 0 auto;
-    padding: 0px 5px;
+    padding: 2px 6px;
     border-radius: 50px;
-    color: #fde23d;
-    font-size: 12px;
-    line-height: 20px;
+    font-size: 13px;
+    color: #FCD240;
   }
   /**/
   .box{
@@ -220,6 +210,7 @@
     justify-content: space-around;
     background-color: white;
   }
+  /*2px solid rgb(255,255,255)*/
   .tabs{
     color: black;
     box-sizing: border-box;
@@ -274,6 +265,9 @@
     border: 1px solid #ccc;
     margin-right: 10px;
   }
+  .username {
+    color: #F97B2E;
+  }
   .fbtu1{
     width: 60%;
     height: 236.39px;
@@ -323,11 +317,16 @@
     object-fit: cover;
   }
   .hidden{
-    height: 45px;
-    overflow: hidden;
+    display: inline-block;
+    height: 50px;
+    width: 200px;
+    font-size: 12px;
+    margin-top: 10px;
+    color: #B4B4B4;
+    overflow:hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
   }
   .p1{
     line-height: 40px;
@@ -336,3 +335,4 @@
     margin-left: 10px;
   }
 </style>
+

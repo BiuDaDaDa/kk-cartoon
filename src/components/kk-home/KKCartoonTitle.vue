@@ -30,6 +30,7 @@
         <img src="../../assets/kkcartoontitle/upp.png" class="order" @touchend='order' ref="img">
       </div>
     </div>
+    <p @touchend="shouhuo">获取</p>
     <ul id="contentList" v-if="tf">
       <router-link to="/kkcartitle" v-for="(key,i) in timeArr"
                    :key="key.id" tag="li" class="writings" @touchend.native="kk(i,key.id)"
@@ -56,12 +57,14 @@
       <div id="introduction">
         <div id="production">作品简介</div>
         <div id="text">{{textbox}}</div>
-        <div id="author">
-          <div>作者:</div>
-          <div>
-            <img :src="headimg" alt="" id="headimg">
+        <div class="author">
+          <div class="zz">作者:</div>
+          <div class="authors" v-for="(k,i) in authors">
+            <div @touchend="autopass(k.id)">
+              <img :src="headimg" alt="" class="headimg">
+            </div>
+            <div>{{k.nickname}}</div>
           </div>
-          <div>{{nickname}}</div>
         </div>
       </div>
       <!--人气值-->
@@ -117,7 +120,8 @@
         popularity: '',
         comments: '',
         count: '',
-        commentArr: []
+        commentArr: [],
+        authors: []
       }
     },
     filters: {
@@ -180,16 +184,24 @@
       }
     },
     methods: {
+      shouhuo: function () {
+        var id = document.cookie.split(';')[0].split('=')[1]
+        console.log(id)
+        if (id === '1') {
+          console.log('aaa')
+        }
+//        for (var j = 0; j < histories.length; j++) {
+//          if (j + '' === id) {
+//            histories[j].style.display = 'block'
+//          } else {
+//            histories[j].style.display = 'none'
+//          }
+//        }
+      },
       kk: function (i, val) {
         if (count === 0) {
           this.$router.push({ name: 'kksection', params: {id: val} })
-          for (var j = 0; j < histories.length; j++) {
-            if (j === i) {
-              histories[j].style.display = 'block'
-            } else {
-              histories[j].style.display = 'none'
-            }
-          }
+          document.cookie = 'name=' + i
         }
       },
       start: function () {
@@ -255,7 +267,6 @@
         if (num === 0) {
           this.$router.push({name: 'kkcommentinfo', params: { id: id }})
           this.$store.commit('commentInfoTo', val)
-          console.log(val)
         }
         num = 0
       }
@@ -282,7 +293,8 @@
           _that.popularity = res.data.data.popularity_value
           _that.comments = res.data.data.comments_count
           _that.count = res.data.data.fav_count
-          console.log(res.data.data.user)
+          _that.authors = res.data.data.related_authors
+          console.log(res.data.data.related_authors)
         },
         failed: function (err) {
           console.log(err)
@@ -474,33 +486,30 @@
     width: 92%;
     font-size: 13px;
   }
-  #headimg {
+  .headimg {
     width: 30px;
     height: 30px;
     border-radius: 50%;
   }
-  #author {
+  .author {
     margin-top: 10px;
-    position: relative;
+    /*position: relative;*/
     height: 30px;
   }
-  #author>div {
-    position: absolute;
+  .author div {
     display: inline-block;
   }
-  #author div:nth-child(1) {
-    left: 0;
-    top: 5px;
+  .zz {
     font-size: 13px;
     color: #5F5F5F;
   }
-  #author div:nth-child(2) {
-    left: 35px;
+  .authors div:nth-child(1) {
+    vertical-align: middle;
+    margin-left: 5px;
   }
-  #author div:nth-child(3) {
-    left: 75px;
-    top: 5px;
+  .authors div:nth-child(2) {
     font-size: 13px;
+    white-space:nowrap;
   }
   #moods {
     position: relative;

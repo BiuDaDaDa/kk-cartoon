@@ -27,7 +27,7 @@
 
 <script>
   import MyNav from '../../components/kk-nav/FooterNav.vue'
-//  import MyClub from '../../components/kk-nav/Club.vue'
+  //  import MyClub from '../../components/kk-nav/Club.vue'
   export default {
     components: {
       MyNav

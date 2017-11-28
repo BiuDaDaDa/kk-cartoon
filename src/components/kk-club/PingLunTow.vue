@@ -12,9 +12,9 @@
       <div class="box1" v-if="isloading">
         <div class="box_up">
           <div class="box_up_left">
-            <img class="usertx1" :src="arrayPing.user.avatar_url" alt="">
+            <img class="usertx1" :src="arrayPing.user.avatar_url"  @click="zuozhe(arrayPing.user.id)" alt="">
             <span class="username">{{arrayPing.user.nickname}}</span>
-            <p>{{arrayPing.updated_at}}</p>
+            <!--<p>{{arrayPing.updated_at}}</p>-->
           </div>
           <div class="box_up_right">
             <img src="../../assets/hans/jia.png" alt="">
@@ -179,6 +179,10 @@
           this.$refs.foot.style.display = 'flex'
           this.$refs.foot.className = 'fabu'
         }
+      },
+      zuozhe (ev) {
+        this.userid = ev
+        this.$router.push({name: 'ZuoZhe', params: {userid: this.userid}})
       }
     }
   }
@@ -359,11 +363,11 @@
     background-color: white;
   }
   .box_left{
-    width: 53px;
-    margin-right:  10px;
+    width: 13.5%;
   }
   .box_right{
-    width: 90%;
+    width: 86%;
+    margin-left: 10px;
   }
   .box_right_bottom{
     display: flex;
