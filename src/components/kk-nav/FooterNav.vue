@@ -54,7 +54,7 @@
         this.findSrc = require('../../assets/kk-nav/kk-nav-find-c.png')
         this.$refs.findRef.style.color = '#fce13c'
       } else if (link === '/kk-tabs') {
-      } else if (link === '/kk-club') {
+      } else if (link === '/kk-club' || link === '/kk-attention') {
         this.clubSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
         this.$refs.clubRef.style.color = '#fce13c'
       }

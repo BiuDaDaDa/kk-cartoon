@@ -44,7 +44,7 @@
             <img src="../../assets/hans/dianzang.png" alt="">&nbsp;
             <span>{{dt.likes_count}}</span>
           </div>
-          <div class="pinglun">
+          <div class="pinglun" @click="pinglun(dt.share_url)">
             <img src="../../assets/hans/pinglun.png" alt="">&nbsp;
             <span>{{dt.comments_count}}</span>
           </div>
@@ -54,9 +54,9 @@
     </div>
     <div class="box2" v-show="isSee">
       <p class="p1">简介</p>
-      <p class="p1">{{zlarray.intro}}</p>
+      <p class="p1">{{zlarray.intro || '作者辛苦赶稿,都没来的及填写资料哦'}}</p>
       <p class="p1">TA的作品</p>
-      <div class="zuoping"  v-for="(topic, i) in topics">
+      <div class="zuoping"  v-for="(topic, i) in topics" @click="jump(topic.id)">
         <img class="zuopingtp" :src="topic.cover_image_url" alt="">
         <div class="zuoping_left">
           <p class="zuopingtitle">{{topic.title}}</p>
@@ -156,10 +156,20 @@
         this.$router.go(-1)
       },
       qq (val) {
-        if (val >= 100000) {
+        if (val >= 10000) {
           val = parseInt(val / 10000) + '万粉丝'
+        } else if (val <= 10000) {
+          val = val + '粉丝'
         }
         return val
+      },
+      jump (ev) {
+        this.dataid = ev
+        this.$router.push({name: 'kkcartoontitle', params: {id: this.dataid}})
+      },
+      pinglun (ev) {
+        this.myid = ev.split('feeds/')[1]
+        this.$router.push({path: `/kk-daping/${this.myid}`})
       }
     }
   }
@@ -194,11 +204,14 @@
     height: 80px;
   }
   .fensi{
-    width: 20%;
+    width: 15%;
     background-color: rgba(0,0,0,.5);
     margin: 0 auto;
-    padding: 2px 6px;
+    padding: 0px 5px;
     border-radius: 50px;
+    color: #fde23d;
+    font-size: 12px;
+    line-height: 20px;
   }
   /**/
   .box{
@@ -207,7 +220,6 @@
     justify-content: space-around;
     background-color: white;
   }
-  /*2px solid rgb(255,255,255)*/
   .tabs{
     color: black;
     box-sizing: border-box;
@@ -313,6 +325,9 @@
   .hidden{
     height: 45px;
     overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
   .p1{
     line-height: 40px;

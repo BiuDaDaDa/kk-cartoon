@@ -1,5 +1,5 @@
 <template>
-<div @touchstart="changePos1" @touchend="changePos2" class="kkFind">
+<div class="kkFind">
   <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
     <div class="Nav" :class="{activeNav:!isShow}">
       <div @click="genderChange"  class="diBg" :class="{actDiBg:!isShow}">
@@ -29,6 +29,7 @@
       </div>
     </div>
   </div>
+  <div class="detection" @touchstart="changePos1" @touchend="changePos2">
   <div v-show="isShow" class="recommend">
     <Recycle :newRecycle="newRecycle"/>
     <List :newList="newList"/>
@@ -47,6 +48,7 @@
       </span>
       </button>
     </div>
+  </div>
   </div>
   <FooterNav></FooterNav>
 </div>

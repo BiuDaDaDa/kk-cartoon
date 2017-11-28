@@ -1,10 +1,10 @@
 <template>
-  <div id="my-clud">
+  <div id="my-clud" @touchstart="changePos1" @touchend="changePos2">
     <div class="wrap" v-if="isloading">
-      <div class="box" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
+      <div class="box" @touchmove="move" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
         <div class="box_up">
           <div class="box_up_left">
-            <img class="usertx" :src="common.user.avatar_url" alt="">
+            <img class="usertx" :src="common.user.avatar_url" alt="" @click="zuozhe(common.user.id)" onClick="event.cancelBubble = true">
             <span class="username">{{common.user.nickname}}</span>
           </div>
           <div class="box_up_right">
@@ -50,8 +50,23 @@
     },
     mounted () {
       this.fecthHomeData()
+      let link = window.location.href.split('8081')[1]
+      this.$store.commit('clubURLGo', link)
     },
     methods: {
+      changePos1 () {
+        this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+      },
+      changePos2 () {
+        this.scrollTop2 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 > this.scrollTop2) {
+          // 上，触摸下滑动,down动画上
+          this.$store.commit('deployGo', 'down')
+        } else if (this.scrollTop1 < this.scrollTop2) {
+          // 下,触摸上滑动,up动画上
+          this.$store.commit('deployGo', 'up')
+        }
+      },
       fecthHomeData () {
         let that = this
         this.$request({
@@ -97,9 +112,15 @@
       jump: function (ev, ee) {
         // 拆分字符串,取右
         this.myid = ev.split('feeds/')[1]
-//        this.$router.push({name: 'PingLun', params: {id: this.myid}})
         this.dataid = ee
         this.$router.push({name: 'PingLunTow', params: {id: this.myid, dataid: this.dataid}})
+      },
+      move: function () {
+//        console.log(window.scrollY)
+      },
+      zuozhe (ev) {
+        this.userid = ev
+        this.$router.push({name: 'ZuoZhe', params: {userid: this.userid}})
       }
     }
   }
@@ -109,6 +130,8 @@
   .wrap{
     background-color: rgb(247,247,247);
     padding-top: 45px;
+    width: 414px;
+    padding-top: 115px;
   }
   .box{
     background-color: white;

@@ -1,10 +1,6 @@
 <template>
-  <div id="my-clud">
+  <div id="my-clud" @touchstart="changePos1" @touchend="changePos2">
   <div class="wrap" v-if="isloading">
-    <!--<div class="top">-->
-      <!--<span class="title">热门</span>-->
-      <!--<span class="title">评论</span>-->
-    <!--</div>-->
     <div class="box" @touchmove="move" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
       <div class="box_up">
         <div class="box_up_left">
@@ -54,8 +50,23 @@
     },
     mounted () {
       this.fecthHomeData()
+      let link = window.location.href.split('8081')[1]
+      this.$store.commit('clubURLGo', link)
     },
     methods: {
+      changePos1 () {
+        this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+      },
+      changePos2 () {
+        this.scrollTop2 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 > this.scrollTop2) {
+          // 上，触摸下滑动,down动画上
+          this.$store.commit('deployGo', 'down')
+        } else if (this.scrollTop1 < this.scrollTop2) {
+          // 下,触摸上滑动,up动画上
+          this.$store.commit('deployGo', 'up')
+        }
+      },
       fecthHomeData () {
         let that = this
         this.$request({
@@ -116,25 +127,9 @@
 </script>
 
 <style scoped lang="less">
-  /*.top{*/
-    /*position: fixed;*/
-    /*left: 0;*/
-    /*top: 0;*/
-    /*display: flex;*/
-    /*width: 100%;*/
-    /*border-bottom: 1px solid #ccc;*/
-    /*justify-content: space-around;*/
-    /*background-color: white;*/
-  /*}*/
-  /*.title{*/
-    /*color: black;*/
-    /*border-bottom: 2px solid rgb(240,214,62);*/
-    /*box-sizing: border-box;*/
-    /*padding: 10px 25px;*/
-  /*}*/
   .wrap{
     background-color: rgb(247,247,247);
-    padding-top: 45px;
+    padding-top: 115px;
     width: 414px;
   }
   .box{
