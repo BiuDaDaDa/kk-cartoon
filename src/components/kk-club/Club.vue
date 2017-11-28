@@ -113,7 +113,7 @@
         // 拆分字符串,取右
         this.myid = ev.split('feeds/')[1]
         this.dataid = ee
-        this.$router.push({name: 'PingLun', params: {id: this.myid, dataid: this.dataid}})
+        this.$router.push({name: 'PingLun', params: {myid: this.myid, dataid: this.dataid}})
       },
       move: function () {
 //        console.log(window.scrollY)

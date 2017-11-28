@@ -103,7 +103,7 @@
         isloading: false,
         Zuiarray: [],
         arrayPing: [],
-        feed1: this.$route.params.id,
+        feed1: this.$route.params.myid,
         feed2: this.$route.params.dataid
       }
     },

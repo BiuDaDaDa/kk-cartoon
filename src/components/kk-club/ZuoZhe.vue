@@ -153,7 +153,8 @@
         this.$refs.dt.style.borderBottom = '2px solid #f0d63e'
       },
       isback () {
-        this.$router.go(-1)
+//        this.$router.go(-1)
+        window.history.back()
       },
       qq (val) {
         if (val >= 10000) {
