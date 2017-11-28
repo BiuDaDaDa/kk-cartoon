@@ -26,7 +26,7 @@
     </div>
     <!---->
     <div class="box1" v-for="(common, i) in numarray.children_comments">
-      <div class="box_left">
+      <div class="box_left1">
         <img class="usertx" :src="common.user.avatar_url" alt="">
       </div>
       <div class="box_right">
@@ -119,23 +119,41 @@
   .box{
     width: 100%;
     display: flex;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.24vw solid #ccc;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 2.41vw;
     background-color: white;
-    margin-top: 51px;
+    margin-top: 6.92vh;
   }
   .box1{
     width: 100%;
     display: flex;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.24vw solid #ccc;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 2.41vw;
     background-color: rgb(230,230,230);
   }
   .box_left{
-    width: 53px;
-    margin-right:  10px;
+    width: 12.8vw;
+    margin-right:  2.41vw;
+    position: relative;
+  }
+  .box_left1{
+    width: 12.8vw;
+    margin-right:  2.41vw;
+    position: relative;
+  }
+  .box_left:before{
+    content: '';
+    background: url(../../assets/hans/v.png);
+    background-repeat: repeat;
+    background-size: 4.1vw 2.3vh;
+    position: absolute;
+    left: 8.45vw;
+    top: 4.75vh;
+    z-index: 10;
+    width: 4.1vw;
+    height: 2.3vh;
   }
   .box_right{
     width: 90%;
@@ -155,14 +173,14 @@
     border: 1px solid #ccc;
   }
   .usertxt{
-    margin: 15px 0;
+    margin: 2.03vh 0;
   }
   .lou{
-    margin-right: 10px;
+    margin-right: 2.41vw;
   }
   .div1{
-    margin: 15px 0;
-    padding: 0 10px;
+    margin: 2.03vh 0;
+    /*padding: 0 10px;*/
   }
   /**/
   .top{
@@ -173,12 +191,12 @@
     display: flex;
     align-items: center;
     /*justify-content: space-between;*/
-    padding: 0 20px;
+    padding: 0 4.83vw;
     background-color: white;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.24vw solid #ccc;
   }
   .dongtai{
-    line-height: 50px;
+    line-height: 6.79vh;
     margin-left: 35%;
   }
   /**/
@@ -189,39 +207,39 @@
     bottom: 0;
     display: flex;
     justify-content: space-between;
-    padding: 4px 40px 6px 10px;
+    padding: 0.54vh 9.66vw 0.81vh 2.41vw;
     align-items: center;
     background-color: rgb(240,240,240);
   }
   .fabu_left{
     width: 75%;
     position: relative;
-    padding: 9px 0;
+    padding: 1.22vh 0;
   }
   .tp{
     position: absolute;
-    left: 20px;
-    top: 18px;
+    left: 4.83vw;
+    top: 2vh;
     z-index: 5;
     background-image: url(../../assets/hans/fabu.png);
     background-repeat: no-repeat;
     background-position: 0px 0px;
-    width: 22px;
-    height: 22px;
+    width: 7.31vw;
+    height: 3.98vh;
   }
   .fabu_right{
-    margin-top: 4px;
     position: relative;
+    left: 2.41vw;
   }
   .input{
     width: 100%;
     border-radius: 20px;
-    border: 1px solid #ccc;
+    border: 0.24vw solid #ccc;
     outline: none;
-    line-height: 38px;
-    padding-left: 50px;
+    line-height: 5.16vh;
+    padding-left: 12.07vw;
   }
   .footer{
-    margin-bottom: 68px;
+    margin-bottom: 9.23vh;
   }
 </style>

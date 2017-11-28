@@ -10,9 +10,9 @@
       </div>
       <div class="top_usertx">
         <img class="usertx" :src="zlarray.avatar_url" alt="">
-        <p>{{zlarray.nickname}}</p>
+        <p class="username1">{{zlarray.nickname}}</p>
         <p class="fensi" v-text="qq(zlarray.follower_cnt)"></p>
-        <p>{{zlarray.u_intro}}</p>
+        <p class="renzheng">{{zlarray.u_intro}}</p>
       </div>
     </div>
     <!---->
@@ -78,7 +78,7 @@
         dtarray: [],
         topics: [],
         isShow: true,
-        isSee: true,
+        isSee: false,
         userid: this.$route.params.userid
       }
     },
@@ -153,7 +153,8 @@
         this.$refs.dt.style.borderBottom = '2px solid #f0d63e'
       },
       isback () {
-        this.$router.go(-1)
+//        this.$router.go(-1)
+        window.history.back()
       },
       qq (val) {
         if (val >= 10000) {
@@ -185,37 +186,50 @@
   .top_up{
     display: flex;
     justify-content: space-between;
-    padding: 20px 20px;
+    padding: 2.71vh 4.83vw;
   }
   .top_up_right{
-    padding: 5px 7px;
+    padding: 0.679vh 1.69vw;
     background-color: rgb(240,214,62);
     border-radius: 20px;
   }
   .top_usertx{
     text-align: center;
-    padding-bottom: 40px;
-    line-height: 30px;
+    padding-bottom: 5.46vh;
+    line-height: 4.07vh;
+    position: relative;
+  }
+  .top_usertx:before{
+    content: '';
+    background: url(../../assets/hans/v.png);
+    background-repeat: repeat;
+    background-size: 4.83vw 2.71vh;
+    position: absolute;
+    left: 54.34vw;
+    top: 8.15vh;
+    z-index: 10;
+    width: 4.83vw;
+    height: 2.71vh;
   }
   .usertx{
-    border: 1px solid #ccc;
+    border: 0.24vw solid #ccc;
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    width: 19.32vw;
+    height:10.86vh;
   }
   .fensi{
-    width: 15%;
+    width: 18%;
     background-color: rgba(0,0,0,.5);
     margin: 0 auto;
-    padding: 0px 5px;
+    padding: 0px 1.2vw;
     border-radius: 50px;
     color: #fde23d;
     font-size: 12px;
-    line-height: 20px;
+    line-height: 2.71vh;
   }
   /**/
   .box{
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.24vw solid #ccc;
     display: flex;
     justify-content: space-around;
     background-color: white;
@@ -223,7 +237,7 @@
   .tabs{
     color: black;
     box-sizing: border-box;
-    padding: 10px 25px;
+    padding: 1.35vh 6.03vw;
   }
   /**/
   .box1_bg{
@@ -233,8 +247,8 @@
     background-color: white;
     width: 100%;
     box-sizing: border-box;
-    padding: 10px;
-    margin-bottom: 5px;
+    padding: 2.41vw;
+    margin-bottom: 0.679vh;
   }
   .box_up{
     display: flex;
@@ -244,15 +258,28 @@
   .box_up_left{
     display: flex;
     align-items: center;
+    position: relative;
+  }
+  .box_up_left:before{
+    content: '';
+    background: url(../../assets/hans/v.png);
+    background-repeat: repeat;
+    background-size: 4.1vw 2.1vh;
+    position: absolute;
+    left: 7.97vw;
+    bottom: 0;
+    z-index: 10;
+    width: 4.1vw;
+    height: 2.1vh;
   }
   .box_up_right{
-    padding: 5px 7px;
+    padding: 0.679vh 1.69vw;
     background-color: rgb(240,214,62);
     border-radius: 20px;
   }
   .box_content{
-    padding-top: 10px;
-    padding-bottom: 30px;
+    padding-top: 1.35vh;
+    padding-bottom: 4.07vh;
   }
   .box_img{
     width: 100%;
@@ -260,37 +287,37 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 10px;
+    margin-left: 2.41vw;
   }
   .box_bottom{
     display: flex;
     justify-content: space-between;
-    margin-top: 5px;
+    margin-top: 0.679vh;
   }
   .usertx1{
-    width: 50px;
-    height: 50px;
+    width: 12.07vw;
+    height: 6.79vh;
     border-radius: 50%;
-    border: 1px solid #ccc;
-    margin-right: 10px;
+    border: 0.24vw solid #ccc;
+    margin-right: 2.41vw;
   }
   .fbtu1{
     width: 60%;
-    height: 236.39px;
+    height: 32.11vh;
     object-fit: cover;
   }
   .fbtu2,.fbtu3,.fbtu5,.fbtu6,.fbtu7,.fbtu8,.fbtu9{
     width: 30%;
-    height: 118.19px;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    height: 16.05vh;
+    margin-left: 1.2vw;
+    margin-bottom: 0.67vh;
     object-fit: cover;
   }
   .fbtu4{
     width: 29%;
-    height: 118.19px;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    height: 16.05vh;
+    margin-left: 1.2vw;
+    margin-bottom: 0.67vh;
     object-fit: cover;
   }
   .fbtu4:nth-of-type(2n){
@@ -303,7 +330,7 @@
   .dianzang{
     display: flex;
     align-items: center;
-    margin-right: 15px;
+    margin-right: 3.6vw;
   }
   .pinglun{
     display: flex;
@@ -311,28 +338,42 @@
   }
   /**/
   .box2{
-    padding: 0 30px 0 10px;
+    padding: 0 7.24vw 0 2.41vw;
   }
   .zuoping{
     display: flex;
-    height: 80px;
-    padding: 5px 0;
+    height: 10.869vh;
+    padding: 0.679vh 0;
   }
   .zuopingtp{
     width: 40%;
     object-fit: cover;
   }
   .hidden{
-    height: 45px;
+    height: 13.58vh;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    color: #7e8c8d;
   }
   .p1{
     line-height: 40px;
   }
   .zuoping_left{
-    margin-left: 10px;
+    margin-left: 5.43vh;
+  }
+  .username{
+    color: darkorange;
+  }
+  .username1,.renzheng{
+    color: white;
+  }
+  .renzheng{
+    font-size: 13px;
+  }
+  .zuopingjieshao{
+    font-size: 13px;
+    color: #7e8c8d;
   }
 </style>

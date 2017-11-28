@@ -130,9 +130,9 @@
 <style scoped lang="less">
   .children_comments {
     background-color: #F6F9FA;
-    padding: 7px 10px;
-    width: 320px;
-    margin: 15px 0;
+    padding: 0.95vh 2.41vw;
+    width: 77.29vw;
+    margin: 2.03vh 0;
   }
   .children_comments>div {
     font-size: 13px;
@@ -148,14 +148,14 @@
   .box{
     width: 100%;
     display: flex;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.24vw solid #ccc;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 2.41vw;
     background-color: white;
   }
   .box_left{
-    width: 53px;
-    margin-right:  10px;
+    width: 12.8vw;
+    margin-right: 2.41vw;
   }
   .box_right{
     width: 90%;
@@ -172,10 +172,10 @@
   .usertx{
     width: 100%;
     border-radius: 50%;
-    border: 1px solid #ccc;
+    border: 0.24vw solid #ccc;
   }
   .usertxt{
-    margin: 15px 0;
+    margin: 2.03vh 0;
   }
   /**/
   .fabu{
@@ -185,44 +185,44 @@
     bottom: 0;
     display: flex;
     justify-content: space-between;
-    padding: 4px 40px 6px 10px;
+    padding: 0.54vh 8.66vw 0.81vh 2.41vw;
     align-items: center;
     background-color: rgb(240,240,240);
   }
   .fabu_left{
     width: 75%;
     position: relative;
-    padding: 9px 0;
+    padding: 1.22vh 0;
   }
   .tp{
     position: absolute;
-    left: 20px;
-    top: 18px;
+    left: 4.83vw;
+    top: 2vh;
     z-index: 5;
     background-image: url(../../assets/hans/fabu.png);
     background-repeat: no-repeat;
     background-position: 0px 0px;
-    width: 22px;
-    height: 22px;
+    width: 7.31vw;
+    height: 3.98vh;
   }
   .fabu_right{
-    margin-top: 4px;
     position: relative;
+    left: 2.41vw;
   }
   .input{
     width: 100%;
     border-radius: 20px;
-    border: 1px solid #ccc;
+    border: 0.24vw solid #ccc;
     outline: none;
-    line-height: 38px;
-    padding-left: 50px;
+    line-height: 5.16vh;
+    padding-left: 12.07vw;
   }
   /**/
   .div1{
-    margin-top: 51px;
+    margin-top: 6.92vh;
   }
   .div2{
-    margin-bottom: 67px;
+    margin-bottom: 9.1vh;
   }
   .top{
     width: 90%;
@@ -232,23 +232,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 20px;
+    padding: 0 4.83vw;
     background-color: white;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.24vw solid #ccc;
   }
   .x{
     position: absolute;
-    left: 10px;
-    top: 14px;
+    left: 2.41vw;
+    top: 1.9vh;
   }
   .btn{
     display: flex;
-    padding: 6px 0;
+    padding: 0.81vh 0;
   }
   .tabs{
-    padding: 6px 30px;
+    padding: 0.81vh 7.24vw;
     background-color: rgb(230,230,230);
-    border: 1px solid #ccc;
+    border: 0.24vw solid #ccc;
   }
   .btn div:nth-child(1){
     background-color: rgb(200,200,200);

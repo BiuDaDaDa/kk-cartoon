@@ -107,8 +107,8 @@
           type: 'get',
           url: '/kuaikanv2/messages/all?start_time=1511089083341',
           success (res) {
-//            console.log(res.data.data)
-            if (res.data.data === undefined) {
+//            console.log(res.data.data.since)
+            if (res.data.data.since === -1) {
               this.userLog = false
             } else {
               this.userLog = true

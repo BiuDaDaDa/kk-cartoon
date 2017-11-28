@@ -16,7 +16,7 @@
           <p v-html="huanhang(common.content.text)"></p>
         </div>
         <div class="box_img">
-          <img :class="'fbtu'+ common.content.images.length" v-for="(value, index) in common.content.images" :src="common.content.image_base + value" alt="">
+          <img :class="'fbtu'+ common.content.images.length" v-for="(value, i) in common.content.images" :src="common.content.image_base + value" @click="fangda(common.content.images[i])" onClick="event.cancelBubble = true" alt="">
         </div>
         <div class="box_bottom">
           <div class="box_bottom_left">
@@ -34,6 +34,7 @@
           </div>
         </div>
       </div>
+      <div class="gao"></div>
     </div>
   </div>
 </template>
@@ -121,6 +122,10 @@
       zuozhe (ev) {
         this.userid = ev
         this.$router.push({name: 'ZuoZhe', params: {userid: this.userid}})
+      },
+      fangda (val) {
+        this.imageid = val
+        this.$router.push({name: 'FangDa', params: {imageid: this.imageid}})
       }
     }
   }
@@ -129,19 +134,18 @@
 <style scoped lang="less">
   .wrap{
     background-color: rgb(247,247,247);
-    padding-top: 45px;
-    width: 414px;
-    padding-top: 115px;
+    padding-top: 14.2vh;
+    width: 100%;
   }
   .box{
     background-color: white;
     width: 100%;
     box-sizing: border-box;
-    padding: 10px;
-    margin-bottom: 5px;
+    padding: 2.4vw;
+    margin-bottom: 0.67vh;
   }
   .box_up{
-    width: 385px;
+    width: 98%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -149,15 +153,28 @@
   .box_up_left{
     display: flex;
     align-items: center;
+    position: relative;
+  }
+  .box_up_left:before{
+    content: '';
+    background: url(../../assets/hans/v.png);
+    background-repeat: repeat;
+    background-size: 4.1vw 2.1vh;
+    position: absolute;
+    left: 7.97vw;
+    bottom: 0;
+    z-index: 10;
+    width: 4.1vw;
+    height: 2.1vh;
   }
   .box_up_right{
-    padding: 5px 7px;
+    padding: 1.2vw 0.95vh;
     background-color: rgb(240,214,62);
     border-radius: 20px;
   }
   .box_content{
-    padding-top: 10px;
-    padding-bottom: 30px;
+    padding-top: 1.35vh;
+    padding-bottom: 4vh;
   }
   .box_img{
     width: 100%;
@@ -165,37 +182,37 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 10px;
+    margin-left: 2.4vw;
   }
   .box_bottom{
     display: flex;
     justify-content: space-between;
-    margin-top: 5px;
+    margin-top: 0.67vh;
   }
   .usertx{
-    width: 50px;
-    height: 50px;
+    width: 12vw;
+    height: 12vw;
     border-radius: 50%;
-    border: 1px solid #ccc;
-    margin-right: 10px;
+    border: 0.24vw solid #ccc;
+    margin-right: 2.4vw;
   }
   .fbtu1{
     width: 60%;
-    height: 236.39px;
+    height: 32.11vh;
     object-fit: cover;
   }
   .fbtu2,.fbtu3,.fbtu5,.fbtu6,.fbtu7,.fbtu8,.fbtu9{
     width: 30%;
-    height: 118.19px;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    height: 16.05vh;
+    margin-left: 1.2vw;
+    margin-bottom: 0.67vh;
     object-fit: cover;
   }
   .fbtu4{
     width: 29%;
-    height: 118.19px;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    height: 16.05vh;
+    margin-left: 1.2vw;
+    margin-bottom: 0.67vh;
     object-fit: cover;
   }
   .fbtu4:nth-of-type(2n){
@@ -208,7 +225,7 @@
   .dianzang{
     display: flex;
     align-items: center;
-    margin-right: 15px;
+    margin-right: 3.6vw;
   }
   .pinglun{
     display: flex;
@@ -217,5 +234,11 @@
   .rou{
     display: flex;
     align-items: center;
+  }
+  .gao{
+    padding-bottom: 8vh;
+  }
+  .username{
+    color: darkorange;
   }
 </style>

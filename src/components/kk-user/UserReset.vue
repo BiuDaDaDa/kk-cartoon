@@ -8,18 +8,10 @@
       </div>
 
       <div class="reg-input">
-        <img src="../../assets/kk-user/log/kk-log-phone-black.png" alt="">
-        <input type="text" placeholder="请输入您的手机号" v-model="phoneNum" ref="phoneValue">
+        <input type="password" placeholder="请输入新密码，至少8位" ref="newPass" v-model="passNum">
       </div>
-      <h4 v-show="hintShow">{{regHint}}</h4>
-      <button @click="getyzm">获取验证码</button>
-
-      <h3>
-        注册即视为同意
-        <span>《用户协议》</span>
-        <span>《隐私协议》</span>
-        <span>《未成年人保护协议》</span>
-      </h3>
+      <h4 v-show="hintShow">{{resetHint}}</h4>
+      <button @click="confirm">确认</button>
 
     </div>
   </div>
@@ -27,44 +19,32 @@
 
 <script>
   export default {
-    name: 'UserForget',
+    name: 'UserReset',
     data () {
       return {
-        phoneNum: '',
-        regHint: '',
+        passNum: '',
+        resetHint: '',
         hintShow: false
       }
     },
     methods: {
-      getyzm () {
-        if (this.$refs.phoneValue.value === '') {
-          this.regHint = '请输入您的手机号'
+      confirm () {
+        if (this.passNum.length <= 7) {
           this.hintShow = true
+          this.resetHint = '密码长度至少为8位'
         } else {
           this.$request({
             type: 'post',
-            url: '/kuaikanv1/phone/send_code',
+            url: '/kkv1/account/reset_password/by_phone',
             params: {
-              'phone': this.phoneNum,
-              'reason': 'reset_password'
+              password: this.passNum
             },
             success (res) {
-              let backCode
-//              console.log(this.phoneNum)
-              console.log(res.data.code)
-              backCode = res.data.code
-              if (backCode === 600002) {
-                console.log(this.phoneNum)
-                this.regHint = '填错了吧？这是无效的手机号！(ˊ·_·`)'
+              if (res.data.code === 401) {
                 this.hintShow = true
-              } else if (backCode === 600001) {
-                this.regHint = '你的手机号还没注册啦！'
-                this.hintShow = true
+                this.resetHint = '请求超时'
               } else {
-                console.log(this.phoneNum)
-                window.localStorage.setItem('phoneNum', this.phoneNum)
-                window.localStorage.setItem('resetPass', true)
-                this.$router.push({path: '/userVerify'})
+                this.$router.push({path: '/user'})
               }
             },
             failed (err) {
@@ -100,8 +80,8 @@
       }
     }
     .reg-input{
-      width: 60vw;
-      height: 7.5vh;
+      width: 56vw;
+      height: 4.5vh;
       background-color: #fff;
       display: flex;
       align-items: center;
@@ -109,11 +89,7 @@
       left: 20vw;
       top: 27vh;
       border-radius: 18px;
-      img{
-        width: 8vw;
-        margin-left: 5vw;
-        margin-right: 2vw;
-      }
+      padding: 1vh 2vw;
       input{
         height: 3vh;
         width: 45vw;
@@ -128,7 +104,7 @@
       /*background-color: aqua;*/
       position: absolute;
       left: 20vw;
-      top: 34.5vh;
+      top: 32.9vh;
       font-size: 14px;
       font-weight: normal;
       color: red;
@@ -142,25 +118,13 @@
       text-align: center;
       position: absolute;
       left: 20vw;
-      top: 38.5vh;
+      top: 36.5vh;
       border-radius: 15px;
       color: #fff;
       font-size: 17px;
       background-color: #323f48;
       border: none;
       outline: none;
-    }
-    h3{
-      width: 90vw;
-      text-align: center;
-      font-size: 12px;
-      font-weight: normal;
-      position: absolute;
-      top: 48.5vh;
-      left: 5vw;
-      span{
-        color: deepskyblue;
-      }
     }
   }
 </style>
