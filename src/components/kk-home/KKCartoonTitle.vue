@@ -98,7 +98,15 @@
 </template>
 <script>
   var list = document.getElementsByClassName('listContent')
-  var histories = document.getElementsByClassName('history')
+//  var histories = document.getElementsByClassName('history')
+  var arrstr = document.cookie.split(';')
+  for (var i = 0; i < arrstr.length; i++) {
+    var temp = arrstr[i].split('=')
+    console.log(temp)
+    if (temp[0] === ' id') {
+      console.log('aaa')
+    }
+  }
   var tf = true
   var count = 0
   var num = 0
@@ -201,7 +209,7 @@
       kk: function (i, val) {
         if (count === 0) {
           this.$router.push({ name: 'kksection', params: {id: val} })
-          document.cookie = 'name=' + i
+          document.cookie = 'id=' + i
         }
       },
       start: function () {
