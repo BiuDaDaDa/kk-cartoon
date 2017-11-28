@@ -1,10 +1,10 @@
 <template>
-  <div id="my-clud">
+  <div id="my-clud" @touchstart="changePos1" @touchend="changePos2">
     <div class="wrap" v-if="isloading">
-      <div class="box" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
+      <div class="box" @touchmove="move" v-for="(common, i) in array.data.feeds" @click="jump(common.share_url, i)">
         <div class="box_up">
           <div class="box_up_left">
-            <img class="usertx" :src="common.user.avatar_url" alt="">
+            <img class="usertx" :src="common.user.avatar_url" alt="" @click="zuozhe(common.user.id)" onClick="event.cancelBubble = true">
             <span class="username">{{common.user.nickname}}</span>
           </div>
           <div class="box_up_right">
@@ -16,7 +16,7 @@
           <p v-html="huanhang(common.content.text)"></p>
         </div>
         <div class="box_img">
-          <img :class="'fbtu'+ common.content.images.length" v-for="(value, index) in common.content.images" :src="common.content.image_base + value" alt="">
+          <img :class="'fbtu'+ common.content.images.length" v-for="(value, i) in common.content.images" :src="common.content.image_base + value" @click="fangda(common.content.images[i])" onClick="event.cancelBubble = true" alt="">
         </div>
         <div class="box_bottom">
           <div class="box_bottom_left">
@@ -34,6 +34,7 @@
           </div>
         </div>
       </div>
+      <div class="gao"></div>
     </div>
   </div>
 </template>
@@ -50,8 +51,23 @@
     },
     mounted () {
       this.fecthHomeData()
+      let link = window.location.href.split('8081')[1]
+      this.$store.commit('clubURLGo', link)
     },
     methods: {
+      changePos1 () {
+        this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+      },
+      changePos2 () {
+        this.scrollTop2 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 > this.scrollTop2) {
+          // 上，触摸下滑动,down动画上
+          this.$store.commit('deployGo', 'down')
+        } else if (this.scrollTop1 < this.scrollTop2) {
+          // 下,触摸上滑动,up动画上
+          this.$store.commit('deployGo', 'up')
+        }
+      },
       fecthHomeData () {
         let that = this
         this.$request({
@@ -97,9 +113,19 @@
       jump: function (ev, ee) {
         // 拆分字符串,取右
         this.myid = ev.split('feeds/')[1]
-//        this.$router.push({name: 'PingLun', params: {id: this.myid}})
         this.dataid = ee
         this.$router.push({name: 'PingLunTow', params: {id: this.myid, dataid: this.dataid}})
+      },
+      move: function () {
+//        console.log(window.scrollY)
+      },
+      zuozhe (ev) {
+        this.userid = ev
+        this.$router.push({name: 'ZuoZhe', params: {userid: this.userid}})
+      },
+      fangda (val) {
+        this.imageid = val
+        this.$router.push({name: 'FangDa', params: {imageid: this.imageid}})
       }
     }
   }
@@ -109,6 +135,8 @@
   .wrap{
     background-color: rgb(247,247,247);
     padding-top: 45px;
+    width: 414px;
+    padding-top: 105px;
   }
   .box{
     background-color: white;
@@ -126,6 +154,19 @@
   .box_up_left{
     display: flex;
     align-items: center;
+    position: relative;
+  }
+  .box_up_left:before{
+    content: '';
+    background: url(../../assets/hans/v.png);
+    background-repeat: repeat;
+    background-size: 17px 17px;
+    position: absolute;
+    left: 33px;
+    bottom: 0;
+    z-index: 10;
+    width: 17px;
+    height: 17px;
   }
   .box_up_right{
     padding: 5px 7px;
@@ -142,7 +183,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 20px;
+    margin-left: 10px;
   }
   .box_bottom{
     display: flex;
@@ -151,6 +192,7 @@
   }
   .usertx{
     width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: 1px solid #ccc;
     margin-right: 10px;
@@ -193,5 +235,8 @@
   .rou{
     display: flex;
     align-items: center;
+  }
+  .gao{
+    padding-bottom: 59px;
   }
 </style>

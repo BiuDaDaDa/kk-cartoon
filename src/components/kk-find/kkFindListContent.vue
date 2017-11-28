@@ -10,15 +10,15 @@
     </span>
   </div>
   <div class="wrap">
-    <div class="UpdateList">下次出榜时间:&nbsp;&nbsp;{{UpDateTime}}</div>
-    <div v-for="(myTopic,index) in topics" @touchstart="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
+    <div class="UpdateList" v-if="UpDateTime">下次出榜时间:&nbsp;&nbsp;{{UpDateTime}}</div>
+    <div v-for="(myTopic,index) in topics" @touchmove="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
       <div class="bLeft">
         <img :src="myTopic['vertical_image_url']" alt="">
       </div>
       <div class="bRight">
         <div class="topOne">
-          <img v-if="index===0||index===1||index===2" :src="require('../../assets/kk-find/topList'+index+'.jpg')" alt=''>
-          <span v-if="index!==0&&index!==1&&index!==2">{{index+1<10?'0'+(index+1):index+1}}</span>
+          <img v-if="index<3" :src="require('../../assets/kk-find/topList'+index+'.jpg')" alt=''>
+          <span v-if="index>=3">{{index+1<10?'0'+(index+1):index+1}}</span>
         </div>
         <p class="title">{{myTopic['title']}}</p>
         <p class="author">作者：{{myTopic['user']['nickname']}}</p>
@@ -45,11 +45,13 @@
           {title: '完结榜', id: '3'},
           {title: '畅销榜', id: '4'}],
         NavListId: '5',
-        UpDateTime: ''
+        UpDateTime: '',
+        isGo: 1
       }
     },
     methods: {
       changeTab (tid) {
+        this.topics = []
         this.NavListId = tid
         this.HuoQuListSort()
       },
@@ -74,17 +76,17 @@
         })
       },
       goBack () {
-        this.$router.push({ path: '/kkfind' })
+        window.history.back()
+//        this.$router.push({ path: '/kkfind' })
       },
       changeGo1 () {
-        this.scrollTop1 = document.documentElement.scrollTop ||
-          document.body.scrollTop || window.pageYflset || 0
+        this.isGo = 0
       },
       changeGo2 (tarId) {
-        this.scrollTop2 = document.documentElement.scrollTop ||
-          document.body.scrollTop || window.pageYflset || 0
-        if (this.scrollTop1 === this.scrollTop2) {
+        if (this.isGo === 1) {
           this.cartoonGo(tarId)
+        } else {
+          this.isGo = 1
         }
       },
       cartoonGo (tarId) {
@@ -161,7 +163,11 @@
     height: 182px;
     margin-right: 5%;
     float: left;
-
+    background-image: url(../../assets/kk-find/kk-mhbg.jpg);
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
   }
   .bLeft img{
     width: 100%;

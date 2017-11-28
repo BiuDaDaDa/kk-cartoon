@@ -2,9 +2,9 @@
   <div>
     <div ref="head">
       <div id="nav">
-        <router-link id="back" tag="div" to="/" @touchend.native="back"><</router-link>
+        <div id="back" @click="back"><</div>
         <p id="title">{{title}}</p>
-        <router-link id="complete" tag="div" to="/" @touchend.native="back">全集</router-link>
+        <div id="complete" @click="back">全集</div>
       </div>
       <mt-popup
         v-model="popupVisible"
@@ -49,8 +49,34 @@
           <div id="abolish" @click="abolish">取消</div>
         </div>
       </mt-popup>
-    <!--中间内容-->
-  </div>
+      <mt-popup
+        v-model="switchValue"
+        position="bottom">
+        <div id="switch">
+          <div class="tools">
+            <div id="left">翻页模式</div>
+            <div id="right">当前漫画只适合上下分页哦</div>
+          </div>
+          <div class="tools">
+            <div class="page">
+              <p>点击翻页</p>
+              <p>打开后可点击屏幕上下方翻页</p>
+            </div>
+            <div class="pageSwitch">
+              <mt-switch v-model="value"></mt-switch>
+            </div>
+          </div>
+          <div class="tools">
+            <div class="page">
+              <p>夜间模式</p>
+            </div>
+            <div class="pageSwitch">
+              <mt-switch v-model="night"></mt-switch>
+            </div>
+          </div>
+        </div>
+      </mt-popup>
+    </div>
     <div id="content" @touchmove="move">
       <img  :src="k" alt="" class="iamges" v-for="(k,i) in images">
     </div>
@@ -69,9 +95,9 @@
       </div>
     </div>
     <div id="cross">
-      <div class="previous_posts"><&nbsp;上一篇</div>
+      <div class="previous_posts" @touchend="previous"><&nbsp;上一篇</div>
       <div class="line"></div>
-      <div class="next_chapter">下一篇&nbsp;></div>
+      <div class="next_chapter" @touchend="next">下一篇&nbsp;></div>
     </div>
     <!--作者-->
     <div class="author">
@@ -123,18 +149,17 @@
       <div id="send">发送</div>
       <div id="foot">
         <div id="chapter">
-          <router-link to='/'><</router-link>
+          <div @touchend="previous"><</div>
           <div id="now">当前话</div>
-          <router-link to='/' class="right" tag="span"> > </router-link>
+          <div class="right" tag="span" @touchend="next"> > </div>
         </div>
         <router-link to='/' tag="div" id="discuss" @touchend.native="linkto">
           <div id="comment_count">{{comments}}</div>
         </router-link>
         <div id="share" @touchend="share" @click="shartt">&nbsp;</div>
-        <div id="tool" @touchend="tool" @click="actionSheet">&nbsp;</div>
+        <div id="tool" @touchend="tool">&nbsp;</div>
       </div>
     </div>
-    <!--弹出-->
   </div>
 </template>
 
@@ -151,12 +176,63 @@
         zan_count: '',
         authorArr: [],
         commentsArr: [],
-        popupVisible: false
+        popupVisible: false,
+        switchValue: false,
+        value: true,
+        night: false,
+        nextParams: 0,
+        previousParams: 0
       }
     },
     methods: {
+      previous: function () {
+        scrollTo(0, 0)
+        let ace = this.previousParams
+        let url = {
+          url: '/kkv2/comic/' + ace,
+          type: 'get',
+          success: function (res) {
+            this.title = res.data.data.title
+            this.images = res.data.data.images
+            this.comments = res.data.data.comments_count
+            this.targed = res.data.data.id
+            this.zan_count = res.data.data.likes_count
+            this.authorArr = res.data.data.topic.related_authors
+            this.nextParams = res.data.data.next_comic_id
+            this.previousParams = res.data.data.previous_comic_id
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        }
+        this.$request(url)
+      },
+      next: function () {
+        scrollTo(0, 0)
+        console.log(window.scrollY)
+        let ace = this.nextParams
+        let url = {
+          url: '/kkv2/comic/' + ace,
+          type: 'get',
+          success: function (res) {
+            this.title = res.data.data.title
+            this.images = res.data.data.images
+            this.comments = res.data.data.comments_count
+            this.targed = res.data.data.id
+            this.zan_count = res.data.data.likes_count
+            this.authorArr = res.data.data.topic.related_authors
+            this.nextParams = res.data.data.next_comic_id
+            this.previousParams = res.data.data.previous_comic_id
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        }
+        this.$request(url)
+      },
       shartt: function () {
         this.popupVisible = true
+        this.$refs.foot.style.display = 'none'
       },
       abolish: function () {
         this.popupVisible = false
@@ -166,7 +242,7 @@
         this.$router.push({ name: 'kkcomment', params: {id: this.targed} })
       },
       back: function () {
-        this.$router.push({name: 'kkcartoontitle'})
+        window.history.back()
       },
       call: function (i) {
         console.log(i)
@@ -194,20 +270,18 @@
         console.log('点击分享')
       },
       tool: function () {
-        console.log('这是工具')
+        this.switchValue = true
+        this.$refs.foot.style.display = 'none'
       },
       move: function () {
         var that = this
-        console.log(window.scrollY)
         if (window.scrollY > 1 && window.scrollY <= 6800) {
           this.$refs.head.style.display = 'none'
           this.$refs.foot.style.display = 'none'
           this.$refs.head.className = ''
         } else if (window.scrollY >= 7000) {
-          this.$refs.head.className = 'head'
           this.$refs.head.style.display = 'block'
           this.$refs.foot.style.display = 'block'
-          this.$refs.foot.className = 'foot'
         } else if (window.scrollY > 5600) {
           if (num === 0) {
             num = 1
@@ -228,6 +302,8 @@
             }
             this.$request(url)
           }
+        } else if (window.scrollY === 0) {
+          this.$refs.head.style.display = 'block'
         }
       }
     },
@@ -244,6 +320,8 @@
           that.targed = res.data.data.id
           that.zan_count = res.data.data.likes_count
           that.authorArr = res.data.data.topic.related_authors
+          that.nextParams = res.data.data.next_comic_id
+          that.previousParams = res.data.data.previous_comic_id
           console.log(res.data.data)
         },
         failed: function (err) {
@@ -261,17 +339,6 @@
     height: 40px;
     border-bottom: 1px solid darkgray;
   }
-  .head {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    background-color: white;
-  }
-  .foot {
-    position: fixed;
-    bottom: 0;
-    background-color: rgb(245,245,245);
-  }
   #back {
     position: absolute;
     left: 15px;
@@ -282,10 +349,10 @@
     font-size: 14px;
     text-align: center;
     position: absolute;
-    width: 180px;
+    width: 220px;
     left: 50%;
     line-height: 40px;
-    margin-left: -90px;
+    margin-left: -110px;
   }
   #complete {
     position: absolute;
@@ -571,6 +638,7 @@
     width: 432px;
     position: relative;
     height: 280px;
+    z-index: 120;
   }
   #shin {
     position: absolute;
@@ -618,5 +686,36 @@
     font-size: 20px;
     text-align: center;
     top: 240px;
+  }
+  #switch {
+    width: 432px;
+    height: 200px;
+    background-color: #FFFFFF;
+  }
+  .tools {
+    overflow: hidden;
+    margin-top: 30px;
+  }
+  #left {
+    float: left;
+    padding-left: 25px;
+  }
+  #right {
+    float: right;
+    font-size: 12px;
+    width: 190px;
+    color: #C1C4CF;
+  }
+  .page {
+    float: left;
+    padding-left: 25px;
+  }
+  .page p:nth-child(2) {
+    font-size: 12px;
+    color: #C1C4CF;
+  }
+  .pageSwitch {
+    float: right;
+    width: 80px;
   }
 </style>

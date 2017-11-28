@@ -12,7 +12,7 @@
     </div>
     <div class="boxF">
       <div :class="'box'+item['item_type']" v-for="ite in item['topics']||item['banners']"
-           @touchstart="changeGo1" @touchend="changeGo2(ite['target_id'])" :key="ite['target_id']">
+           @touchmove="changeGo1" @touchend="changeGo2(ite['target_id'])" :key="ite['target_id']">
         <div class="boxTop">
           <img :src="ite['pic']" alt="">
         </div>
@@ -38,7 +38,8 @@
     },
     data () {
       return {
-        rec: false
+        rec: false,
+        isGo: 1
       }
     },
     methods: {
@@ -48,14 +49,13 @@
         this.$store.commit('increment', tt)
       },
       changeGo1 () {
-        this.scrollTop1 = document.documentElement.scrollTop ||
-          document.body.scrollTop || window.pageYflset || 0
+        this.isGo = 0
       },
       changeGo2 (tarId) {
-        this.scrollTop2 = document.documentElement.scrollTop ||
-          document.body.scrollTop || window.pageYflset || 0
-        if (this.scrollTop1 === this.scrollTop2) {
+        if (this.isGo === 1) {
           this.cartoonGo(tarId)
+        } else {
+          this.isGo = 1
         }
       },
       cartoonGo (tarId) {
@@ -128,6 +128,11 @@
   }
   .boxF .boxTop{
     width: 100%;
+    background-image: url(../../assets/kk-find/kk-mhbg.jpg);
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
   }
   .boxF img{
     width: 100%;

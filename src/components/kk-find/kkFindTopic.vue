@@ -1,9 +1,24 @@
 <template>
-<div @touchstart="changePos1" @touchend="changePos2" class="myTopics">
+<div class="myTopics">
   <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
     <div class="Nav" :class="{activeNav:!isShow}">
       <div class="diBg" :class="{actDiBg:!isShow}">
-        <img @click="genderChange" src="" alt="男">
+        <div @click="genderChange" v-if="gender===1" class="changeSex" >
+          <span class="man">
+            <img src="../../assets/kk-find/kk-find-man1.png" alt="男">
+          </span>
+          <span class="woman">
+            <img src="../../assets/kk-find/kk-find-woman1.png" alt="女">
+          </span>
+        </div>
+        <div @click="genderChange" v-if="gender===0" class="changeSex" >
+          <span class="man1">
+            <img src="../../assets/kk-find/kk-find-man1.png" alt="男">
+          </span>
+          <span class="woman1">
+            <img src="../../assets/kk-find/kk-find-woman1.png" alt="女">
+          </span>
+        </div>
       </div>
       <div class="btnN">
         <span @click="changeTui" :class="{actBtn:isShow}">推荐</span>
@@ -15,55 +30,57 @@
     </div>
   </div>
   <div class="follow">
-  <div  ref="listSort" class="listSort" style="top: 0px">
-    <span v-for="tag in tags" class="tagSort"
-        :class="{activeTagSort:tagId==tag['tag_id']}" @click="changeTagId(tag['tag_id'])">
-      <mt-tab-item :id="tagId==tag['tag_id']">{{tag['title']}}</mt-tab-item>
-    </span>
-  </div>
-  <div class="myTopicNav">
-    <span class="muLu" :class="{activeMuLu:isShow1 === 1}" @click="changeType(1)">推荐</span>
-    <span class="fenGe">|</span>
-    <span class="muLu" :class="{activeMuLu:isShow1 === 2}" @click="changeType(2)">最火热</span>
-    <span class="fenGe">|</span>
-    <span class="muLu" :class="{activeMuLu:isShow1 === 3}" @click="changeType(3)">新上架</span>
-  </div>
-    <div  v-infinite-scroll="loadMore"
-          infinite-scroll-disabled="loading"
-          infinite-scroll-distance="100">
-      <div v-for="myTopic in topics" @touchstart="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
-        <div class="bLeft">
-          <img :src="myTopic['cover_image_url']" alt="">
-        </div>
-        <div class="bRight">
-          <p class="title">{{myTopic['title']}}</p>
-          <p v-show="false" class="tags">
-            <span></span>
-          </p>
-          <p class="author">{{myTopic['user']['nickname']}}</p>
-          <div class="jie" v-show="isShow1===1">
-            <span class="zan">
-              <img src="../../assets/kk-find/kk-find-zan.png" alt="">
-              <span>{{myTopic['likes_count']>100000?Math.floor(myTopic['likes_count']/10000)+'万':myTopic['likes_count']}}</span>
-            </span>
-            <span  class="comment">
-              <img src="../../assets/kk-find/kk-find-comment.png" alt="">
-              <span>{{myTopic['comments_count']>100000?Math.floor(myTopic['comments_count']/10000)+'万':myTopic['comments_count']}}</span>
-            </span>
+    <div  ref="listSort" class="listSort" style="top: 0px">
+      <span v-for="tag in tags" class="tagSort"
+          :class="{activeTagSort:tagId==tag['tag_id']}" @click="changeTagId(tag['tag_id'])">
+        <mt-tab-item :id="tagId==tag['tag_id']">{{tag['title']}}</mt-tab-item>
+      </span>
+    </div>
+    <div class="detection" @touchstart="changePos1" @touchend="changePos2">
+    <div class="myTopicNav">
+      <span class="muLu" :class="{activeMuLu:isShow1 === 1}" @click="changeType(1)">推荐</span>
+      <span class="fenGe">|</span>
+      <span class="muLu" :class="{activeMuLu:isShow1 === 2}" @click="changeType(2)">最火热</span>
+      <span class="fenGe">|</span>
+      <span class="muLu" :class="{activeMuLu:isShow1 === 3}" @click="changeType(3)">新上架</span>
+    </div>
+      <div  v-infinite-scroll="loadMore"
+            infinite-scroll-disabled="loading"
+            infinite-scroll-distance="100">
+        <div v-for="myTopic in topics" @touchmove="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
+          <div class="bLeft">
+            <img :src="myTopic['cover_image_url']" alt="">
           </div>
-          <div class="jie" v-show="isShow1===2">
-            <span class="comment">
-              <img src="../../assets/kk-find/kk-find-hot.png" alt="">
-              <span>{{myTopic['view_count']>100000?myTopic['view_count']>100000000?Math.floor(myTopic['view_count']/100000000)+'亿':Math.floor(myTopic['view_count']/10000)+'万':myTopic['view_count']}}</span>
-            </span>
+          <div class="bRight">
+            <p class="title">{{myTopic['title']}}</p>
+            <p v-show="false" class="tags">
+              <span></span>
+            </p>
+            <p class="author">{{myTopic['user']['nickname']}}</p>
+            <div class="jie" v-show="isShow1===1">
+              <span class="zan">
+                <img src="../../assets/kk-find/kk-find-zan.png" alt="">
+                <span>{{myTopic['likes_count']>100000?Math.floor(myTopic['likes_count']/10000)+'万':myTopic['likes_count']}}</span>
+              </span>
+              <span  class="comment">
+                <img src="../../assets/kk-find/kk-find-comment.png" alt="">
+                <span>{{myTopic['comments_count']>100000?Math.floor(myTopic['comments_count']/10000)+'万':myTopic['comments_count']}}</span>
+              </span>
+            </div>
+            <div class="jie" v-show="isShow1===2">
+              <span class="comment">
+                <img src="../../assets/kk-find/kk-find-hot.png" alt="">
+                <span>{{myTopic['view_count']>100000?myTopic['view_count']>100000000?Math.floor(myTopic['view_count']/100000000)+'亿':Math.floor(myTopic['view_count']/10000)+'万':myTopic['view_count']}}</span>
+              </span>
+            </div>
+            <div class="jie" v-show="isShow1===3">
+              <span class="comment">
+                <span>{{myTopic['latest_comic_title']}}</span>
+              </span>
+            </div>
           </div>
-          <div class="jie" v-show="isShow1===3">
-            <span class="comment">
-              <span>{{myTopic['latest_comic_title']}}</span>
-            </span>
-          </div>
-        </div>
-       </div>
+         </div>
+      </div>
     </div>
   </div>
   <FooterNav ></FooterNav>
@@ -92,7 +109,8 @@
         isShow: false,
         isShow1: 1,
         scrollTop1: '',
-        scrollTop2: ''
+        scrollTop2: '',
+        isGo: 1
       }
     },
     methods: {
@@ -169,10 +187,12 @@
         }
       },
       changePos1 () {
-        this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+        this.scrollTop1 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
       },
       changePos2 () {
-        this.scrollTop2 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+        this.scrollTop2 = document.documentElement.scrollTop ||
+          document.body.scrollTop || window.pageYflset || 0
         if (this.scrollTop1 !== this.scrollTop2) {
           this.changePos()
         }
@@ -220,18 +240,18 @@
       genderChange () {
         this.$store.commit('genderTo')
         this.since = 0
+        this.tagId = '0'
         this.topics = []
         this.HuoQuListSort()
       },
       changeGo1 () {
-        this.scrollTop1 = document.documentElement.scrollTop ||
-          document.body.scrollTop || window.pageYflset || 0
+        this.isGo = 0
       },
       changeGo2 (tarId) {
-        this.scrollTop2 = document.documentElement.scrollTop ||
-          document.body.scrollTop || window.pageYflset || 0
-        if (this.scrollTop1 === this.scrollTop2) {
+        if (this.isGo === 1) {
           this.cartoonGo(tarId)
+        } else {
+          this.isGo = 1
         }
       },
       cartoonGo (tarId) {
@@ -279,6 +299,47 @@
   }
   .actDiBg{
     background-color: #fff;
+  }
+  .changeSex{
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .man,.woman,.man1,.woman1{
+    display: flex;
+    align-items: center;
+    width: 9px;
+    height: 10px;
+    position: absolute;
+    padding: 1px;
+    border: 1px solid rgba(0,0,0,.6);
+    border-radius: 3px;
+    background-color: rgb(255,255,255);
+
+  }
+  .changeSex .man{
+    z-index: 30;
+    bottom: 15%;
+    right: 15%;
+  }
+  .changeSex .woman{
+    top: 15%;
+    left: 15%;
+    z-index: 28;
+  }
+  .changeSex .man1{
+    top: 15%;
+    left: 15%;
+    z-index: 28;
+  }
+  .changeSex .woman1{
+    z-index: 30;
+    bottom: 15%;
+    right: 15%;
+  }
+  .changeSex img{
+    width: 100%;
+    height: 100%;
   }
   .btnN{
     height: 24px;
@@ -356,6 +417,11 @@
   height: 117px;
   margin-right: 5%;
   float: left;
+  background-image: url(../../assets/kk-find/kk-mhbg.jpg);
+  background-repeat:no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center center;
 }
   .bLeft img{
     width: 100%;

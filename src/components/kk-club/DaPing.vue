@@ -1,13 +1,11 @@
 <template>
   <div>
     <div class="top">
-      <!--<div @click="isback">-->
         <router-link to="/kk-club">
         <img class="x" src="../../assets/hans/x.png" alt="">
         </router-link>
-      <!--</div>-->
       <div class="btn">
-        <div v-for="(jump, i) in jumps" @click="clicked(i)">{{jump.text}}</div>
+        <div v-for="(jump, i) in jumps" class="tabs" @click="clicked(i)">{{jump}}</div>
       </div>
     </div>
     <div class="div1"></div>
@@ -51,15 +49,17 @@
 </template>
 
 <script>
+  var tab = document.getElementsByClassName('tabs')
   export default {
     name: 'DaPing',
     data () {
       return {
         parray: [],
+        bg: 0,
         feed1: this.$route.params.id,
         jumps: [
-          {text: '最新评论'},
-          {text: '最热评论'}
+          '最新评论',
+          '最热评论'
         ],
         tabs: ''
       }
@@ -108,15 +108,21 @@
           this.tabs = 'score'
           this.fecthHomeData()
         }
+        for (var j = 0; j < tab.length; j++) {
+          if (j === i) {
+            tab[j].style.backgroundColor = 'rgb(200,200,200)'
+            tab[j].style.color = 'white'
+          } else {
+            tab[j].style.backgroundColor = 'rgb(230,230,230)'
+            tab[j].style.color = 'black'
+          }
+        }
       },
       tiao1 (ev) {
 //        console.log(ev)
         this.myid = ev
         this.$router.push({name: 'HuiHua', params: {id: this.myid}})
       }
-//      isback () {
-//        this.$router.go(-1)
-//      }
     }
   }
 </script>
@@ -239,9 +245,13 @@
     display: flex;
     padding: 6px 0;
   }
-  .btn div{
+  .tabs{
     padding: 6px 30px;
     background-color: rgb(230,230,230);
     border: 1px solid #ccc;
+  }
+  .btn div:nth-child(1){
+    background-color: rgb(200,200,200);
+    color: white;
   }
 </style>

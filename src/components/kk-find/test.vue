@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 
 <!--<template>-->
   <!--<div class="test">-->
@@ -127,3 +129,4 @@
     <!--padding: 50px 0;-->
   <!--}-->
 <!--</style>-->
+>>>>>>> cbf81df6bd5111ac6491a7ceff1b8ab247236129

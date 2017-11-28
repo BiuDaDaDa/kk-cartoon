@@ -1,15 +1,33 @@
 <template>
-  <div class="hello" @touchmove="touch">
-    <ul id="dayList" ref="list">
+  <div class="hello">
+    <div class="topDi"></div>
+    <div  ref="kkFindNav" class="kkFindNav"  style="top: 0px" >
+      <div class="Nav">
+        <div class="diBg" >
+            <img src="../../assets/kkcartoontitle/kk-games.png" alt="">
+        </div>
+        <div class="btnN">
+          <span @click="changeFen" :class="{actBtn:!isShow}">关注</span>
+          <span  @click="changeTui" :class="{actBtn:isShow}">热门</span>
+        </div>
+        <div class="diBg">
+          <img src="../../assets/kk-find/kk-find-search1.png" alt="🔍">
+        </div>
+      </div>
+    </div>
+    <ul id="dayList" ref="list" style="top: 60px">
       <router-link tag="li" v-for="(key,i) in dayarray" :key="key.id" to="/" class="list" @touchstart.native="tab(i)">
         {{key}}
       </router-link>
     </ul>
-    <div id="mainContent">
+    <div class="detection" @touchmove="touch" @touchstart="changePos1" @touchend="changePos2">
+    <div id="mainContent" v-infinite-scroll="loadMore"
+         infinite-scroll-disabled="loading"
+         infinite-scroll-distance="100">
       <div v-for="(k,i) in array" class="content">
         <router-link to="/" tag="div" class="nav"
                      @touchend.native="link(k.topic.id)" @touchstart.native='tiao'>
-          <div class="title">{{k.label_text}}</div>
+          <div class="title" :style="{backgroundColor:k.label_color}">{{k.label_text}}</div>
           <p class="heading">{{k.topic.title}}</p>
           <router-link to="/" class="all">全集&nbsp;></router-link>
           <p class="author">作者:&nbsp;&nbsp;{{k.topic.user.nickname}}</p>
@@ -25,6 +43,11 @@
           </div>
         </router-link>
       </div>
+      <div @touchstart="tab(Number(tabI-1))" v-show="since === -1 "  class="footer">
+        <p class="alert">到底啦!</p>
+        <p class="alert"> 看前一天的吧！</p>
+      </div>
+    </div>
     </div>
     <FooterNav></FooterNav>
   </div>
@@ -37,10 +60,7 @@
   var dayarray = []
   var arrayday = []
   var num = 0
-  var weekDay = ['/kuaikanv1/daily/comic_lists/1510416000', '/kuaikanv1/daily/comic_' +
-  'lists/1510329600', '/kuaikanv1/daily/comic_lists/1510502400', '/kuaikanv1/daily/comic_lists' +
-  '/1510588800', '/kuaikanv1/daily/comic_lists/1510675200', '/kuaikanv1/daily/comic_lists' +
-  '/1510761600', '/kuaikanv1/daily/comic_lists/0']
+  var weekDay = [Number(day.getTime() / 1000 - 86400 * 6), Number(day.getTime() / 1000 - 86400 * 5), Number(day.getTime() / 1000 - 86400 * 4), Number(day.getTime() / 1000 - 86400 * 3), Number(day.getTime() / 1000 - 86400 * 2), Number(day.getTime() / 1000 - 86400), 0]
   for (var i = 6; i > 0; i--) {
     dayarray[i] = nowDay - i
     switch (dayarray[i]) {
@@ -68,13 +88,62 @@
         array: [],
         dayarray: arrayday,
         weekArr: weekDay,
-        url: ''
+        tabI: 0,
+        url: 0,
+        since: 0,
+        loading: false,
+        isShow: true
       }
     },
     components: {
       FooterNav
     },
     methods: {
+      changeTui () {
+        if (!this.isShow) {
+          this.isShow = true
+          this.$router.push({path: '/'})
+        }
+      },
+      changeFen () {
+        if (this.isShow) {
+          this.isShow = false
+          this.$router.push({path: '/attention'})
+        }
+      },
+      changePos1 () {
+        this.scrollTop1 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+      },
+      changePos2 () {
+        this.scrollTop2 = document.documentElement.scrollTop || document.body.scrollTop || window.pageYflset || 0
+        if (this.scrollTop1 !== this.scrollTop2) {
+          this.changePos()
+        }
+      },
+      changePos () {
+        let myTimer = null
+        let _this = this
+        // 向下滑动
+        if (this.scrollTop1 < this.scrollTop2 && this.$refs.kkFindNav.offsetTop === 0) {
+          clearInterval(myTimer)
+          myTimer = setInterval(function () {
+            _this.$refs.kkFindNav.style.top = _this.$refs.kkFindNav.offsetTop - 1 + 'px'
+            _this.$refs.list.style.top = _this.$refs.list.offsetTop - 1 + 'px'
+            if (_this.$refs.kkFindNav.offsetTop === -40) {
+              clearInterval(myTimer)
+            }
+          }, 10)
+        } else if (this.scrollTop1 > this.scrollTop2 && this.$refs.kkFindNav.offsetTop === -40) {
+          clearInterval(myTimer)
+          myTimer = setInterval(function () {
+            _this.$refs.kkFindNav.style.top = _this.$refs.kkFindNav.offsetTop + 1 + 'px'
+            _this.$refs.list.style.top = _this.$refs.list.offsetTop + 1 + 'px'
+            if (_this.$refs.kkFindNav.offsetTop === 0) {
+              clearInterval(myTimer)
+            }
+          }, 10)
+        }
+      },
       tiao: function () {
         num = 0
       },
@@ -87,17 +156,14 @@
       },
       touch: function () {
         num = 1
-        if (window.scrollY > 10) {
-          this.$refs.list.className = 'fixed'
-        } else {
-          this.$refs.list.className = ''
-        }
-        if (window.scrollY > 3200) {
-        }
       },
       tab: function (i) {
         num = 0
+        this.tabI = i
+        console.log(i)
         this.url = weekDay[i]
+        this.array = []
+        this.since = 0
         for (var y = 0; y < listArr.length; y++) {
           if (y === i) {
             listArr[y].style.borderBottom = '2px solid #E4C93D'
@@ -105,18 +171,35 @@
             listArr[y].style.borderBottom = 'none'
           }
         }
-        var _that = this
+        this.HuoQuKkCartoon()
+      },
+      loadMore () {
+        if (!this.loading) {
+          this.loading = true
+          if (this.since !== -1) {
+            setTimeout(() => {
+              this.HuoQuKkCartoon()
+            }, 2000)
+          }
+        }
+      },
+      HuoQuKkCartoon () {
         let a = {
-          url: this.url,
+          url: '/kuaikanv1/daily/comic_lists/' + this.url,
           type: 'get',
           headers: {},
           params: {
-            gender: 1,
+            gender: this.gender,
             new_device: false,
-            since: 0
+            since: this.since
           },
           success: function (res) {
-            _that.array = res.data.data.comics
+            this.array = this.array.concat(res.data.data.comics)
+            this.since = res.data.data.since
+            if (res['data']['data']['comics'].length < 20) {
+              console.log('全部加载')
+            }
+            this.loading = false
           },
           failed: function (err) {
             console.log(err)
@@ -125,31 +208,68 @@
         this.$request(a)
       }
     },
-    mounted () {
-      var _that = this
-      let a = {
-        url: '/kuaikanv1/daily/comic_lists/0',
-        type: 'get',
-        headers: {},
-        params: {
-          gender: 1,
-          new_device: false,
-          since: 0
-        },
-        success: function (res) {
-          _that.array = res.data.data.comics
-        },
-        failed: function (err) {
-          console.log(err)
-        }
+    computed: {
+      gender () {
+        return this.$store.state.gender
       }
-      this.$request(a)
+    },
+    mounted () {
+      this.HuoQuKkCartoon()
     }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .topDi{
+    height: 20px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 25;
+    background-color: yellow;
+  }
+  .kkFindNav{
+    padding-top: 20px;
+    width: 100%;
+    position: fixed;
+    z-index: 20;
+    background-color: yellow;
+  }
+  .Nav{
+    display: flex;
+    height: 40px;
+    padding:0 5%;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .diBg{
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+  .btnN{
+    height: 24px;
+    width: 28%;
+    background-color: rgb(0,0,0);
+    border-radius: 12px;
+    border:1px solid rgb(0,0,0);
+  }
+  .btnN span{
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 200;
+    text-align: center;
+    line-height: 24px;
+    color: yellow;
+    padding: 0 10%;
+    outline: none;
+  }
+  .btnN .actBtn{
+    background-color: yellow;
+    color: #000;
+    border-radius: 12px;
+  }
   h1, h2 {
     font-weight: normal;
   }
@@ -169,20 +289,16 @@
     height: 50px;
   }
   #mainContent {
-    margin-top: -15px;
+    margin: 90px 0;
   }
   .content {
     margin-top: 10px;
     padding-top: 10px;
   }
-  .fixed {
-    position: fixed;
-    top: -17px;
-  }
 
   .title {
     font-size: 12px;
-    background-color: cornflowerblue;
+    /*background-color: cornflowerblue;*/
     color: white;
     width: 32px;
     height: 18px;
@@ -233,8 +349,7 @@
     width: 100%;
     border-bottom: 1px solid darkgray;
     background-color: white;
-    margin-top: 20px;
-    top: -20px;
+    position: fixed;
   }
   #dayList li:last-child {
     border-bottom: 2px solid #E4C93D;
@@ -274,6 +389,18 @@
   }
   .bottomContent>div {
     position: absolute;
+  }
+  .footer{
+    margin: 30px auto;
+    width: 60%;
+    padding: 2% 0;
+    text-align: center;
+    border-radius: 40px;
+    background-color: rgba(38,129,210,.3);
+    color: rgb(38,129,210);
+  }
+  .footer p{
+    font-size: 14px;
   }
 </style>
 
