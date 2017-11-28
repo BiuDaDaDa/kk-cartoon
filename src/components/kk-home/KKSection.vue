@@ -284,6 +284,7 @@
           this.$refs.foot.style.display = 'block'
         } else if (window.scrollY > 5600) {
           if (num === 0) {
+            console.log('jin')
             num = 1
             let url = {
               url: '/kkv2/comments/hot_floor_list',

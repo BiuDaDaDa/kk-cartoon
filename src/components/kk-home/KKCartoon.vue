@@ -10,7 +10,7 @@
           <span @click="changeFen" :class="{actBtn:!isShow}">关注</span>
           <span  @click="changeTui" :class="{actBtn:isShow}">热门</span>
         </div>
-        <div class="diBg">
+        <div class="diBg" @click="search1">
           <img src="../../assets/kk-find/kk-find-search1.png" alt="🔍">
         </div>
       </div>
@@ -104,6 +104,9 @@
           this.isShow = true
           this.$router.push({path: '/'})
         }
+      },
+      search1: function () {
+        this.$router.push({path: '/search'})
       },
       changeFen () {
         if (this.isShow) {

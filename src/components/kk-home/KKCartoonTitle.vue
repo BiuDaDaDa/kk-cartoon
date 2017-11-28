@@ -30,7 +30,6 @@
         <img src="../../assets/kkcartoontitle/upp.png" class="order" @touchend='order' ref="img">
       </div>
     </div>
-    <p @touchend="shouhuo">获取</p>
     <ul id="contentList" v-if="tf">
       <router-link to="/kkcartitle" v-for="(key,i) in timeArr"
                    :key="key.id" tag="li" class="writings" @touchend.native="kk(i,key.id)"
@@ -98,7 +97,6 @@
 </template>
 <script>
   var list = document.getElementsByClassName('listContent')
-//  var histories = document.getElementsByClassName('history')
   var arrstr = document.cookie.split(';')
   for (var i = 0; i < arrstr.length; i++) {
     var temp = arrstr[i].split('=')
@@ -193,20 +191,6 @@
       }
     },
     methods: {
-      shouhuo: function () {
-        var id = document.cookie.split(';')[0].split('=')[1]
-        console.log(id)
-        if (id === '1') {
-          console.log('aaa')
-        }
-//        for (var j = 0; j < histories.length; j++) {
-//          if (j + '' === id) {
-//            histories[j].style.display = 'block'
-//          } else {
-//            histories[j].style.display = 'none'
-//          }
-//        }
-      },
       attention: function (val) {
         console.log(val)
         let url = {
@@ -230,7 +214,6 @@
       kk: function (i, val) {
         if (count === 0) {
           this.$router.push({ name: 'kksection', params: {id: val} })
-          document.cookie = 'id=' + i
         }
       },
       autopass: function (val) {
