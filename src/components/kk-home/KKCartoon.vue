@@ -21,7 +21,9 @@
       </router-link>
     </ul>
     <div class="detection" @touchmove="touch" @touchstart="changePos1" @touchend="changePos2">
-    <div id="mainContent">
+    <div id="mainContent" v-infinite-scroll="loadMore"
+         infinite-scroll-disabled="loading"
+         infinite-scroll-distance="100">
       <div v-for="(k,i) in array" class="content">
         <router-link to="/" tag="div" class="nav"
                      @touchend.native="link(k.topic.id)" @touchstart.native='tiao'>
@@ -41,6 +43,10 @@
           </div>
         </router-link>
       </div>
+      <div @touchstart="tab(Number(tabI-1))" v-show="since === -1 "  class="footer">
+        <p class="alert">到底啦!</p>
+        <p class="alert"> 看前一天的吧！</p>
+      </div>
     </div>
     </div>
     <FooterNav></FooterNav>
@@ -54,10 +60,7 @@
   var dayarray = []
   var arrayday = []
   var num = 0
-  var weekDay = ['/kuaikanv1/daily/comic_lists/1510416000', '/kuaikanv1/daily/comic_' +
-  'lists/1510329600', '/kuaikanv1/daily/comic_lists/1510502400', '/kuaikanv1/daily/comic_lists' +
-  '/1510588800', '/kuaikanv1/daily/comic_lists/1510675200', '/kuaikanv1/daily/comic_lists' +
-  '/1510761600', '/kuaikanv1/daily/comic_lists/0']
+  var weekDay = [Number(day.getTime() / 1000 - 86400 * 6), Number(day.getTime() / 1000 - 86400 * 5), Number(day.getTime() / 1000 - 86400 * 4), Number(day.getTime() / 1000 - 86400 * 3), Number(day.getTime() / 1000 - 86400 * 2), Number(day.getTime() / 1000 - 86400), 0]
   for (var i = 6; i > 0; i--) {
     dayarray[i] = nowDay - i
     switch (dayarray[i]) {
@@ -85,7 +88,10 @@
         array: [],
         dayarray: arrayday,
         weekArr: weekDay,
-        url: '',
+        tabI: 0,
+        url: 0,
+        since: 0,
+        loading: false,
         isShow: true
       }
     },
@@ -150,17 +156,14 @@
       },
       touch: function () {
         num = 1
-//        if (window.scrollY > 10) {
-//          this.$refs.list.className = 'fixed'
-//        } else {
-//          this.$refs.list.className = ''
-//        }
-//        if (window.scrollY > 3200) {
-//        }
       },
       tab: function (i) {
         num = 0
+        this.tabI = i
+        console.log(i)
         this.url = weekDay[i]
+        this.array = []
+        this.since = 0
         for (var y = 0; y < listArr.length; y++) {
           if (y === i) {
             listArr[y].style.borderBottom = '2px solid #E4C93D'
@@ -168,18 +171,35 @@
             listArr[y].style.borderBottom = 'none'
           }
         }
-        var _that = this
+        this.HuoQuKkCartoon()
+      },
+      loadMore () {
+        if (!this.loading) {
+          this.loading = true
+          if (this.since !== -1) {
+            setTimeout(() => {
+              this.HuoQuKkCartoon()
+            }, 2000)
+          }
+        }
+      },
+      HuoQuKkCartoon () {
         let a = {
-          url: this.url,
+          url: '/kuaikanv1/daily/comic_lists/' + this.url,
           type: 'get',
           headers: {},
           params: {
-            gender: 1,
+            gender: this.gender,
             new_device: false,
-            since: 0
+            since: this.since
           },
           success: function (res) {
-            _that.array = res.data.data.comics
+            this.array = this.array.concat(res.data.data.comics)
+            this.since = res.data.data.since
+            if (res['data']['data']['comics'].length < 20) {
+              console.log('全部加载')
+            }
+            this.loading = false
           },
           failed: function (err) {
             console.log(err)
@@ -188,25 +208,13 @@
         this.$request(a)
       }
     },
-    mounted () {
-      var _that = this
-      let a = {
-        url: '/kuaikanv1/daily/comic_lists/0',
-        type: 'get',
-        headers: {},
-        params: {
-          gender: 1,
-          new_device: false,
-          since: 0
-        },
-        success: function (res) {
-          _that.array = res.data.data.comics
-        },
-        failed: function (err) {
-          console.log(err)
-        }
+    computed: {
+      gender () {
+        return this.$store.state.gender
       }
-      this.$request(a)
+    },
+    mounted () {
+      this.HuoQuKkCartoon()
     }
   }
 </script>
@@ -281,7 +289,7 @@
     height: 50px;
   }
   #mainContent {
-    margin-top: 90px;
+    margin: 90px 0;
   }
   .content {
     margin-top: 10px;
@@ -381,6 +389,18 @@
   }
   .bottomContent>div {
     position: absolute;
+  }
+  .footer{
+    margin: 30px auto;
+    width: 60%;
+    padding: 2% 0;
+    text-align: center;
+    border-radius: 40px;
+    background-color: rgba(38,129,210,.3);
+    color: rgb(38,129,210);
+  }
+  .footer p{
+    font-size: 14px;
   }
 </style>
 
