@@ -7,40 +7,37 @@
           <img src="../../assets/kk-user/kk-user-close.png" alt="">
         </router-link>
         <h2>编辑资料</h2>
-        <h3>发送</h3>
+        <h3 @click="sendInfo">发送</h3>
       </div>
     </div>
     <!-- -----头部----- -->
     <div class="info-all">
       <div class="info-img">
         <div class="img-all">
-          <img :src="infoUrl" alt="">
+          <img ref="userInfoImg" :src="showImg === 1 ? userInfo.avatar_url : changeUserImg" alt="">
+          <input type="file" accept="image/*" ref="userImg" @change="changeImg($event)">
         </div>
       </div>
 
       <div class="info-content">
         <div class="info-for">
           <h2>昵称</h2>
-          <input type="text" :value="infoName">
+          <input ref="userNickName" type="text" :value="userInfo.nickname">
         </div>
         <div class="info-for">
           <h2>性别</h2>
-          <input type="text" :value="infoSex === 1 ? '男' : '女'">
+          <input ref="userSex" type="text" :value="userInfo.gender === 1 ? '男' : '女'">
         </div>
         <div class="info-for">
           <h2>生日</h2>
-          <input type="text" :value="infoBirthday">
+          <input ref="userBirthday" type="text" :value="userInfo.birthday">
         </div>
       </div>
 
       <div class="info-id">
-        <span>{{infoId}}</span>
+        <span>{{userInfo.id}}</span>
       </div>
     </div>
-    <div class="user-sex"></div>
-    <!--<div class="user-birthday">-->
-      <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
-    <!--</div>-->
   </div>
 </template>
 
@@ -49,32 +46,13 @@
       name: 'UserInfo',
       data () {
         return {
-          infoName: '',
-          infoSex: '',
-          infoBirthday: '',
-          infoUrl: '',
-          infoId: '',
-          slots: [
-            {
-              flex: 1,
-              values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
-              className: 'slot1',
-              textAlign: 'right'
-            },
-            {
-              divider: true,
-              content: '-',
-              className: 'slot2'
-            }, {
-              flex: 1,
-              values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
-              className: 'slot3',
-              textAlign: 'left'
-            }
-          ]
+          showImg: 1,
+          userInfo: '',
+          changeUserImg: ''
         }
       },
       mounted () {
+        this.showImg = 1
         this.$request({
           type: 'get',
           url: '/kuaikanv1/users/me',
@@ -82,12 +60,8 @@
             'X-Device': 'A:bcce411315f9d871'
           },
           success (res) {
-            this.infoName = res.data.data.nickname
-            this.infoSex = res.data.data.gender
-            this.infoBirthday = res.data.data.birthday
-            this.infoUrl = res.data.data.avatar_url
-            this.infoId = res.data.data.id
-//            console.log(res.data.data.avatar_url)
+            this.userInfo = res.data.data
+//            console.log(this.userInfo)
           },
           failed (err) {
             console.log(err)
@@ -95,10 +69,44 @@
         })
       },
       methods: {
-        onValuesChange (picker, values) {
-          if (values[0] > values[1]) {
-            picker.setSlotValue(1, values[0])
+        sendInfo () {
+          console.log(this.$refs.userNickName.value)
+          console.log(this.$refs.userSex.value)
+          console.log(this.$refs.userBirthday.value)
+//          console.log(this.changeUserImg)
+          console.log(this.$refs.userImg.value)
+          this.$request({
+            type: 'post',
+            url: '/kuaikanv1/account/update',
+            params: {
+              'gender': 1,
+              'birthday': '1993-02-24',
+              'nickname': 'Moriarty666'
+//              'avatar': this.changeUserImg
+            },
+            headers: {
+//              'Content-Type': 'multipart/form-data; boundary=c86061fd-e1a4-4c08-b15d-4095fff571a6',
+              'X-Device': 'A:bcce411315f9d871',
+              'user-agent': 'Kuaikan/4.8.0/48000(Android;7.0;DUK-AL20;kuaikan221;WIFI;2416*1440)'
+            },
+            success (res) {
+              console.log(res)
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
+        },
+        changeImg (obj) {
+          this.showImg = 2
+          console.log(obj.target.files[0])
+          let file = obj.target.files[0]
+          let reader = new FileReader()
+          let that = this
+          reader.onload = function (e) {
+            that.changeUserImg = e.target.result
           }
+          reader.readAsDataURL(file)
         }
       }
     }
@@ -164,8 +172,21 @@
         height: 25vw;
         border-radius: 50%;
         overflow: hidden;
+        position: relative;
         img{
           width: 100%;
+        }
+        input{
+          position: absolute;
+          top:0;
+          left: 0;
+          width: 25vw;
+          height: 25vw;
+          background-color: red;
+          z-index: 10;
+          border: none;
+          opacity: 0;
+          outline: none;
         }
       }
     }

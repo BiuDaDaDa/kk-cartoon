@@ -34,7 +34,8 @@
 
 <style scoped lang=less>
   .recycle{
-    height: 280px;
+    /*height: 280px;*/
+    height: 67.6329vw;
     position: relative;
     overflow: hidden;
   }
@@ -53,7 +54,8 @@
   }
   .imgF{
     width: 100%;
-    height: 280px;
+    /*height: 280px;*/
+    height: 67.6329vw;
     background-image: url(../../assets/kk-find/kk-mhbg.jpg);
     background-repeat:no-repeat;
     -webkit-background-size: cover;

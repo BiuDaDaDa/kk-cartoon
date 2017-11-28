@@ -168,7 +168,8 @@
     padding-bottom:15%;
   }
   .kkFindNav{
-    padding-top: 20px;
+    // 20/414*100
+    padding-top: 4.8309vw;
     width: 100%;
     position: fixed;
     z-index: 20;
@@ -176,7 +177,8 @@
   }
   .Nav{
     display: flex;
-    height: 40px;
+    // 40/736*100
+    height: 5.4348vh;
     padding:0 5%;
     justify-content: space-between;
     align-items: center;
@@ -233,7 +235,7 @@
   }
   .btnN{
     height: 24px;
-    width: 28%;
+    min-width: 28%;
     background-color: rgba(0,0,0,.6);
     border-radius: 12px;
     border:1px solid rgba(0,0,0,.6);
@@ -245,7 +247,8 @@
     text-align: center;
     line-height: 24px;
     color: #fff;
-    padding: 0 10%;
+    width: 47%;
+    min-width: 42px;
     outline: none;
   }
   .btnN .actBtn{

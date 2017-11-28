@@ -19,6 +19,9 @@ import UserLogin from '../../components/kk-user/UserLogin'
 import UserReg from '../../components/kk-user/UserReg'
 import UserForget from '../../components/kk-user/UserForget'
 import UserVerify from '../../components/kk-user/UserVerify'
+import UserFirst from '../../components/kk-user/UserFirst'
+import Search from '../../components/kk-nav/Search'
+import UserReset from '../../components/kk-user/UserReset'
 
 export default [
   {
@@ -127,5 +130,20 @@ export default [
     path: '/userVerify',
     name: 'UserVerify',
     component: UserVerify
+  },
+  {
+    path: '/userFirst',
+    name: 'UserFirst',
+    component: UserFirst
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: Search
+  },
+  {
+    path: '/userReset',
+    name: 'UserReset',
+    component: UserReset
   }
 ]

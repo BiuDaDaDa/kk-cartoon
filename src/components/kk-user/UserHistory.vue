@@ -13,15 +13,15 @@
     <!-- -----头部----- -->
 
     <div class="history-all">
-      <div class="history-for">
+      <div class="history-for" v-for="historyValue,historyIndex in readHistory">
         <div class="history-img">
           <img src="" alt="">
         </div>
 
         <div class="history-title">
-          <h2>云天谣</h2>
-          <h3>更新至：第11话 擅闯禁地的惩罚</h3>
-          <h4>阅读至：第11话 擅闯禁地的惩罚</h4>
+          <h2>{{historyValue.topic_id}}</h2>
+          <h3>更新至：{{historyValue.latest_comic_title}}</h3>
+          <h4>阅读至：{{historyValue.latest_comic_title}}</h4>
         </div>
 
         <button>续看</button>
@@ -46,19 +46,22 @@
           this.userLog = false
         } else {
           this.$request({
-            type: 'get',
-            url: '/kuaikanv1/topic_new/check_update',
+            type: 'post',
+            url: '/kuaikanv2/topic/history/sync',
             params: {
-              'topic_ids': '1576,1191,1671,133,1690,544,78'
+              'sync': {
+                'size': 100,
+                'timestamp': 0,
+                'type': 2
+              }
             },
             success (res) {
               console.log(res)
-              if (res.data.data === undefined) {
-                this.userLog = false
+              if (res.data.code === 401) {
+                console.log('请登录')
               } else {
-                this.userLog = true
-                this.userWork = res.data.data.topics
-                console.log(this.userWork)
+                this.readHistory = res.data.data.info
+                console.log(this.readHistory)
               }
             },
             failed (err) {

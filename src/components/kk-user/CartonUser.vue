@@ -41,7 +41,7 @@
       data () {
         return {
           userName: '',
-          logOrInfo: '',
+          logOrInfo: '/userLogin',
           userNews: [
             {
               name: '我的消息',
@@ -53,7 +53,7 @@
               name: '我的钱包',
               src: require('../../assets/kk-user/kk-user-wallet.png'),
               show: false,
-              userInfo: 'userWallet'
+              userInfo: '/userWallet'
             },
             {
               name: '我的关注',
@@ -113,7 +113,8 @@
             url: '/kuaikanv1/users/me',
             success (res) {
 //              console.log(res.data.data)
-              if (res.data.data.nickname === undefined) {
+//              console.log(res.data.code)
+              if (res.data.code === 401) {
                 this.userName = '登录'
                 this.logOrInfo = '/userLogin'
               } else {

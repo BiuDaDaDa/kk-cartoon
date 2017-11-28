@@ -24,16 +24,14 @@
     name: 'UserVerify',
     data () {
       return {
-        yzmShow: true,
+        yzmShow: false,
         yzmHint: '请输入验证码',
         againSend: '重新发送',
-        backTime: 1,
-        phoneNum: ''
+        backTime: 60
       }
     },
     mounted () {
       let that = this
-      console.log(that.phoneNum)
       let timer
       clearInterval(timer)
       timer = setInterval(function () {
@@ -55,35 +53,67 @@
           this.yzmShow = true
           this.yzmHint = '请输入验证码'
         } else {
-          console.log(1)
+          this.$request({
+            type: 'post',
+            url: '/kuaikanv1/phone/verify',
+            params: {
+              'phone': window.localStorage.getItem('phoneNum'),
+              'code': this.$refs.yzmNum.value
+            },
+            success (res) {
+              console.log(window.localStorage.getItem('resetPass'))
+              if (res.data.code === 600005) {
+                this.yzmShow = true
+                this.yzmHint = '验证码无效或者过期咯！o(╯□╰)o'
+              } else {
+                if (window.localStorage.getItem('resetPass') === 'true') {
+                  window.localStorage.removeItem('resetPass')
+                  this.$router.push({path: '/userReset'})
+                } else {
+                  this.$router.push({path: '/userFirst'})
+                }
+              }
+            },
+            failed (err) {
+              console.log(err)
+            }
+          })
         }
       },
       again () {
-        window.localStorage.getItem('phoneNum')
         this.$request({
           type: 'post',
           url: '/kuaikanv1/phone/send_code',
           params: {
-            'phone': this.phoneNum,
+            'phone': window.localStorage.getItem('phoneNum'),
             'reason': 'register'
           },
           success (res) {
-            let that = this
-            let timertwo
-            clearInterval(timertwo)
-            timertwo = setInterval(function () {
-              that.backTime = that.backTime - 1
-              if (that.backTime >= 0) {
-                that.againSend = that.backTime + '秒后重新获取'
-                that.$refs.againRef.style.pointerEvents = 'none'
-                that.$refs.againRef.color = '#b8b8b8'
-              } else {
-                clearInterval(timertwo)
-                that.againSend = '重新发送'
-                that.$refs.againRef.style.pointerEvents = 'auto'
-                that.backTime = 60
-              }
-            }, 1000)
+            console.log(res.data.code)
+            if (res.data.code === 600002) {
+              this.yzmShow = true
+              this.yzmHint = '无效的电话号码'
+            } else if (res.data.code === 600004) {
+              this.yzmShow = true
+              this.yzmHint = '无效的电话号码'
+            } else {
+              let that = this
+              let timertwo
+              clearInterval(timertwo)
+              timertwo = setInterval(function () {
+                that.backTime = that.backTime - 1
+                if (that.backTime >= 0) {
+                  that.againSend = that.backTime + '秒后重新获取'
+                  that.$refs.againRef.style.pointerEvents = 'none'
+                  that.$refs.againRef.color = '#b8b8b8'
+                } else {
+                  clearInterval(timertwo)
+                  that.againSend = '重新发送'
+                  that.$refs.againRef.style.pointerEvents = 'auto'
+                  that.backTime = 60
+                }
+              }, 1000)
+            }
           },
           failed (err) {
             console.log(err)
@@ -146,6 +176,7 @@
         font-size: 16px;
         font-weight: normal;
         color: #939393;
+        padding-left: 2vw;
       }
     }
     h4{
