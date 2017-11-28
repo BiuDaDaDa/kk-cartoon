@@ -88,7 +88,6 @@
         return [myYear, myMonth, myDay, myWeek2, myHour, myMin, mySec]
       },
       timeChange (time) {
-        console.log(this.myTime(time))
         return this.myTime(time)[0] + '-' + this.myTime(time)[1] + '-' + this.myTime(time)[2]
       },
       isLike () {}

@@ -44,7 +44,7 @@
         }
       },
       back: function () {
-        this.$router.push({name: 'kksection', params: {id: this.$route.params.id}})
+        this.$router.go(-1)
       },
       call: function (val) {
         var a = new Date().getTime()

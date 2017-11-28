@@ -3,8 +3,8 @@
     <!--选集-->
     <div id="out">
       <div id="mask"></div>
-      <router-link to='/' class="back"><</router-link>
-      <button class="attention">+关注</button>
+      <div class="back" @click="back"><</div>
+      <button class="attention" @touchend="attention(path)">+关注</button>
       <img :src="jsText.cover_image_url" alt="" class="image">
       <div class="title">{{jsText.title}}</div>
       <div id="foot">
@@ -129,7 +129,8 @@
         comments: '',
         count: '',
         commentArr: [],
-        authors: []
+        authors: [],
+        path: 0
       }
     },
     filters: {
@@ -206,11 +207,34 @@
 //          }
 //        }
       },
+      attention: function (val) {
+        console.log(val)
+        let url = {
+          url: '/kkv1/topics/' + val + '/fav',
+          type: 'post',
+//          headers: {
+//            Cookie: 'session=ff711f2c-a14e-4cd4-9e4d-8c0862b15a2e;uid=92661336;Path=/;Created=533469266;kk_s_t=1511832175947;Domain=.kkmh.com;Expires=2017-12-12 09:54:36 +0000;'
+//          },
+          success: function (res) {
+            console.log(res)
+          },
+          failed: function (err) {
+            console.log(err)
+          }
+        }
+        this.$request(url)
+      },
+      back: function () {
+        window.history.back()
+      },
       kk: function (i, val) {
         if (count === 0) {
           this.$router.push({ name: 'kksection', params: {id: val} })
           document.cookie = 'id=' + i
         }
+      },
+      autopass: function (val) {
+        this.$router.push({name: 'kkauthor', params: {id: val}})
       },
       start: function () {
         count = 0
@@ -302,7 +326,8 @@
           _that.comments = res.data.data.comments_count
           _that.count = res.data.data.fav_count
           _that.authors = res.data.data.related_authors
-          console.log(res.data.data.related_authors)
+          _that.path = res.data.data.id
+          console.log(res.data.data.id)
         },
         failed: function (err) {
           console.log(err)
