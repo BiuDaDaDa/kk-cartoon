@@ -155,7 +155,6 @@
     text-align: center;
     line-height: 24px;
     color: yellow;
-    padding: 0 10%;
     outline: none;
   }
   .btnN .actBtn{
