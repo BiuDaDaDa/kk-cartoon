@@ -78,7 +78,7 @@
         </div>
         <ul id="reply">
           <router-link to='/' tag="li" class="replys" :key="index" v-for="(value,index) in commentArr"
-                       @touchend.native="info(value.topic_id)" @touchmove="slide">
+                       @touchend.native="info(value.topic_id,value)" @touchmove="slide">
             <img :src="value.user.avatar_url" alt="" class="headimage">
             <div class="content">
               <p class="username">{{value.user.nickname}}</p>
@@ -251,9 +251,11 @@
       slide: function () {
         num = 1
       },
-      info: function (id) {
+      info: function (id, val) {
         if (num === 0) {
           this.$router.push({name: 'kkcommentinfo', params: { id: id }})
+          this.$store.commit('commentInfoTo', val)
+          console.log(val)
         }
         num = 0
       }
