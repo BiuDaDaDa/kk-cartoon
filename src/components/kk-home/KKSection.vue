@@ -78,7 +78,10 @@
       </mt-popup>
     </div>
     <div id="content" @touchmove="move">
-      <img  :src="k" alt="" class="iamges" v-for="(k,i) in images">
+      <div class="box" v-for="(k,i) in images">
+        <!--<img :src="k" alt="" class="iamges">-->
+        <img v-lazy="k">
+      </div>
     </div>
     <div id="rump">
       <div class="zan">
@@ -334,6 +337,7 @@
 </script>
 
 <style scoped lang="less">
+  image[lazy=loading] {}
   #nav {
     position: relative;
     height: 40px;
@@ -615,6 +619,14 @@
     margin-top: 10px;
     color: #A7A7A7;
     font-size: 13px;
+  }
+  .box {
+    height: 56.2802vw;
+    background-image: url(../../assets/kk-find/kk-mhbg.jpg);
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
   }
   .created {
     float: left;
