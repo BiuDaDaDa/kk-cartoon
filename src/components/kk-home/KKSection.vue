@@ -80,7 +80,7 @@
     <div id="content" @touchmove="move">
       <div class="box" v-for="(k,i) in images">
         <!--<img :src="k" alt="" class="iamges">-->
-        <img v-lazy="k">
+        <img v-lazy="k" class="images">
       </div>
     </div>
     <div id="rump">
@@ -621,12 +621,14 @@
     font-size: 13px;
   }
   .box {
-    height: 56.2802vw;
     background-image: url(../../assets/kk-find/kk-mhbg.jpg);
     background-repeat:no-repeat;
     -webkit-background-size: cover;
     background-size: cover;
     background-position: center center;
+  }
+  .images {
+    width: 100%;
   }
   .created {
     float: left;
