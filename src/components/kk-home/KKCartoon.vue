@@ -32,7 +32,9 @@
           <router-link to="/" class="all">全集&nbsp;></router-link>
           <p class="author">作者:&nbsp;&nbsp;{{k.topic.user.nickname}}</p>
         </router-link>
-        <img :src="k.cover_image_url" alt="" class="image">
+        <div class="box">
+          <img v-lazy="k.cover_image_url" class="image">
+        </div>
         <router-link to="/" tag="div" class="bottomContent">
           <div class="bottomtitle">{{k.title}}</div>
           <div class="likesCount">
@@ -173,7 +175,7 @@
             listArr[y].style.borderBottom = 'none'
           }
         }
-        if (this.tabI === -1) {
+        if (this.tabI !== -1) {
           this.HuoQuKkCartoon()
         }
       },
@@ -225,6 +227,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  image[lazy=loading] {}
   .topDi{
     height: 20px;
     width: 100%;
@@ -328,6 +331,14 @@
     font-size: 12px;
     height: 18px;
     /*border: 1px solid red;*/
+  }
+  .box {
+    height: 56.2802vw;
+    background-image: url(../../assets/kk-find/kk-mhbg.jpg);
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
   }
   .image {
     width: 100%;

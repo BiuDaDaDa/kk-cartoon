@@ -5,7 +5,9 @@
       <div id="mask"></div>
       <div class="back" @click="back"><</div>
       <button class="attention" @touchend="attention(path)">+关注</button>
-      <img :src="jsText.cover_image_url" alt="" class="image">
+      <div class="box">
+        <img :src="jsText.cover_image_url" alt="" class="image">
+      </div>
       <div class="title">{{jsText.title}}</div>
       <div id="foot">
        <div class="left">
