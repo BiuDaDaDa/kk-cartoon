@@ -173,7 +173,9 @@
             listArr[y].style.borderBottom = 'none'
           }
         }
-        this.HuoQuKkCartoon()
+        if (this.tabI === -1) {
+          this.HuoQuKkCartoon()
+        }
       },
       loadMore () {
         if (!this.loading) {
@@ -216,6 +218,7 @@
     },
     mounted () {
       this.HuoQuKkCartoon()
+      this.tabI = 6
     }
   }
 </script>

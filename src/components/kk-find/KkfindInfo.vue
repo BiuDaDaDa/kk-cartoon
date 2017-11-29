@@ -24,7 +24,7 @@
         <span @click="changeTui" :class="{actBtn:isShow}">推荐</span>
         <span @click="changeFen" :class="{actBtn:!isShow}">分类</span>
       </div>
-      <div class="diBg" :class="{actDiBg:!isShow}">
+      <div @click="toSearch" class="diBg" :class="{actDiBg:!isShow}">
         <img src="../../assets/kk-find/kk-find-search.png" alt="🔍">
       </div>
     </div>
@@ -78,6 +78,9 @@
       }
     },
     methods: {
+      toSearch () {
+        this.$router.push({path: '/search'})
+      },
       changeTui () {
         if (!this.isShow) {
           this.isShow = true

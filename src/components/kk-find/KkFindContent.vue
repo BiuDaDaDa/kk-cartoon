@@ -14,7 +14,7 @@
       <div :class="'box'+item['item_type']" v-for="ite in item['topics']||item['banners']"
            @touchmove="changeGo1" @touchend="changeGo2(ite['target_id'])" :key="ite['target_id']">
         <div class="boxTop">
-          <img :src="ite['pic']" alt="">
+          <img v-lazy="ite['pic']" alt="">
         </div>
         <div class="boxBottom" v-if="item['topics']" >
           <p class="title">{{ite['title']}}</p>
@@ -95,6 +95,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
+image[lazy=loading] {}
   .box14,.box2,.box18{
     width: 49%;
     margin-bottom: 2.4155vw;
