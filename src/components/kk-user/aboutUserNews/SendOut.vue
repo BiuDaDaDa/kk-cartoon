@@ -7,6 +7,7 @@
         </div>
 
         <div class="sf-center">
+          <span>{{sendValue.target_comment.content}}</span>
           <div class="sfc-img">
             <img :src="sendValue.target_comic.cover_image_url" alt="">
           </div>
@@ -85,9 +86,16 @@
       .sf-center{
         width: 94%;
         height: 44%;
-        padding: 7% 3% 4%;
+        padding: 8% 3% 4%;
         background-color: #f6fafb;
         display: flex;
+        position: relative;
+        span{
+          position: absolute;
+          top: 3%;
+          left: 3%;
+          font-size:15px;
+        }
         .sfc-img{
           width: 40%;
           height: 100%;

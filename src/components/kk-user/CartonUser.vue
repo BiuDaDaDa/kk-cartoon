@@ -166,18 +166,18 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   .userIn{
-    width: 60px;
-    height: 60px;
+    width: 18vw;
+    height: 18vw;
     position: absolute;
     top: 0;
     left: 50%;
-    margin-left: -30px;
-    margin-top: -30px;
+    margin-left: -9vw;
+    margin-top: -9vw;
     z-index: 3;
     display: block;
     .user-head{
-      width: 60px;
-      height: 60px;
+      width: 18vw;
+      height: 18vw;
       border-radius: 50%;
       background-image: url(../../assets/kk-user/kk-user-head.jpg);
       -webkit-background-size: 100% 100%;
