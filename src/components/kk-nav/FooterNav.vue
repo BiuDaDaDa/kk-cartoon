@@ -31,6 +31,34 @@
 </template>
 
 <script>
+<<<<<<< HEAD
+    export default {
+      name: 'FooterNav',
+      data () {
+        return {
+          cartonSrc: require('../../assets/kk-nav/kk-nav-carton.png'),
+          findSrc: require('../../assets/kk-nav/kk-nav-find.png'),
+          clubSrc: require('../../assets/kk-nav/kk-nav-v.png'),
+          userSrc: require('../../assets/kk-nav/kk-nav-user.png')
+        }
+      },
+      mounted () {
+//        console.log(window.location.href.split('8081')[1])
+        let link = window.location.href.split('8081')[1]
+        if (link === '/user') {
+          this.userSrc = require('../../assets/kk-nav/kk-nav-user-c.png')
+          this.$refs.userRef.style.color = '#fce13c'
+        } else if (link === '/' || link === '/attention') {
+          this.cartonSrc = require('../../assets/kk-nav/kk-nav-carton-c.png')
+          this.$refs.cartonRef.style.color = '#fce13c'
+        } else if (link === '/kkFind' || link === '/kkFindFen') {
+          this.findSrc = require('../../assets/kk-nav/kk-nav-find-c.png')
+          this.$refs.findRef.style.color = '#fce13c'
+        } else if (link === '/kk-club') {
+          this.clubSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
+          this.$refs.clubRef.style.color = '#fce13c'
+        }
+=======
   export default {
     name: 'FooterNav',
     data () {
@@ -57,9 +85,9 @@
       } else if (link === '/kk-club' || link === '/kk-attention') {
         this.clubSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
         this.$refs.clubRef.style.color = '#fce13c'
+>>>>>>> 20def1e83f69be47cc8a7d132cfd238f4f222388
       }
     }
-  }
 </script>
 
 <style scoped lang='less'>

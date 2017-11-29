@@ -64,7 +64,7 @@
                 </pre>
               </div>
 
-              <div class="inform-body-footer">
+              <div class="inform-body-footer" @click="expclicked">
                 <span>{{informValue.target_guide_name}}</span>
               </div>
             </div>
@@ -137,6 +137,9 @@
       },
       toUserLogin () {
         this.$router.push({path: '/userLogin'})
+      },
+      expclicked () {
+        this.$router.push({path: '/kkFind'})
       }
     }
   }

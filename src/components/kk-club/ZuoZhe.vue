@@ -129,16 +129,13 @@
           return val.replace(/\n/g, '<br/>')
         }
       },
-      getLocalTime: function (nS) {
-        if ((new Date(parseInt(nS)).getHours()) < 10) {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + '0' + (new Date(parseInt(nS)).getHours()) + ':' + (new Date(parseInt(nS)).getMinutes())
-        } else if ((new Date(parseInt(nS)).getMinutes()) < 10) {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + (new Date(parseInt(nS)).getHours()) + ':' + '0' + (new Date(parseInt(nS)).getMinutes())
-        } else if ((new Date(parseInt(nS)).getHours()) < 10 && (new Date(parseInt(nS)).getMinutes()) < 10) {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + '0' + (new Date(parseInt(nS)).getHours()) + ':' + '0' + (new Date(parseInt(nS)).getMinutes())
-        } else {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + (new Date(parseInt(nS)).getHours()) + ':' + (new Date(parseInt(nS)).getMinutes())
-        }
+      getLocalTime: function (ns) {
+        let time = new Date(ns)
+        let M = (time.getMonth() + 1 < 10 ? '0' + (time.getMonth() + 1) : time.getMonth() + 1) + '-'
+        let D = (time.getDate() < 10 ? '0' + (time.getDate()) : time.getDate()) + ' '
+        let h = (time.getHours() < 10 ? '0' + time.getHours() : time.getHours()) + ':'
+        let m = (time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes())
+        return M + D + h + m
       },
       clicked () {
         this.isShow = false

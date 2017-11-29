@@ -5,7 +5,9 @@
       <div id="mask"></div>
       <div class="back" @click="back"><</div>
       <button class="attention" @touchend="attention(path)">+关注</button>
-      <img :src="jsText.cover_image_url" alt="" class="image">
+      <div class="box">
+        <img :src="jsText.cover_image_url" alt="" class="image">
+      </div>
       <div class="title">{{jsText.title}}</div>
       <div id="foot">
        <div class="left">
@@ -97,14 +99,6 @@
 </template>
 <script>
   var list = document.getElementsByClassName('listContent')
-  var arrstr = document.cookie.split(';')
-  for (var i = 0; i < arrstr.length; i++) {
-    var temp = arrstr[i].split('=')
-    console.log(temp)
-    if (temp[0] === ' id') {
-      console.log('aaa')
-    }
-  }
   var tf = true
   var count = 0
   var num = 0
@@ -192,7 +186,6 @@
     },
     methods: {
       attention: function (val) {
-        console.log(val)
         let url = {
           url: '/kkv1/topics/' + val + '/fav',
           type: 'post',
@@ -245,7 +238,6 @@
               'X-Device': 'A:eef09de00f4e0b31'
             },
             success: function (res) {
-              console.log(res.data.data.reviews)
               this.commentArr = res.data.data.reviews
             },
             failed: function (err) {
@@ -310,7 +302,6 @@
           _that.count = res.data.data.fav_count
           _that.authors = res.data.data.related_authors
           _that.path = res.data.data.id
-          console.log(res.data.data.id)
         },
         failed: function (err) {
           console.log(err)
