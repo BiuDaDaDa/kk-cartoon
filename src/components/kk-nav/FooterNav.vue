@@ -1,29 +1,11 @@
 <template>
   <div>
     <div class="footer-all">
-      <div class="kk-carton">
-        <router-link to="/"></router-link>
-        <img :src="cartonSrc" alt="">
-        <h3 ref="cartonRef">漫画</h3>
-      </div>
-
-      <div class="kk-find">
-        <router-link to="/kkFind"></router-link>
-        <img :src="findSrc" alt="">
-        <h3 ref="findRef">发现</h3>
-      </div>
-
-      <div class="kk-club">
-        <router-link to="/kk-tabs"></router-link>
-        <router-link to="/kk-club"></router-link>
-        <img :src="clubSrc" alt="">
-        <h3 ref="clubRef">V社区</h3>
-      </div>
-
-      <div class="kk-user">
-        <router-link to="/user"></router-link>
-        <img :src="userSrc" alt="">
-        <h3 ref="userRef">我的</h3>
+      <div class="kk-for" v-for="footerValue,footerIndex in userFooter">
+        <router-link :to="footerValue.urlFirst"></router-link>
+        <router-link :to="footerValue.urlSecond" v-if="footerValue.urlSecond"></router-link>
+        <img :src="footerValue.imgSrc" alt="">
+        <h3 ref="forRef">{{footerValue.name}}</h3>
       </div>
 
     </div>
@@ -35,28 +17,47 @@
     name: 'FooterNav',
     data () {
       return {
-        cartonSrc: require('../../assets/kk-nav/kk-nav-carton.png'),
-        findSrc: require('../../assets/kk-nav/kk-nav-find.png'),
-        clubSrc: require('../../assets/kk-nav/kk-nav-v.png'),
-        userSrc: require('../../assets/kk-nav/kk-nav-user.png')
+        userFooter: [
+          {
+            urlFirst: '/',
+            imgSrc: require('../../assets/kk-nav/kk-nav-carton.png'),
+            name: '漫画'
+          },
+          {
+            urlFirst: '/kkFind',
+            imgSrc: require('../../assets/kk-nav/kk-nav-find.png'),
+            name: '发现'
+          },
+          {
+            urlFirst: '/kk-tabs',
+            urlSecond: '/kk-club',
+            imgSrc: require('../../assets/kk-nav/kk-nav-v.png'),
+            name: 'V社区'
+          },
+          {
+            urlFirst: '/user',
+            imgSrc: require('../../assets/kk-nav/kk-nav-user.png'),
+            name: '我的'
+          }
+        ]
       }
     },
     mounted () {
 //      console.log(window.location.href.split('8081')[1])
       let link = window.location.href.split('8081')[1]
       if (link === '/user') {
-        this.userSrc = require('../../assets/kk-nav/kk-nav-user-c.png')
-        this.$refs.userRef.style.color = '#fce13c'
+        this.userFooter[3].imgSrc = require('../../assets/kk-nav/kk-nav-user-c.png')
+        this.$refs.forRef[3].style.color = '#fce13c'
       } else if (link === '/' || link === '/attention') {
-        this.cartonSrc = require('../../assets/kk-nav/kk-nav-carton-c.png')
-        this.$refs.cartonRef.style.color = '#fce13c'
+        this.userFooter[0].imgSrc = require('../../assets/kk-nav/kk-nav-carton-c.png')
+        this.$refs.forRef[0].style.color = '#fce13c'
       } else if (link === '/kkFind' || link === '/kkFindFen') {
-        this.findSrc = require('../../assets/kk-nav/kk-nav-find-c.png')
-        this.$refs.findRef.style.color = '#fce13c'
+        this.userFooter[1].imgSrc = require('../../assets/kk-nav/kk-nav-find-c.png')
+        this.$refs.forRef[1].style.color = '#fce13c'
       } else if (link === '/kk-tabs') {
       } else if (link === '/kk-club' || link === '/kk-attention') {
-        this.clubSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
-        this.$refs.clubRef.style.color = '#fce13c'
+        this.userFooter[2].imgSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
+        this.$refs.forRef[2].style.color = '#fce13c'
       }
     }
   }
