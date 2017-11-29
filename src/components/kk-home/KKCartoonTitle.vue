@@ -81,8 +81,8 @@
           <div>投稿</div>
         </div>
         <ul id="reply">
-          <router-link to='/' tag="li" class="replys" :key="index" v-for="(value,index) in commentArr"
-                       @touchend.native="info(value.topic_id,value)" @touchmove="slide">
+          <li class="replys" :key="index" v-for="(value,index) in commentArr"
+                       @touchend="info(value.topic_id,value)" @touchmove="slide">
             <img :src="value.user.avatar_url" alt="" class="headimage">
             <div class="content">
               <p class="username">{{value.user.nickname}}</p>
@@ -90,7 +90,7 @@
               <div class="call">{{value.likes_count}}</div>
               <div class="courtent">{{value.content}}</div>
             </div>
-          </router-link>
+          </li>
           <p id="essence">暂无更多精华</p>
         </ul>
       </div>
