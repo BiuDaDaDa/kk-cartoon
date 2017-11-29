@@ -203,6 +203,7 @@
             this.array = this.array.concat(res.data.data.comics)
             this.since = res.data.data.since
             if (res['data']['data']['comics'].length < 20) {
+              console.log('全部加载')
             }
             this.loading = false
           },
