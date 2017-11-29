@@ -88,7 +88,7 @@
         array: [],
         dayarray: arrayday,
         weekArr: weekDay,
-        tabI: 0,
+        tabI: '',
         url: 0,
         since: 0,
         loading: false,
@@ -163,7 +163,6 @@
       tab: function (i) {
         num = 0
         this.tabI = i
-        console.log(i)
         this.url = weekDay[i]
         this.array = []
         this.since = 0
@@ -174,7 +173,7 @@
             listArr[y].style.borderBottom = 'none'
           }
         }
-        if (this.tabI === -1) {
+        if (this.tabI !== -1) {
           this.HuoQuKkCartoon()
         }
       },
