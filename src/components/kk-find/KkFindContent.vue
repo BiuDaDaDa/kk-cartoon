@@ -14,7 +14,7 @@
       <div :class="'box'+item['item_type']" v-for="ite in item['topics']||item['banners']"
            @touchmove="changeGo1" @touchend="changeGo2(ite['target_id'])" :key="ite['target_id']">
         <div class="boxTop">
-          <img :src="ite['pic']" alt="">
+          <img v-lazy="ite['pic']" alt="">
         </div>
         <div class="boxBottom" v-if="item['topics']" >
           <p class="title">{{ite['title']}}</p>
@@ -95,36 +95,42 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
+image[lazy=loading] {}
   .box14,.box2,.box18{
     width: 49%;
-    margin-bottom: 10px;
+    margin-bottom: 2.4155vw;
   }
   .box14 .boxTop, .box2 .boxTop{
-    height:127px;
+    /*height:127px;*/
+    height:30.6763vw;
   }
   .box18 .boxTop{
-    height: 203px;
+    /*height: 203px;*/
+    height: 49.0338vw;
    }
   .box4,.box5{
     width: 33%;
-    margin-bottom: 10px;
+    margin-bottom: 2.4155vw;
   }
   .box4 .boxTop, .box5 .boxTop{
-    height:182px;
+    /*height:182px;*/
+    height:43.9614vw;
   }
   .box19{
     width: 33%;
-    margin-bottom: 10px;
+    margin-bottom: 2.4155vw;
   }
   .box19 .boxTop{
-    height:182px;
+    /*height:182px;*/
+    height:43.9614vw;
   }
   .box7{
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 2.4155vw;
   }
   .box7 .boxTop{
-    height:136px;
+    /*height:136px;*/
+    height:32.8502vw;
   }
   .boxF .boxTop{
     width: 100%;
@@ -152,6 +158,9 @@
     font-size: 13px;
     color: #888;
     font-weight: bolder;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .boxBottom span{
     margin-right: 2%;

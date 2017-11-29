@@ -4,12 +4,12 @@
     <img @click="goBack" class="back" src="../../assets/kk-find/kk-find-back.png" alt="<">
     {{countMoreList['1']}}
   </div>
-  <div class="wrap"  v-infinite-scroll="loadMore"
+  <div  class="wrap"  v-infinite-scroll="loadMore"
         infinite-scroll-disabled="loading"
         infinite-scroll-distance="100">
     <div v-for="myTopic in topics" class="box" @touchmove="changeGo1" @touchend="changeGo2(myTopic['id'])">
       <div class="bLeft">
-        <img :src="myTopic['cover_image_url']" alt="">
+        <img v-lazy="myTopic['cover_image_url']">
       </div>
       <div class="bRight">
         <button class="care">+关注</button>
@@ -47,6 +47,10 @@
       }
     },
     methods: {
+      loadTop () {
+      // 加载更多数据
+        this.$refs.loadmore.onTopLoaded()
+      },
       HuoQuListSort () {
         this.$request({
           type: 'get',
@@ -145,7 +149,10 @@
   }
   .bLeft{
     width: 45%;
-    height: 117px;
+    min-width: 90px;
+    /*height: 117px;*/
+    height: 28.2609vw;
+    min-height: 117px;
     margin-right: 5%;
     float: left;
     background-image: url(../../assets/kk-find/kk-mhbg.jpg);
@@ -154,6 +161,7 @@
     background-size: cover;
     background-position: center center;
   }
+  image[lazy=loading] {}
   .bLeft img{
     width: 100%;
     height:100%;

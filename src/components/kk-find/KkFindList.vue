@@ -1,7 +1,7 @@
 <template>
 <div class="list">
   <div v-for="(item,index) in newList" @click="myChangeTab(index)" :key="item['id']" class="imgF">
-    <img :src="item['pic']" alt="">
+    <img v-lazy="item['pic']" alt="">
   </div>
 </div>
 </template>
@@ -36,7 +36,8 @@
   }
 .list .imgF{
   width: 15%;
-  height: 80px;
+  /*height: 80px;*/
+  height: 19.3237vw;
   background-image: url(../../assets/kk-find/kk-mhbg.jpg);
   background-repeat:no-repeat;
   -webkit-background-size: cover;
@@ -47,4 +48,5 @@
   width: 100%;
   height: 100%;
 }
+  image[lazy=loading] {}
 </style>

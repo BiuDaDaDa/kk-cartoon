@@ -24,7 +24,7 @@
         <span @click="changeTui" :class="{actBtn:isShow}">推荐</span>
         <span @click="changeFen" :class="{actBtn:!isShow}">分类</span>
       </div>
-      <div class="diBg" :class="{actDiBg:!isShow}">
+      <div @click="toSearch" class="diBg" :class="{actDiBg:!isShow}">
         <img src="../../assets/kk-find/kk-find-search1.png" alt="🔍">
       </div>
     </div>
@@ -49,7 +49,7 @@
             infinite-scroll-distance="100">
         <div v-for="myTopic in topics" @touchmove="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
           <div class="bLeft">
-            <img :src="myTopic['cover_image_url']" alt="">
+            <img v-lazy="myTopic['cover_image_url']" alt="">
           </div>
           <div class="bRight">
             <p class="title">{{myTopic['title']}}</p>
@@ -114,6 +114,9 @@
       }
     },
     methods: {
+      toSearch () {
+        this.$router.push({path: '/search'})
+      },
       changeTui () {
         if (!this.isShow) {
           this.isShow = true
@@ -279,7 +282,6 @@
     width: 100%;
     position: fixed;
     z-index: 20;
-
   }
   .Nav{
     display: flex;
@@ -352,10 +354,11 @@
     display: inline-block;
     font-size: 14px;
     font-weight: 200;
+    width: 47%;
+    min-width: 42px;
     text-align: center;
     line-height: 24px;
     color: #fff;
-    padding: 0 10%;
     outline: none;
   }
   .btnN .actBtn{
@@ -414,7 +417,10 @@
   }
 .bLeft{
   width: 45%;
-  height: 117px;
+  min-width: 90px;
+  /*height: 117px;*/
+  height: 28.2609vw;
+  min-height: 117px;
   margin-right: 5%;
   float: left;
   background-image: url(../../assets/kk-find/kk-mhbg.jpg);
@@ -461,4 +467,5 @@
   .bRight .jie .zan{
     margin-right: 3%;
   }
+  image[lazy=loading] {}
 </style>

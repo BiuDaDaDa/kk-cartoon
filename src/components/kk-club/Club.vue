@@ -7,7 +7,7 @@
           <img class="usertx" :src="common.user.avatar_url" alt="" @click="zuozhe(common.user.id)" onClick="event.cancelBubble = true">
           <span class="username">{{common.user.nickname}}</span>
         </div>
-        <div class="box_up_right">
+        <div class="box_up_right" @click="guanzhu" onClick="event.cancelBubble = true">
           <img src="../../assets/hans/jia.png" alt="">
           <span>关注</span>
         </div>
@@ -88,16 +88,13 @@
         })
       },
       // 时间
-      getLocalTime: function (nS) {
-        if ((new Date(parseInt(nS)).getHours()) < 10) {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + '0' + (new Date(parseInt(nS)).getHours()) + ':' + (new Date(parseInt(nS)).getMinutes())
-        } else if ((new Date(parseInt(nS)).getMinutes()) < 10) {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + (new Date(parseInt(nS)).getHours()) + ':' + '0' + (new Date(parseInt(nS)).getMinutes())
-        } else if ((new Date(parseInt(nS)).getHours()) < 10 && (new Date(parseInt(nS)).getMinutes()) < 10) {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + '0' + (new Date(parseInt(nS)).getHours()) + ':' + '0' + (new Date(parseInt(nS)).getMinutes())
-        } else {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + (new Date(parseInt(nS)).getHours()) + ':' + (new Date(parseInt(nS)).getMinutes())
-        }
+      getLocalTime: function (ns) {
+        let time = new Date(ns)
+        let M = (time.getMonth() + 1 < 10 ? '0' + (time.getMonth() + 1) : time.getMonth() + 1) + '-'
+        let D = (time.getDate() < 10 ? '0' + (time.getDate()) : time.getDate()) + ' '
+        let h = (time.getHours() < 10 ? '0' + time.getHours() : time.getHours()) + ':'
+        let m = (time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes())
+        return M + D + h + m
       },
       // 换行
       huanhang: function (val) {
@@ -126,6 +123,9 @@
       fangda (val) {
         this.imageid = val
         this.$router.push({name: 'FangDa', params: {imageid: this.imageid}})
+      },
+      guanzhu () {
+        this.$router.push({name: 'UserLogin'})
       }
     }
   }
@@ -134,18 +134,18 @@
 <style scoped lang="less">
   .wrap{
     background-color: rgb(247,247,247);
-    padding-top: 105px;
-    width: 414px;
+    padding-top: 14.2vh;
+    width: 100%;
   }
   .box{
     background-color: white;
     width: 100%;
     box-sizing: border-box;
-    padding: 10px;
-    margin-bottom: 5px;
+    padding: 2.4vw;
+    margin-bottom: 0.67vh;
   }
   .box_up{
-    width: 385px;
+    width: 98%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -159,22 +159,22 @@
     content: '';
     background: url(../../assets/hans/v.png);
     background-repeat: repeat;
-    background-size: 17px 17px;
+    background-size: 4.1vw 2.1vh;
     position: absolute;
-    left: 33px;
+    left: 7.97vw;
     bottom: 0;
     z-index: 10;
-    width: 17px;
-    height: 17px;
+    width: 4.1vw;
+    height: 2.1vh;
   }
   .box_up_right{
-    padding: 5px 7px;
+    padding: 1.2vw 0.95vh;
     background-color: rgb(240,214,62);
     border-radius: 20px;
   }
   .box_content{
-    padding-top: 10px;
-    padding-bottom: 30px;
+    padding-top: 1.35vh;
+    padding-bottom: 4vh;
   }
   .box_img{
     width: 100%;
@@ -182,37 +182,37 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 10px;
+    margin-left: 2.4vw;
   }
   .box_bottom{
     display: flex;
     justify-content: space-between;
-    margin-top: 5px;
+    margin-top: 0.67vh;
   }
   .usertx{
-    width: 50px;
-    height: 50px;
+    width: 12vw;
+    height: 12vw;
     border-radius: 50%;
-    border: 1px solid #ccc;
-    margin-right: 10px;
+    border: 0.24vw solid #ccc;
+    margin-right: 2.4vw;
   }
   .fbtu1{
     width: 60%;
-    height: 236.39px;
+    height: 32.11vh;
     object-fit: cover;
   }
   .fbtu2,.fbtu3,.fbtu5,.fbtu6,.fbtu7,.fbtu8,.fbtu9{
     width: 30%;
-    height: 118.19px;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    height: 16.05vh;
+    margin-left: 1.2vw;
+    margin-bottom: 0.67vh;
     object-fit: cover;
   }
   .fbtu4{
     width: 29%;
-    height: 118.19px;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    height: 16.05vh;
+    margin-left: 1.2vw;
+    margin-bottom: 0.67vh;
     object-fit: cover;
   }
   .fbtu4:nth-of-type(2n){
@@ -225,7 +225,7 @@
   .dianzang{
     display: flex;
     align-items: center;
-    margin-right: 15px;
+    margin-right: 3.6vw;
   }
   .pinglun{
     display: flex;
@@ -236,6 +236,9 @@
     align-items: center;
   }
   .gao{
-    padding-bottom: 59px;
+    padding-bottom: 8vh;
+  }
+  .username{
+    color: darkorange;
   }
 </style>

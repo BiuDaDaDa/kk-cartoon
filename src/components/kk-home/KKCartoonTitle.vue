@@ -5,7 +5,9 @@
       <div id="mask"></div>
       <div class="back" @click="back"><</div>
       <button class="attention" @touchend="attention(path)">+关注</button>
-      <img :src="jsText.cover_image_url" alt="" class="image">
+      <div class="box">
+        <img :src="jsText.cover_image_url" alt="" class="image">
+      </div>
       <div class="title">{{jsText.title}}</div>
       <div id="foot">
        <div class="left">
@@ -30,7 +32,6 @@
         <img src="../../assets/kkcartoontitle/upp.png" class="order" @touchend='order' ref="img">
       </div>
     </div>
-    <p @touchend="shouhuo">获取</p>
     <ul id="contentList" v-if="tf">
       <router-link to="/kkcartitle" v-for="(key,i) in timeArr"
                    :key="key.id" tag="li" class="writings" @touchend.native="kk(i,key.id)"
@@ -98,15 +99,6 @@
 </template>
 <script>
   var list = document.getElementsByClassName('listContent')
-//  var histories = document.getElementsByClassName('history')
-  var arrstr = document.cookie.split(';')
-  for (var i = 0; i < arrstr.length; i++) {
-    var temp = arrstr[i].split('=')
-    console.log(temp)
-    if (temp[0] === ' id') {
-      console.log('aaa')
-    }
-  }
   var tf = true
   var count = 0
   var num = 0
@@ -193,22 +185,7 @@
       }
     },
     methods: {
-      shouhuo: function () {
-        var id = document.cookie.split(';')[0].split('=')[1]
-        console.log(id)
-        if (id === '1') {
-          console.log('aaa')
-        }
-//        for (var j = 0; j < histories.length; j++) {
-//          if (j + '' === id) {
-//            histories[j].style.display = 'block'
-//          } else {
-//            histories[j].style.display = 'none'
-//          }
-//        }
-      },
       attention: function (val) {
-        console.log(val)
         let url = {
           url: '/kkv1/topics/' + val + '/fav',
           type: 'post',
@@ -230,7 +207,6 @@
       kk: function (i, val) {
         if (count === 0) {
           this.$router.push({ name: 'kksection', params: {id: val} })
-          document.cookie = 'id=' + i
         }
       },
       autopass: function (val) {
@@ -262,7 +238,6 @@
               'X-Device': 'A:eef09de00f4e0b31'
             },
             success: function (res) {
-              console.log(res.data.data.reviews)
               this.commentArr = res.data.data.reviews
             },
             failed: function (err) {
@@ -327,7 +302,6 @@
           _that.count = res.data.data.fav_count
           _that.authors = res.data.data.related_authors
           _that.path = res.data.data.id
-          console.log(res.data.data.id)
         },
         failed: function (err) {
           console.log(err)

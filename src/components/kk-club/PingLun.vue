@@ -157,16 +157,13 @@
         }
       },
       // 时间
-      getLocalTime: function (nS) {
-        if ((new Date(parseInt(nS)).getHours()) < 10) {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + '0' + (new Date(parseInt(nS)).getHours()) + ':' + (new Date(parseInt(nS)).getMinutes())
-        } else if ((new Date(parseInt(nS)).getMinutes()) < 10) {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + (new Date(parseInt(nS)).getHours()) + ':' + '0' + (new Date(parseInt(nS)).getMinutes())
-        } else if ((new Date(parseInt(nS)).getHours()) < 10 && (new Date(parseInt(nS)).getMinutes()) < 10) {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + '0' + (new Date(parseInt(nS)).getHours()) + ':' + '0' + (new Date(parseInt(nS)).getMinutes())
-        } else {
-          return (new Date(parseInt(nS)).getMonth() + 1) + '-' + (new Date(parseInt(nS)).getDate()) + '&nbsp;' + (new Date(parseInt(nS)).getHours()) + ':' + (new Date(parseInt(nS)).getMinutes())
-        }
+      getLocalTime: function (ns) {
+        let time = new Date(ns)
+        let M = (time.getMonth() + 1 < 10 ? '0' + (time.getMonth() + 1) : time.getMonth() + 1) + '-'
+        let D = (time.getDate() < 10 ? '0' + (time.getDate()) : time.getDate()) + ' '
+        let h = (time.getHours() < 10 ? '0' + time.getHours() : time.getHours()) + ':'
+        let m = (time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes())
+        return M + D + h + m
       },
       move: function () {
         if (window.scrollY >= 45 && window.scrollY <= 899) {
@@ -196,9 +193,9 @@
 <style scoped lang="less">
   .children_comments {
     background-color: #F6F9FA;
-    padding: 7px 10px;
-    width: 320px;
-    margin: 15px 0;
+    padding: 1.69vw 1.35vh;
+    width: 77.29vw;
+    margin: 2vh 0;
   }
   .children_comments>div {
     font-size: 13px;
@@ -208,7 +205,7 @@
     font-size: 13px;
   }
   .wrap{
-    width: 414px;
+    width: 100vw;
     display: flex;
     background-color: rgb(220,220,220);
   }
@@ -219,55 +216,55 @@
     bottom: 0;
     display: flex;
     justify-content: space-between;
-    padding: 4px 40px 6px 10px;
+    padding: 0.54vh 9.66vw 0.81vh 2.14vw;
     align-items: center;
     background-color: rgb(240,240,240);
   }
   .fabu_left{
     width: 75%;
     position: relative;
-    padding: 9px 0;
+    padding: 1.22vh 0;
   }
   .tp{
     position: absolute;
-    left: 20px;
-    top: 18px;
+    left: 4.83vw;
+    top: 2.1vh;
     z-index: 5;
     background-image: url(../../assets/hans/fabu.png);
     background-repeat: no-repeat;
     background-position: 0px 0px;
-    width: 22px;
-    height: 22px;
+    width: 7.31vw;
+    height: 5.31vh;
   }
   .fabu_right{
-    margin-top: 6px;
+    margin-top: 0.81vh;
     position: relative;
-    margin-right: 10px;
+    margin-right: 2.41vw;
   }
   .input{
     width: 100%;
     border-radius: 20px;
-    border: 1px solid #ccc;
+    border: 0.24vw solid #ccc;
     outline: none;
-    line-height: 38px;
-    padding-left: 50px;
+    line-height: 5.16vh;
+    padding-left: 12.07vw;
   }
   .num{
     position: absolute;
-    left: 8px;
-    top: -15px;
+    left: 1.93vw;
+    top: -2.03vh;
     background-color: red;
     border-radius: 45%;
     color: white;
-    padding: 1px 6px;
+    padding: 0.135vh 1.44vw;
   }
   .box1{
     background-color: white;
     width: 100%;
     box-sizing: border-box;
-    padding: 10px;
-    margin-bottom: 5px;
-    margin-top: 51px;
+    padding: 2.41vw;
+    margin-bottom: 0.67vh;
+    margin-top: 6.92vh;
   }
   .box_up{
     display: flex;
@@ -277,15 +274,28 @@
   .box_up_left{
     display: flex;
     align-items: center;
+    position: relative;
+  }
+  .box_up_left:before{
+    content: '';
+    background: url(../../assets/hans/v.png);
+    background-repeat: repeat;
+    background-size: 4.1vw 2.1vh;
+    position: absolute;
+    left: 7.97vw;
+    bottom: 0;
+    z-index: 10;
+    width: 4.1vw;
+    height: 2.1vh;
   }
   .box_up_right{
-    padding: 5px 7px;
+    padding: 0.679vh 1.69vw;
     background-color: rgb(240,214,62);
     border-radius: 20px;
   }
   .box_content{
-    padding-top: 10px;
-    padding-bottom: 30px;
+    padding-top: 1.358vh;
+    padding-bottom: 4.07vh;
   }
   .box_img{
     width: 100%;
@@ -293,36 +303,36 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 10px;
+    margin-left:2.4vw;
   }
   .box_bottom{
     display: flex;
     justify-content: space-between;
-    margin-top: 5px;
+    margin-top: 0.67vh;
   }
   .usertx1{
-    width: 50px;
+    width: 12.07vw;
     border-radius: 50%;
-    border: 1px solid #ccc;
-    margin-right: 10px;
+    border: 0.24vw solid #ccc;
+    margin-right: 2.41vw;
   }
   .fbtu1{
     width: 60%;
-    height: 236.39px;
+    height: 32.11vh;
     object-fit: cover;
   }
   .fbtu2,.fbtu3,.fbtu5,.fbtu6,.fbtu7,.fbtu8,.fbtu9{
     width: 30%;
-    height: 118.19px;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    height: 16.05vh;
+    margin-left: 1.2vw;
+    margin-bottom: 0.67vh;
     object-fit: cover;
   }
   .fbtu4{
     width: 29%;
-    height: 118.19px;
-    margin-left: 5px;
-    margin-bottom: 5px;
+    height: 16.05vh;
+    margin-left: 1.2vw;
+    margin-bottom: 0.67vh;
     object-fit: cover;
   }
   .fbtu4:nth-of-type(2n){
@@ -335,7 +345,7 @@
   .dianzang{
     display: flex;
     align-items: center;
-    margin-right: 15px;
+    margin-right: 3.6vw;
   }
   .pinglun{
     display: flex;
@@ -344,25 +354,25 @@
   /*评论*/
   .zuixinpinglun{
     display: flex;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.24vw solid #ccc;
     align-items: center;
-    padding: 20px 10px;
-    margin-top: 10px;
+    padding: 2.71vh 2.41vw;
+    margin-top: 1.35vh;
     background-color: white;
   }
   .huandian{
-    width: 4px;
-    height: 15px;
+    width: 0.96vw;
+    height: 2.03vh;
     background-color: rgb(240,170,0);
     border-radius: 45%;
-    margin-right: 10px;
+    margin-right: 2.41vw;
   }
   .box{
     width: 100%;
     display: flex;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.24vw solid #ccc;
     box-sizing: border-box;
-    padding: 10px;
+    padding: 2.4vw;
     background-color: white;
   }
   .box_left{
@@ -370,7 +380,7 @@
   }
   .box_right{
     width: 86%;
-    margin-left: 10px;
+    margin-left: 2.4vw;
   }
   .box_right_bottom{
     display: flex;
@@ -384,24 +394,24 @@
   .usertx{
     width: 100%;
     border-radius: 50%;
-    border: 1px solid #ccc;
+    border: 0.24vw solid #ccc;
   }
   .usertxt{
     margin: 15px 0;
   }
   .chakan{
     text-align: center;
-    line-height: 50px;
+    line-height: 6.79vh;
     background-color: white;
   }
   .footer{
     text-align: center;
     background-color: rgb(230,230,230);
-    padding: 20px 0;
-    margin-bottom: 68px;
+    padding: 2.71vh 0;
+    margin-bottom: 9.23vh;
   }
   .zangtp{
-    margin-right: 5px;
+    margin-right: 1.2vw;
   }
   .top{
     width: 95.5%;
@@ -411,11 +421,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 10px;
+    padding: 0 2.41vw;
     background-color: white;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.24vw solid #ccc;
+    z-index: 111;
   }
   .dongtai{
-    line-height: 50px;
+    line-height: 6.79vh;
   }
 </style>

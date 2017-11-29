@@ -10,7 +10,7 @@
           <span @click="changeFen" :class="{actBtn:!isShow}">关注</span>
           <span  @click="changeTui" :class="{actBtn:isShow}">热门</span>
         </div>
-        <div class="diBg">
+        <div class="diBg" @click="search1">
           <img src="../../assets/kk-find/kk-find-search1.png" alt="🔍">
         </div>
       </div>
@@ -32,7 +32,9 @@
           <router-link to="/" class="all">全集&nbsp;></router-link>
           <p class="author">作者:&nbsp;&nbsp;{{k.topic.user.nickname}}</p>
         </router-link>
-        <img :src="k.cover_image_url" alt="" class="image">
+        <div class="box">
+          <img v-lazy="k.cover_image_url" class="image">
+        </div>
         <router-link to="/" tag="div" class="bottomContent">
           <div class="bottomtitle">{{k.title}}</div>
           <div class="likesCount">
@@ -105,6 +107,9 @@
           this.$router.push({path: '/'})
         }
       },
+      search1: function () {
+        this.$router.push({path: '/search'})
+      },
       changeFen () {
         if (this.isShow) {
           this.isShow = false
@@ -160,7 +165,6 @@
       tab: function (i) {
         num = 0
         this.tabI = i
-        console.log(i)
         this.url = weekDay[i]
         this.array = []
         this.since = 0
@@ -171,7 +175,9 @@
             listArr[y].style.borderBottom = 'none'
           }
         }
-        this.HuoQuKkCartoon()
+        if (this.tabI !== -1) {
+          this.HuoQuKkCartoon()
+        }
       },
       loadMore () {
         if (!this.loading) {
@@ -197,7 +203,6 @@
             this.array = this.array.concat(res.data.data.comics)
             this.since = res.data.data.since
             if (res['data']['data']['comics'].length < 20) {
-              console.log('全部加载')
             }
             this.loading = false
           },
@@ -215,12 +220,14 @@
     },
     mounted () {
       this.HuoQuKkCartoon()
+      this.tabI = 6
     }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  image[lazy=loading] {}
   .topDi{
     height: 20px;
     width: 100%;
@@ -259,10 +266,11 @@
     display: inline-block;
     font-size: 14px;
     font-weight: 200;
+    width: 47%;
+    min-width: 42px;
     text-align: center;
     line-height: 24px;
     color: yellow;
-    padding: 0 10%;
     outline: none;
   }
   .btnN .actBtn{
@@ -324,13 +332,18 @@
     height: 18px;
     /*border: 1px solid red;*/
   }
+  .box {
+    height: 56.2802vw;
+    background-image: url(../../assets/kk-find/kk-mhbg.jpg);
+    background-repeat:no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+  }
   .image {
     width: 100%;
     height: 100%;
   }
-  /*.fixed {*/
-  /**/
-  /*}*/
   .author {
     position: absolute;
     top: 25px;

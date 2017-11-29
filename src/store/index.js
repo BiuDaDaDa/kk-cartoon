@@ -35,3 +35,18 @@ export default new Vuex.Store({
     }
   }
 })
+/* 存取
+function cun (el) {
+  document.cookie = 'ii=' + el
+}
+function qu () {
+  var arrstr = document.cookie.split(';')
+  for (var i = 0; i < arrstr.length; i++) {
+    var temp = arrstr[i].split('=')
+    console.log(temp)
+    if (temp[0] === ' ii') {
+      console.log('aaa')
+      return temp[1]
+    }
+  }
+} */
