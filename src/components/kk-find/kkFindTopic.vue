@@ -70,7 +70,7 @@
             <div class="jie" v-show="isShow1===2">
               <span class="comment">
                 <img src="../../assets/kk-find/kk-find-hot.png" alt="">
-                <span>{{myTopic['view_count']>100000?myTopic['view_count']>100000000?Math.floor(myTopic['view_count']/100000000)+'亿':Math.floor(myTopic['view_count']/10000)+'万':myTopic['view_count']}}</span>
+                <span>{{myTopic['view_count']>100000?myTopic['view_count']>100000000?Math.floor(myTopic['view_count']/1000000)/100+'亿':Math.floor(myTopic['view_count']/100)/100+'万':myTopic['view_count']}}</span>
               </span>
             </div>
             <div class="jie" v-show="isShow1===3">
