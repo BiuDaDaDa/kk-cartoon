@@ -48,28 +48,28 @@
 
 <style scoped lang="less">
   .box{
-    width: 414px;
-    height: 736px;
+    width: 100vw;
+    height: 100vh;
     background-color: black;
     display: table-cell;
     vertical-align:middle;
     position: relative;
   }
   .tp{
-    width: 414px;
+    width: 100vw;
     vertical-align: middle;
   }
   .txt{
     color: white;
     position: absolute;
-    bottom: 10px;
-    left: 48.5%;
+    bottom: 1.35vh;
+    left: 46%;
   }
   .dian{
     font-weight: bolder;
     color: white;
     position: absolute;
     top: 0;
-    right: 10px;
+    right: 2.41vw;
   }
 </style>

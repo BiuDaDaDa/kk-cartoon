@@ -10,12 +10,12 @@
           <span @click="changeFen" :class="{actBtn:!isShow}">关注</span>
           <span  @click="changeTui" :class="{actBtn:isShow}">广场</span>
         </div>
-        <div class="diBg">
+        <div class="diBg" @click="search1">
           <img src="../../assets/kk-find/kk-find-search1.png" alt="🔍">
         </div>
       </div>
     </div>
-    <div ref="clubNav" class="box" style="top: 60px">
+    <div ref="clubNav" class="box" style="top: 8.15vh">
       <router-link class="title" :class="{actTitle:kkClubURL === '/kk-club'}" to="/kk-club">热门</router-link>
       <router-link class="title" :class="{actTitle:kkClubURL === '/kk-zuixin'}" to="/kk-zuixin">评论</router-link>
     </div>
@@ -52,7 +52,7 @@
         }
       },
       changePos () {
-        console.log(this.kkClubURL)
+//        console.log(this.kkClubURL)
         let myTimer = null
         let _this = this
         // 向下滑动
@@ -75,6 +75,9 @@
             }
           }, 10)
         }
+      },
+      search1 () {
+        this.$router.push({name: 'Search'})
       }
     },
     computed: {
@@ -95,7 +98,7 @@
 
 <style scoped lang="less">
   .topDi{
-    height: 20px;
+    height: 2.71vh;
     width: 100%;
     position: fixed;
     top: 0;
@@ -103,7 +106,7 @@
     background-color: yellow;
   }
   .kkFindNav{
-    padding-top: 20px;
+    padding-top: 2.71vh;
     width: 100%;
     position: fixed;
     z-index: 20;
@@ -111,22 +114,21 @@
   }
   .Nav{
     display: flex;
-    height: 40px;
+    height: 5.43vh;
     padding:0 5%;
     justify-content: space-between;
     align-items: center;
   }
   .diBg{
-    width: 24px;
-    height: 24px;
+    width: 5.79vw;
+    height: 3.26vh;
     border-radius: 50%;
   }
   .btnN{
-    height: 24px;
-    width: 28%;
+    height: 3.26vh;
     background-color: rgb(0,0,0);
     border-radius: 12px;
-    border:1px solid rgb(0,0,0);
+    border:0.24vw solid rgb(0,0,0);
   }
   .btnN span{
     display: inline-block;
@@ -152,18 +154,18 @@
     left: 0;
     z-index: 100;
     width: 100%;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.24vw solid #ccc;
     display: flex;
     justify-content: space-around;
     background-color: white;
   }
   .title{
     color: black;
-    border-bottom: 2px solid #fff;
+    border-bottom: 0.27vw solid #fff;
     box-sizing: border-box;
-    padding: 10px 25px;
+    padding: 1.35vh 6.03vw;
   }
   .actTitle{
-    border-bottom: 2px solid orange;
+    border-bottom: 0.27vw solid orange;
   }
 </style>
