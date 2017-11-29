@@ -1,7 +1,7 @@
 <template>
 <div class="list">
   <div v-for="(item,index) in newList" @click="myChangeTab(index)" :key="item['id']" class="imgF">
-    <img :src="item['pic']" alt="">
+    <img v-lazy="item['pic']" alt="">
   </div>
 </div>
 </template>
@@ -48,4 +48,5 @@
   width: 100%;
   height: 100%;
 }
+  image[lazy=loading] {}
 </style>

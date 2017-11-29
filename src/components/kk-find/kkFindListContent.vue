@@ -13,7 +13,7 @@
     <div class="UpdateList" v-if="UpDateTime">下次出榜时间:&nbsp;&nbsp;{{UpDateTime}}</div>
     <div v-for="(myTopic,index) in topics" @touchmove="changeGo1" @touchend="changeGo2(myTopic['id'])" class="box">
       <div class="bLeft">
-        <img :src="myTopic['vertical_image_url']" alt="">
+        <img v-lazy="myTopic['vertical_image_url']" alt="">
       </div>
       <div class="bRight">
         <div class="topOne">
@@ -234,4 +234,5 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+  image[lazy=loading] {}
 </style>

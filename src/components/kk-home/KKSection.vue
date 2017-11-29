@@ -209,7 +209,6 @@
       },
       next: function () {
         scrollTo(0, 0)
-        console.log(window.scrollY)
         let ace = this.nextParams
         let url = {
           url: '/kkv2/comic/' + ace,
@@ -236,9 +235,9 @@
       },
       abolish: function () {
         this.popupVisible = false
+        this.$refs.foot.style.display = 'block'
       },
       linkto: function () {
-        console.log(this.targed)
         this.$router.push({ name: 'kkcomment', params: {id: this.targed} })
       },
       back: function () {
@@ -271,7 +270,7 @@
       },
       tool: function () {
         this.switchValue = true
-        this.$refs.foot.style.display = 'none'
+        this.$refs.foot.style.display = 'block'
       },
       move: function () {
         var that = this

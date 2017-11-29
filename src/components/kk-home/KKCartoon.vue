@@ -163,7 +163,6 @@
       tab: function (i) {
         num = 0
         this.tabI = i
-        console.log(i)
         this.url = weekDay[i]
         this.array = []
         this.since = 0
@@ -174,7 +173,9 @@
             listArr[y].style.borderBottom = 'none'
           }
         }
-        this.HuoQuKkCartoon()
+        if (this.tabI === -1) {
+          this.HuoQuKkCartoon()
+        }
       },
       loadMore () {
         if (!this.loading) {
@@ -200,7 +201,6 @@
             this.array = this.array.concat(res.data.data.comics)
             this.since = res.data.data.since
             if (res['data']['data']['comics'].length < 20) {
-              console.log('全部加载')
             }
             this.loading = false
           },
@@ -218,6 +218,7 @@
     },
     mounted () {
       this.HuoQuKkCartoon()
+      this.tabI = 6
     }
   }
 </script>

@@ -84,7 +84,6 @@
             total: 1
           },
           success: function (res) {
-            console.log(res.data.data.comment_floors[0].root.id)
             that.array = res.data.data.comment_floors
           },
           failed: function (err) {
