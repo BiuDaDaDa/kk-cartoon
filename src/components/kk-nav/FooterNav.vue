@@ -54,7 +54,6 @@
       } else if (link === '/kkFind' || link === '/kkFindFen') {
         this.userFooter[1].imgSrc = require('../../assets/kk-nav/kk-nav-find-c.png')
         this.$refs.forRef[1].style.color = '#fce13c'
-      } else if (link === '/kk-tabs') {
       } else if (link === '/kk-club' || link === '/kk-attention') {
         this.userFooter[2].imgSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
         this.$refs.forRef[2].style.color = '#fce13c'
