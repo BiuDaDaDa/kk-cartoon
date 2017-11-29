@@ -194,6 +194,7 @@
     padding: 0 4.83vw;
     background-color: white;
     border-bottom: 0.24vw solid #ccc;
+    z-index: 111;
   }
   .dongtai{
     line-height: 6.79vh;

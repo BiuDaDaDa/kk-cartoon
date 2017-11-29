@@ -52,7 +52,7 @@
         }
       },
       changePos () {
-        console.log(this.kkClubURL)
+//        console.log(this.kkClubURL)
         let myTimer = null
         let _this = this
         // 向下滑动
