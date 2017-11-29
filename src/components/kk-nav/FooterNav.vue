@@ -56,8 +56,13 @@
         this.$refs.forRef[1].style.color = '#fce13c'
       } else if (link === '/kk-tabs') {
       } else if (link === '/kk-club' || link === '/kk-attention') {
+<<<<<<< HEAD
         this.userFooter[2].imgSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
         this.$refs.forRef[2].style.color = '#fce13c'
+=======
+        this.clubSrc = require('../../assets/kk-nav/kk-nav-v-c.png')
+        this.$refs.clubRef.style.color = '#fce13c'
+>>>>>>> 4a0f5f68e12a52cdcaae44376a4f1368bd1dc6e7
       }
     }
   }
