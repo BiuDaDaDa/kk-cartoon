@@ -386,9 +386,10 @@
   }
   .listSort .tagSort{
     display: block;
-    font-size: 15px;
+    /*font-size: 15px;*/
+    font-size: 3.6231vw;
     padding: 2% 0;
-    margin: 0 2.8vw;
+    margin: 0 2.75vw;
     border-bottom: 3px solid #fff;
     text-decoration: none;
   }
