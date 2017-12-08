@@ -8,6 +8,7 @@ module.exports = {
   dev: {
     env: require('./dev.env'),
     port: 8081,
+    host: '0.0.0.0',
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -18,7 +19,8 @@ module.exports = {
           '^/kuaikanv1': '/v1'
         },
         //可以是对象也可以是字符串
-        cookieDomainRewrite: "localhost",
+        // cookieDomainRewrite: "localhost",
+        cookieDomainRewrite: "0.0.0.0",
         headers: {
           Host: 'api.kuaikanmanhua.com'
         }
@@ -28,7 +30,7 @@ module.exports = {
         pathRewrite: {
           '^/kuaikanv2': '/v2'
         },
-        cookieDomainRewrite: "localhost",
+        cookieDomainRewrite: "0.0.0.0",
         headers: {
           Host: 'api.kuaikanmanhua.com'
         }
@@ -38,7 +40,7 @@ module.exports = {
         pathRewrite: {
           '^/kuaikanv3': '/v3'
         },
-        cookieDomainRewrite: "localhost",
+        cookieDomainRewrite: "0.0.0.0",
         headers: {
           Host: 'api.kuaikanmanhua.com'
         }
@@ -48,7 +50,7 @@ module.exports = {
         pathRewrite: {
           '^/kkv1': '/v1'
         },
-        cookieDomainRewrite: "localhost",
+        cookieDomainRewrite: "0.0.0.0",
         headers: {
           Host: 'api.kkmh.com'
         }
@@ -58,7 +60,7 @@ module.exports = {
         pathRewrite: {
           '^/kkv2': '/v2'
         },
-        cookieDomainRewrite: "localhost",
+        cookieDomainRewrite: "0.0.0.0",
         headers: {
           Host: 'api.kkmh.com'
         }
@@ -68,7 +70,7 @@ module.exports = {
         pathRewrite: {
           '^/kkv3': '/v3'
         },
-        cookieDomainRewrite: "localhost",
+        cookieDomainRewrite: "0.0.0.0",
         headers: {
           Host: 'api.kkmh.com'
         }

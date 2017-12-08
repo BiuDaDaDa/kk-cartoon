@@ -33,7 +33,7 @@
     <div  ref="listSort" class="listSort" style="top: 0px">
       <span v-for="tag in tags" class="tagSort"
           :class="{activeTagSort:tagId==tag['tag_id']}" @click="changeTagId(tag['tag_id'])">
-        <mt-tab-item :id="tagId==tag['tag_id']">{{tag['title']}}</mt-tab-item>
+        <span :id="tagId==tag['tag_id']">{{tag['title']}}</span>
       </span>
     </div>
     <div class="detection" @touchstart="changePos1" @touchend="changePos2">
@@ -345,7 +345,6 @@
   }
   .btnN{
     height: 24px;
-    width: 28%;
     background-color: rgba(0,0,0,.6);
     border-radius: 12px;
     border:1px solid rgba(0,0,0,.6);
@@ -388,8 +387,8 @@
   .listSort .tagSort{
     display: block;
     font-size: 15px;
-    padding: 2.5% 0;
-    margin: 0 4%;
+    padding: 2% 0;
+    margin: 0 2.8vw;
     border-bottom: 3px solid #fff;
     text-decoration: none;
   }

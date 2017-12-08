@@ -258,7 +258,6 @@
   }
   .btnN{
     height: 24px;
-    width: 28%;
     background-color: rgb(0,0,0);
     border-radius: 12px;
     border:1px solid rgb(0,0,0);
