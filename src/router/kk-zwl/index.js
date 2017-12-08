@@ -1,5 +1,5 @@
 
-import myInfo from '@/components/kk-find/KkFindInfo'
+import myInfo from '@/components/kk-find/KkfindInfo'
 import myFen from '@/components/kk-find/kkFindTopic'
 import MoreList from '@/components/kk-find/kkFindMoreList'
 import ListContent from '@/components/kk-find/kkFindListContent'
